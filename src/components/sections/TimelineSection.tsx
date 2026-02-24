@@ -2,9 +2,20 @@
 
 import { AnimatedSection } from "@/components/AnimatedSection";
 import { TimelineItem } from "@/components/TimelineItem";
+import { TimelinePath } from "@/components/TimelinePath";
+import { useTimelinePathData } from "@/hooks/useTimelinePathData";
 import { timeline } from "@/lib/data/timeline";
+import { useRef } from "react";
 
 export function TimelineSection() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const milestoneRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  const { pathD, dots, isReady, svgWidth, svgHeight } = useTimelinePathData(
+    containerRef,
+    milestoneRefs
+  );
+
   return (
     <section className="mx-auto max-w-4xl py-20">
       <AnimatedSection>
@@ -15,13 +26,30 @@ export function TimelineSection() {
         </div>
       </AnimatedSection>
 
-      <AnimatedSection variant="fade">
-        <div className="relative flex flex-col gap-12">
-          {timeline.map((milestone) => (
-            <TimelineItem key={milestone.year} milestone={milestone} />
+      <div ref={containerRef} className="relative pb-20">
+        {isReady && (
+          <TimelinePath
+            pathD={pathD}
+            dots={dots}
+            svgWidth={svgWidth}
+            svgHeight={svgHeight}
+            containerRef={containerRef}
+          />
+        )}
+
+        <div className="relative z-10 flex flex-col gap-14 md:gap-28">
+          {timeline.map((milestone, index) => (
+            <TimelineItem
+              key={milestone.year}
+              milestone={milestone}
+              alignment={index % 2 === 0 ? "left" : "right"}
+              ref={(el) => {
+                milestoneRefs.current[index] = el;
+              }}
+            />
           ))}
         </div>
-      </AnimatedSection>
+      </div>
     </section>
   );
 }
