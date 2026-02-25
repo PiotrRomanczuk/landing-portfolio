@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { MapPin } from "lucide-react";
+import { motion } from "motion/react";
 import { AnimatedSection } from "@/components/AnimatedSection";
 import { personalInfo } from "@/lib/data/personal";
 
@@ -17,14 +18,14 @@ export function AboutSection() {
         className="flex justify-center md:w-1/3 md:justify-end"
       >
         <div className="relative">
-          <div className="size-48 rounded-full border-2 border-primary/30 p-2">
+          <div className="size-72 rounded-full border-2 border-primary/30 p-2 md:size-96">
             <div className="relative h-full w-full overflow-hidden rounded-full">
               <Image
                 src="/profile.jpg"
                 alt={personalInfo.name}
                 fill
-                className="object-cover grayscale transition-all duration-500 hover:grayscale-0"
-                sizes="192px"
+                className="object-cover object-top grayscale transition-all duration-500 hover:grayscale-0"
+                sizes="(min-width: 768px) 384px, 288px"
                 priority
               />
             </div>
@@ -54,13 +55,18 @@ export function AboutSection() {
             Toolkit
           </h3>
           <div className="flex flex-wrap gap-3">
-            {personalInfo.toolkit.map((tool) => (
-              <span
+            {personalInfo.toolkit.map((tool, i) => (
+              <motion.span
                 key={tool}
-                className="rounded border border-border bg-muted px-3 py-1.5 font-mono text-sm"
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                whileHover={{ y: -3, scale: 1.05 }}
+                viewport={{ once: true, margin: "-40px" }}
+                transition={{ duration: 0.3, delay: 0.15 + i * 0.08 }}
+                className="cursor-default rounded border border-border bg-muted px-3 py-1.5 font-mono text-sm transition-colors hover:border-primary hover:text-primary"
               >
                 {tool}
-              </span>
+              </motion.span>
             ))}
           </div>
         </div>

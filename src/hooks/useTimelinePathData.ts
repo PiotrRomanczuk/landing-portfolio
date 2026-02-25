@@ -57,7 +57,7 @@ export function useTimelinePathData(
       if (isMobile) {
         dots.push({ x: MOBILE_DOT_X, y });
       } else {
-        const x = Math.round(i % 2 === 0 ? width * 0.2 : width * 0.8);
+        const x = Math.round(width * 0.5);
         dots.push({ x, y });
       }
     }
