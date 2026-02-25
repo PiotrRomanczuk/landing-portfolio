@@ -4,25 +4,26 @@ export const timeline: TimelineMilestone[] = [
   {
     year: "2021",
     description:
-      "Wrote my first JavaScript. Immediately wanted to rewrite everything.",
+      "Started with JavaScript fundamentals — built my first interactive apps and caught the bug for web development.",
   },
   {
     year: "2022",
-    description: "Built 50 projects in 50 days to brute-force fluency.",
+    description:
+      "Went deep on frontend craft. 50+ projects in rapid succession to master HTML, CSS, and vanilla JS patterns.",
   },
   {
     year: "2023",
     description:
-      "Discovered React. Started over-engineering everything with components.",
+      "Adopted React and component-driven architecture. Built full SPAs with routing, state management, and API integration.",
   },
   {
     year: "2024",
     description:
-      "Went all-in on TypeScript. Started shipping real production apps.",
+      "Moved to TypeScript and Next.js full-stack. Shipped production apps with auth, databases, and CI/CD pipelines.",
   },
   {
     year: "2025",
     description:
-      "Multiple live deployments. CRMs, real-time visualizations, client work.",
+      "Running multiple live products — business CRMs, real-time data visualizations, and commercial client projects.",
   },
 ];
