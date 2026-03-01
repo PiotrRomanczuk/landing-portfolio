@@ -50,6 +50,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        {/* Temporary: Figma capture script - remove after design capture */}
+        <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
+      </head>
       <body
         className={`${spaceGrotesk.variable} ${spaceMono.variable} font-sans antialiased selection:bg-primary/30 selection:text-white`}
       >

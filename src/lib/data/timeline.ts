@@ -2,28 +2,35 @@ import type { TimelineMilestone } from "@/types";
 
 export const timeline: TimelineMilestone[] = [
   {
-    year: "2021",
+    id: "commercial-client",
+    title: "First Commercial Client Project",
+    period: "2023",
     description:
-      "Started with JavaScript fundamentals — built my first interactive apps and caught the bug for web development.",
+      "Delivered a production landing page for INBORR as a paid freelance engagement — first revenue from code.",
+    tech: ["React", "Tailwind CSS", "Figma"],
   },
   {
-    year: "2022",
+    id: "production-app",
+    title: "Shipped a Production Business App",
+    period: "2024",
     description:
-      "Went deep on frontend craft. 50+ projects in rapid succession to master HTML, CSS, and vanilla JS patterns.",
+      "Built Guitar CRM from scratch for a real business — full inventory management, client tracking, and reporting.",
+    tech: ["Next.js", "TypeScript", "Supabase", "Tailwind CSS"],
   },
   {
-    year: "2023",
+    id: "realtime-viz",
+    title: "Real-Time Data Visualization",
+    period: "2024",
     description:
-      "Adopted React and component-driven architecture. Built full SPAs with routing, state management, and API integration.",
+      "Engineered a WebSocket-powered dashboard rendering 1 000+ live data points at 60 fps with zero dropped frames.",
+    tech: ["React", "WebSocket", "D3.js", "TypeScript"],
   },
   {
-    year: "2024",
+    id: "multiple-products",
+    title: "Multiple Live Products in Production",
+    period: "2025",
     description:
-      "Moved to TypeScript and Next.js full-stack. Shipped production apps with auth, databases, and CI/CD pipelines.",
-  },
-  {
-    year: "2025",
-    description:
-      "Running multiple live products — business CRMs, real-time data visualizations, and commercial client projects.",
+      "Running several deployed applications — actively maintained, monitored, and used by real users every day.",
+    tech: ["Next.js", "TypeScript", "Supabase", "Vercel", "CI/CD"],
   },
 ];

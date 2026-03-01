@@ -33,7 +33,7 @@ export function Navbar() {
   const lastScrollY = useRef(0);
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
-  const spotlightBg = useMotionTemplate`radial-gradient(300px circle at ${mouseX}px ${mouseY}px, hsl(var(--primary) / 0.08), transparent 80%)`;
+  const spotlightBg = useMotionTemplate`radial-gradient(300px circle at ${mouseX}px ${mouseY}px, hsl(var(--primary) / var(--spotlight-opacity)), transparent 80%)`;
 
   function handleMouseMove(e: React.MouseEvent) {
     const { left, top } = e.currentTarget.getBoundingClientRect();

@@ -84,7 +84,7 @@ export function HeroTerminal() {
     >
       {/* Glow */}
       <motion.div
-        className="absolute -inset-4 rounded-2xl bg-primary/10 blur-2xl"
+        className="absolute -inset-4 rounded-2xl bg-primary/10 blur-2xl dark:bg-primary/5"
         animate={
           prefersReducedMotion
             ? { opacity: 0.3 }
@@ -98,12 +98,12 @@ export function HeroTerminal() {
       />
 
       {/* Terminal window */}
-      <div className="relative overflow-hidden rounded-lg border border-border bg-card shadow-lg shadow-primary/20">
+      <div className="relative overflow-hidden rounded-lg border border-border bg-card shadow-lg shadow-primary/20 dark:shadow-primary/10">
         {/* Title bar */}
         <div className="flex items-center gap-2 border-b border-border px-4 py-3">
-          <span className="h-3 w-3 rounded-full bg-red-500" />
-          <span className="h-3 w-3 rounded-full bg-yellow-500" />
-          <span className="h-3 w-3 rounded-full bg-green-500" />
+          <span className="h-3 w-3 rounded-full bg-red-500 dark:bg-red-400/50" />
+          <span className="h-3 w-3 rounded-full bg-yellow-500 dark:bg-yellow-400/50" />
+          <span className="h-3 w-3 rounded-full bg-green-500 dark:bg-green-400/50" />
           <span className="ml-2 font-mono text-xs text-muted-foreground">
             ~/projects
           </span>

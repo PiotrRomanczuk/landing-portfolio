@@ -15,6 +15,8 @@ export const projects: Project[] = [
     liveUrl: "https://guitar-crm.vercel.app",
     sourceUrl: "https://github.com/PiotrRomanczuk/guitar-crm",
     variant: "large",
+    year: "2024",
+    category: "Full-Stack",
   },
   {
     id: "radio-signal",
@@ -30,6 +32,8 @@ export const projects: Project[] = [
     sourceUrl:
       "https://github.com/PiotrRomanczuk/radio-signal-visualization",
     variant: "large",
+    year: "2024",
+    category: "Data Viz",
   },
   {
     id: "inborr",
@@ -46,6 +50,8 @@ export const projects: Project[] = [
     sourceUrl: "https://github.com/PiotrRomanczuk/INBORR---LandingPage",
     screenshot: "/projects/Inborr.png",
     variant: "compact",
+    year: "2023",
+    category: "Frontend",
   },
   {
     id: "pizza-store",
@@ -62,5 +68,7 @@ export const projects: Project[] = [
     sourceUrl: "https://github.com/PiotrRomanczuk/pizza-store",
     screenshot: "/projects/PizzaStore.png",
     variant: "compact",
+    year: "2023",
+    category: "E-Commerce",
   },
 ];

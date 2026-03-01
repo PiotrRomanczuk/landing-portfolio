@@ -23,9 +23,14 @@ export interface Project {
   sourceUrl: string;
   screenshot?: string;
   variant: "large" | "compact";
+  year: string;
+  category: string;
 }
 
 export interface TimelineMilestone {
-  year: string;
+  id: string;
+  title: string;
+  period: string;
   description: string;
+  tech: string[];
 }

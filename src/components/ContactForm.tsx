@@ -59,7 +59,7 @@ export function ContactForm() {
             name="name"
             required
             placeholder="John Doe"
-            className="border-0 border-b border-border bg-transparent px-0 py-2 text-foreground outline-none transition-colors placeholder:text-muted-foreground/30 focus:border-primary focus:ring-0"
+            className="border-0 border-b border-border bg-transparent px-0 py-2 text-foreground outline-none transition-colors placeholder:text-muted-foreground/30 focus:border-primary focus:ring-0 dark:border-white/10"
           />
         </div>
 
@@ -76,7 +76,7 @@ export function ContactForm() {
             name="email"
             required
             placeholder="john@example.com"
-            className="border-0 border-b border-border bg-transparent px-0 py-2 text-foreground outline-none transition-colors placeholder:text-muted-foreground/30 focus:border-primary focus:ring-0"
+            className="border-0 border-b border-border bg-transparent px-0 py-2 text-foreground outline-none transition-colors placeholder:text-muted-foreground/30 focus:border-primary focus:ring-0 dark:border-white/10"
           />
         </div>
 
@@ -93,14 +93,14 @@ export function ContactForm() {
             required
             rows={4}
             placeholder="Tell me about your project..."
-            className="resize-none border-0 border-b border-border bg-transparent px-0 py-2 text-foreground outline-none transition-colors placeholder:text-muted-foreground/30 focus:border-primary focus:ring-0"
+            className="resize-none border-0 border-b border-border bg-transparent px-0 py-2 text-foreground outline-none transition-colors placeholder:text-muted-foreground/30 focus:border-primary focus:ring-0 dark:border-white/10"
           />
         </div>
 
         <button
           type="submit"
           disabled={status === "sending"}
-          className="mt-4 self-start rounded bg-foreground px-8 py-3 text-sm font-bold uppercase tracking-wide text-background transition-colors hover:bg-primary disabled:opacity-50"
+          className="mt-4 self-start rounded bg-foreground px-8 py-3 text-sm font-bold uppercase tracking-wide text-background transition-colors hover:bg-primary disabled:opacity-50 dark:bg-primary dark:text-primary-foreground dark:hover:bg-primary/90"
         >
           {status === "sending" ? "Sending..." : "Send Message"}
         </button>

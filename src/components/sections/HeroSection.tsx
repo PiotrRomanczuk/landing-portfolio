@@ -11,7 +11,7 @@ export function HeroSection() {
   return (
     <section className="relative flex min-h-[80vh] flex-col justify-center py-20">
       {/* Decorative blur */}
-      <div className="pointer-events-none absolute -top-20 -right-20 h-[400px] w-[400px] rounded-full bg-primary/5 blur-3xl" />
+      <div className="pointer-events-none absolute -top-20 -right-20 h-[400px] w-[400px] rounded-full bg-primary/5 blur-3xl dark:bg-primary/[0.03]" />
 
       <div className="relative z-10 md:grid md:grid-cols-2 md:items-center md:gap-12">
         <div>

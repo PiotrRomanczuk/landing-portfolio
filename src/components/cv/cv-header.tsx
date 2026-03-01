@@ -1,6 +1,6 @@
 "use client";
 
-import { Mail, Phone, MapPin, Github, Linkedin } from "lucide-react";
+import { Mail, Phone, MapPin, Github, Globe } from "lucide-react";
 
 export function CVHeader() {
   return (
@@ -40,11 +40,11 @@ export function CVHeader() {
           </li>
           <li>
             <a
-              href="tel:+48123456789"
+              href="tel:+48513602768"
               className="flex items-center gap-1.5 text-xs text-[var(--cv-subtle)] hover:text-foreground transition-colors"
             >
               <Phone size={13} aria-hidden="true" />
-              +48 123 456 789
+              +48 513 602 768
             </a>
           </li>
           <li>
@@ -66,13 +66,13 @@ export function CVHeader() {
           </li>
           <li>
             <a
-              href="https://linkedin.com/in/piotr-romanczuk"
+              href="https://landing-portfolio-one.vercel.app"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-1.5 text-xs text-[var(--cv-subtle)] hover:text-foreground transition-colors"
             >
-              <Linkedin size={13} aria-hidden="true" />
-              linkedin.com/in/piotr-romanczuk
+              <Globe size={13} aria-hidden="true" />
+              landing-portfolio-one.vercel.app
             </a>
           </li>
         </ul>

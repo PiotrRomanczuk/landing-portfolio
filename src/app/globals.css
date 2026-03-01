@@ -86,42 +86,44 @@
   --sidebar-accent-foreground: #1a2744;
   --sidebar-border: #ddd5c8;
   --sidebar-ring: #1e3a5f;
+  --spotlight-opacity: 0.08;
 }
 
 .dark {
-  --cv-divider: rgba(255, 255, 255, 0.08);
-  --cv-subtle: #737373;
-  --background: #0a0a0a;
-  --foreground: #e5e5e5;
-  --card: #141414;
-  --card-foreground: #e5e5e5;
-  --popover: #141414;
-  --popover-foreground: #e5e5e5;
-  --primary: #8faa7b;
-  --primary-foreground: #0a0a0a;
-  --secondary: #1a1a1a;
-  --secondary-foreground: #e5e5e5;
-  --muted: #1a1a1a;
-  --muted-foreground: #737373;
-  --accent: #1a1a1a;
-  --accent-foreground: #e5e5e5;
+  --cv-divider: rgba(255, 255, 255, 0.06);
+  --cv-subtle: #a1a1aa;
+  --background: #09090b;
+  --foreground: #fafafa;
+  --card: #111113;
+  --card-foreground: #fafafa;
+  --popover: #111113;
+  --popover-foreground: #fafafa;
+  --primary: #60a5fa;
+  --primary-foreground: #09090b;
+  --secondary: #18181b;
+  --secondary-foreground: #fafafa;
+  --muted: #18181b;
+  --muted-foreground: #a1a1aa;
+  --accent: #18181b;
+  --accent-foreground: #fafafa;
   --destructive: #ef4444;
-  --border: rgba(255, 255, 255, 0.08);
-  --input: rgba(255, 255, 255, 0.12);
-  --ring: #8faa7b;
-  --chart-1: #8faa7b;
-  --chart-2: #a3bc93;
-  --chart-3: #b8cead;
-  --chart-4: #d0e0c7;
-  --chart-5: #e0edd8;
-  --sidebar: #141414;
-  --sidebar-foreground: #e5e5e5;
-  --sidebar-primary: #8faa7b;
-  --sidebar-primary-foreground: #0a0a0a;
-  --sidebar-accent: #1a1a1a;
-  --sidebar-accent-foreground: #e5e5e5;
-  --sidebar-border: rgba(255, 255, 255, 0.08);
-  --sidebar-ring: #8faa7b;
+  --border: rgba(255, 255, 255, 0.06);
+  --input: rgba(255, 255, 255, 0.1);
+  --ring: #60a5fa;
+  --chart-1: #60a5fa;
+  --chart-2: #93c5fd;
+  --chart-3: #bfdbfe;
+  --chart-4: #dbeafe;
+  --chart-5: #eff6ff;
+  --sidebar: #111113;
+  --sidebar-foreground: #fafafa;
+  --sidebar-primary: #60a5fa;
+  --sidebar-primary-foreground: #09090b;
+  --sidebar-accent: #18181b;
+  --sidebar-accent-foreground: #fafafa;
+  --sidebar-border: rgba(255, 255, 255, 0.06);
+  --sidebar-ring: #60a5fa;
+  --spotlight-opacity: 0.04;
 }
 
 @layer base {
@@ -130,6 +132,11 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+  .dark body,
+  :root.dark body {
+    background: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(96, 165, 250, 0.03), transparent),
+                #09090b;
   }
   html {
     scroll-behavior: smooth;
@@ -172,16 +179,16 @@
 }
 .dark ::-webkit-scrollbar-track,
 :root.dark ::-webkit-scrollbar-track {
-  background: #0a0a0a;
+  background: #09090b;
 }
 .dark ::-webkit-scrollbar-thumb,
 :root.dark ::-webkit-scrollbar-thumb {
-  background: #262626;
+  background: #27272a;
   border-radius: 4px;
 }
 .dark ::-webkit-scrollbar-thumb:hover,
 :root.dark ::-webkit-scrollbar-thumb:hover {
-  background: #333;
+  background: #3f3f46;
 }
 
 /* CV forced light mode — always renders as a paper document */
