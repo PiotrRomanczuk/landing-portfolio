@@ -17,6 +17,10 @@ const skillGroups = [
     label: "Tools",
     skills: ["Git", "Vercel", "CI/CD", "ESLint"],
   },
+  {
+    label: "Spoken",
+    skills: ["Polish — Native", "English — C1"],
+  },
 ];
 
 export function CVSkills() {

@@ -1,10 +1,14 @@
 "use client";
 
 import { AnimatedSection } from "@/components/AnimatedSection";
-import { TimelineItem } from "@/components/TimelineItem";
+import { TerminalLogEntry } from "@/components/TerminalLogEntry";
+import { useReducedMotion } from "@/hooks/useReducedMotion";
 import { timeline } from "@/lib/data/timeline";
+import { motion } from "motion/react";
 
 export function TimelineSection() {
+  const prefersReducedMotion = useReducedMotion();
+
   return (
     <section className="py-20">
       <AnimatedSection>
@@ -18,10 +22,55 @@ export function TimelineSection() {
         </div>
       </AnimatedSection>
 
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-        {timeline.map((milestone, i) => (
-          <TimelineItem key={milestone.id} milestone={milestone} index={i} />
-        ))}
+      <div className="overflow-hidden rounded-lg border border-border bg-card shadow-lg">
+        {/* Title bar */}
+        <div className="flex items-center gap-2 border-b border-border px-4 py-3">
+          <span className="h-3 w-3 rounded-full bg-red-500 dark:bg-red-400/50" />
+          <span className="h-3 w-3 rounded-full bg-yellow-500 dark:bg-yellow-400/50" />
+          <span className="h-3 w-3 rounded-full bg-green-500 dark:bg-green-400/50" />
+          <span className="ml-2 font-mono text-xs text-muted-foreground">
+            ~/career
+          </span>
+        </div>
+
+        {/* Terminal body */}
+        <div className="space-y-4 p-4 font-mono text-xs leading-relaxed md:text-sm">
+          {/* Command line */}
+          <motion.div
+            initial={prefersReducedMotion ? false : { opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.3 }}
+            className="text-muted-foreground"
+          >
+            $ git log --oneline --milestones
+          </motion.div>
+
+          {/* Milestone entries */}
+          {timeline.map((milestone, i) => (
+            <TerminalLogEntry
+              key={milestone.id}
+              milestone={milestone}
+              index={i}
+              skipAnimation={prefersReducedMotion}
+            />
+          ))}
+
+          {/* Trailing prompt with blinking cursor */}
+          <motion.div
+            initial={prefersReducedMotion ? false : { opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{
+              duration: 0.3,
+              delay: prefersReducedMotion ? 0 : timeline.length * 0.15 + 0.3,
+            }}
+            className="text-muted-foreground"
+          >
+            ~/career ${" "}
+            <span className="inline-block animate-blink text-primary">█</span>
+          </motion.div>
+        </div>
       </div>
     </section>
   );

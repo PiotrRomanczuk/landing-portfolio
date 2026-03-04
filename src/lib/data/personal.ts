@@ -4,7 +4,7 @@ export const personalInfo: PersonalInfo = {
   name: "Piotr Romanczuk",
   title: "Software Engineer",
   email: "p.romanczuk@gmail.com",
-  phone: "+48 123 456 789",
+  phone: "+48 513 602 768",
   location: "Warsaw, PL",
   tagline:
     "Building digital experiences with code and coffee. Focusing on clean aesthetics and functional minimalism.",
@@ -13,6 +13,4 @@ export const personalInfo: PersonalInfo = {
     "I mostly work with TypeScript, React, Next.js, and Tailwind. Sometimes Supabase, sometimes plain Node.",
   toolkit: ["React", "TypeScript", "Node.js", "Supabase", "Python"],
   github: "https://github.com/PiotrRomanczuk",
-  linkedin: "https://linkedin.com/in/piotr-romanczuk",
-  twitter: "#",
 };

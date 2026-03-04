@@ -1,6 +1,6 @@
 "use client";
 
-import { ProjectCard } from "@/components/ProjectCard";
+import { TerminalProjectCard } from "@/components/TerminalProjectCard";
 import { AnimatedSection } from "@/components/AnimatedSection";
 import { projects } from "@/lib/data/projects";
 
@@ -27,7 +27,7 @@ export function ProjectsSection() {
               project.variant === "large" ? "md:col-span-2" : "md:col-span-1"
             }
           >
-            <ProjectCard project={project} index={i} />
+            <TerminalProjectCard project={project} index={i} />
           </AnimatedSection>
         ))}
       </div>

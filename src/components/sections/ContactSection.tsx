@@ -38,16 +38,6 @@ export function ContactSection() {
             )}
 
             <div className="mt-8 flex gap-4">
-              {personalInfo.linkedin && (
-                <a
-                  href={personalInfo.linkedin}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex size-10 items-center justify-center rounded-full border border-border bg-card text-xs font-bold transition-all hover:border-primary hover:text-primary"
-                >
-                  LN
-                </a>
-              )}
               <a
                 href={personalInfo.github}
                 target="_blank"
@@ -56,16 +46,6 @@ export function ContactSection() {
               >
                 GH
               </a>
-              {personalInfo.twitter && (
-                <a
-                  href={personalInfo.twitter}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex size-10 items-center justify-center rounded-full border border-border bg-card text-xs font-bold transition-all hover:border-primary hover:text-primary"
-                >
-                  TW
-                </a>
-              )}
             </div>
           </div>
         </AnimatedSection>

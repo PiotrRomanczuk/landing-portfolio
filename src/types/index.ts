@@ -9,15 +9,17 @@ export interface PersonalInfo {
   techSummary: string;
   toolkit: string[];
   github: string;
-  linkedin?: string;
-  twitter?: string;
+}
+
+export interface TerminalLine {
+  type: "command" | "output" | "success" | "comment";
+  text: string;
 }
 
 export interface Project {
   id: string;
   title: string;
   description: string;
-  highlights: string[];
   tech: string[];
   liveUrl?: string;
   sourceUrl: string;
@@ -25,6 +27,9 @@ export interface Project {
   variant: "large" | "compact";
   year: string;
   category: string;
+  terminalPath: string;
+  terminalLines: TerminalLine[];
+  status: "active" | "archived" | "completed";
 }
 
 export interface TimelineMilestone {

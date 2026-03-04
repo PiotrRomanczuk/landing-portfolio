@@ -9,24 +9,6 @@ export function Footer() {
           reserved.
         </p>
         <div className="flex gap-6">
-          {personalInfo.twitter && (
-            <a
-              href={personalInfo.twitter}
-              className="transition-colors hover:text-primary"
-            >
-              Twitter
-            </a>
-          )}
-          {personalInfo.linkedin && (
-            <a
-              href={personalInfo.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="transition-colors hover:text-primary"
-            >
-              LinkedIn
-            </a>
-          )}
           <a
             href={personalInfo.github}
             target="_blank"
