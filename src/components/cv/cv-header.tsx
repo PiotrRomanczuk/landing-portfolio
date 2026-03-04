@@ -66,13 +66,13 @@ export function CVHeader() {
           </li>
           <li>
             <a
-              href="https://landing-portfolio-one.vercel.app"
+              href="https://romanczuk.vercel.app"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-1.5 text-xs text-[var(--cv-subtle)] hover:text-foreground transition-colors"
             >
               <Globe size={13} aria-hidden="true" />
-              landing-portfolio-one.vercel.app
+              romanczuk.vercel.app
             </a>
           </li>
         </ul>
