@@ -132,8 +132,9 @@ export function Navbar() {
           transition={{ duration: 0.4, ease: "easeOut", delay: 0.2 }}
         >
           <a
-            href="/cv.pdf"
-            download
+            href="/cv"
+            target="_blank"
+            rel="noopener noreferrer"
             className="hidden h-9 items-center justify-center rounded border border-border bg-transparent px-4 font-mono text-xs font-bold uppercase tracking-wider transition-colors hover:bg-accent sm:inline-flex"
           >
             CV
@@ -163,7 +164,7 @@ export function Navbar() {
                   </a>
                 ))}
                 <Button asChild variant="outline" className="mt-4">
-                  <a href="/cv.pdf" download onClick={() => setOpen(false)}>
+                  <a href="/cv" target="_blank" rel="noopener noreferrer" onClick={() => setOpen(false)}>
                     <Download className="mr-1.5 h-4 w-4" />
                     Download CV
                   </a>
