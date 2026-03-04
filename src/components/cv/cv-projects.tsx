@@ -5,34 +5,20 @@ const projects = [
   {
     name: "Guitar CRM",
     description:
-      "Production CRM app for managing guitar inventory, clients, and sales.",
-    tech: ["TypeScript", "React", "Next.js", "Tailwind CSS"],
-    url: "https://guitar-crm.vercel.app",
-    urlLabel: "guitar-crm.vercel.app",
-  },
-  {
-    name: "Radio Signal Visualization",
-    description:
-      "Real-time visualization of 1000+ radio signal values via WebSocket, rendered on Canvas at 60fps.",
-    tech: ["TypeScript", "React", "WebSocket", "Canvas API"],
-    url: null,
-    urlLabel: null,
+      "Full-stack CRM for guitar teachers — manages student profiles, lesson scheduling, song library, and practice tracking. Built with role-based auth, Supabase backend, and deployed on Vercel.",
+    tech: ["TypeScript", "Next.js", "Supabase", "Tailwind CSS", "Vercel"],
+    url: "https://strummy.vercel.app",
+    urlLabel: "strummy.vercel.app",
+    sourceUrl: "github.com/PiotrRomanczuk/guitar-crm",
   },
   {
     name: "Instagram Stories Webhook",
     description:
-      "Automated pipeline for capturing and publishing Instagram stories via webhooks with a content management dashboard.",
-    tech: ["TypeScript", "Next.js", "Supabase", "Vercel"],
-    url: "https://marszal-arts.vercel.app",
-    urlLabel: "marszal-arts.vercel.app",
-  },
-  {
-    name: "Pizza Store",
-    description:
-      "E-commerce app with cart management, Stripe payments, and animated UI.",
-    tech: ["TypeScript", "React", "Framer Motion"],
-    url: "https://pizza-store-pearl.vercel.app",
-    urlLabel: "pizza-store-pearl.vercel.app",
+      "Automated content pipeline that captures Instagram stories via Meta webhooks, processes media, and publishes to a client-facing dashboard. Features cron jobs, content queue management, and Supabase realtime.",
+    tech: ["TypeScript", "Next.js", "Supabase", "Meta API", "Vercel Cron"],
+    url: "https://stories-webhook.vercel.app",
+    urlLabel: "stories-webhook.vercel.app",
+    sourceUrl: "github.com/PiotrRomanczuk/instagram-stories-webhook",
   },
 ];
 
@@ -45,24 +31,38 @@ export function CVProjects() {
             key={project.name}
             className="page-break-avoid border border-[var(--cv-divider)] rounded p-3.5 hover:border-[var(--cv-accent)] transition-colors group"
           >
-            {/* Project name + link */}
+            {/* Project name + links */}
             <div className="flex items-start justify-between gap-2 mb-1.5">
               <h3 className="text-sm font-semibold text-foreground leading-tight font-sans">
                 {project.name}
               </h3>
-              {project.url && (
-                <a
-                  href={project.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex-shrink-0 flex items-center gap-0.5 text-[10px] font-medium hover:underline truncate max-w-[140px]"
-                  style={{ color: "var(--cv-accent)" }}
-                  aria-label={`Visit ${project.name}`}
-                >
-                  {project.urlLabel}
-                  <ArrowUpRight size={10} aria-hidden="true" className="flex-shrink-0" />
-                </a>
-              )}
+              <div className="flex-shrink-0 flex items-center gap-2">
+                {project.url && (
+                  <a
+                    href={project.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-0.5 text-[10px] font-medium hover:underline"
+                    style={{ color: "var(--cv-accent)" }}
+                    aria-label={`Visit ${project.name}`}
+                  >
+                    {project.urlLabel}
+                    <ArrowUpRight size={10} aria-hidden="true" className="flex-shrink-0" />
+                  </a>
+                )}
+                {project.sourceUrl && (
+                  <a
+                    href={`https://${project.sourceUrl}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-0.5 text-[10px] font-medium text-[var(--cv-subtle)] hover:underline"
+                    aria-label={`Source code for ${project.name}`}
+                  >
+                    source
+                    <ArrowUpRight size={10} aria-hidden="true" className="flex-shrink-0" />
+                  </a>
+                )}
+              </div>
             </div>
 
             {/* Description */}

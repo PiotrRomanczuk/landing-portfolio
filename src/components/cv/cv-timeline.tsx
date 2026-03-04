@@ -9,7 +9,7 @@ const experience = [
   },
   {
     period: "2021 — Present",
-    role: "Software Engineer (Self-taught)",
+    role: "Software Engineer & Entrepreneur (Self-taught)",
     description:
       "Self-taught full-stack developer. Progressed from JavaScript fundamentals through React and TypeScript to shipping production Next.js apps with auth, databases, and CI/CD. Currently running multiple live products — business CRMs, real-time data visualizations, and commercial client projects.",
   },
