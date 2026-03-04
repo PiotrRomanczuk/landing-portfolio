@@ -1,32 +1,17 @@
 import { CVSection } from "./cv-section";
 
 const skillGroups = [
-  {
-    label: "Languages",
-    skills: ["TypeScript", "JavaScript", "Python"],
-  },
-  {
-    label: "Frontend",
-    skills: ["React", "Next.js", "Tailwind CSS", "Framer Motion", "HTML5 Canvas"],
-  },
-  {
-    label: "Backend",
-    skills: ["Node.js", "Supabase", "REST APIs", "WebSocket"],
-  },
-  {
-    label: "Tools",
-    skills: ["Git", "Vercel", "CI/CD", "ESLint"],
-  },
-  {
-    label: "Spoken",
-    skills: ["Polish — Native", "English — C1"],
-  },
+  { label: "Languages", skills: ["TypeScript", "JavaScript", "Python"] },
+  { label: "Frontend", skills: ["React", "Next.js", "Tailwind CSS", "Framer Motion", "HTML5 Canvas"] },
+  { label: "Backend", skills: ["Node.js", "Supabase", "REST APIs", "WebSocket"] },
+  { label: "Tools", skills: ["Git", "Vercel", "CI/CD", "ESLint"] },
+  { label: "Spoken", skills: ["Polish — Native", "English — C1"] },
 ];
 
 export function CVSkills() {
   return (
     <CVSection title="Toolkit">
-      <div className="flex flex-col gap-2.5">
+      <div className="flex flex-col gap-2">
         {skillGroups.map((group) => (
           <div key={group.label} className="flex items-baseline gap-3 page-break-avoid">
             <span

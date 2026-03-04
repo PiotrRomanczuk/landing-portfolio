@@ -26,7 +26,7 @@ export default function CVPage() {
       }}
     >
       <main
-        className="cv-page mx-auto max-w-[780px] shadow-sm rounded-sm px-10 py-10"
+        className="cv-page mx-auto w-[780px] min-h-[1103px] shadow-sm rounded-sm px-10 py-10 flex flex-col"
         style={{
           background: "#ffffff",
           color: "#111827",
@@ -37,14 +37,14 @@ export default function CVPage() {
         <CVHeader />
         <CVSummary />
         <div className="mt-1 border-t border-[var(--cv-divider)]" />
-        <CVSkills />
+        <CVProjects />
         <div className="mt-1 border-t border-[var(--cv-divider)]" />
         <CVTimeline />
         <div className="mt-1 border-t border-[var(--cv-divider)]" />
-        <CVProjects />
+        <CVSkills />
 
         {/* Footer */}
-        <footer className="mt-4 pt-3 border-t border-[var(--cv-divider)] flex items-center justify-between flex-wrap gap-2">
+        <footer className="mt-auto pt-3 border-t border-[var(--cv-divider)] flex items-center justify-between flex-wrap gap-2">
           <p className="text-[10px] text-[var(--cv-subtle)] font-mono">
             piotr.romanczuk — 2025
           </p>

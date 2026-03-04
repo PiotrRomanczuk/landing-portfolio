@@ -4,18 +4,28 @@ import { CVSection } from "./cv-section";
 const projects = [
   {
     name: "Guitar CRM",
-    description:
-      "Full-stack CRM for guitar teachers — manages student profiles, lesson scheduling, song library, and practice tracking. Built with role-based auth, Supabase backend, and deployed on Vercel.",
-    tech: ["TypeScript", "Next.js", "Supabase", "Tailwind CSS", "Vercel"],
+    bullets: [
+      "Production SaaS serving 20–30 daily users — student management, lesson scheduling, practice tracking",
+      "Spotify-enriched song library with circuit breaker + 8-strategy fuzzy matching",
+      "Bidirectional Google Calendar sync with SSE streaming",
+      "9 AI agents (OpenRouter + Ollama) for lesson planning and content generation",
+      "50+ RLS policies, event-driven notification pipeline, 1,100+ tests across 7 device profiles",
+    ],
+    tech: ["TypeScript", "Next.js", "Supabase", "Spotify API", "Google Calendar", "OpenRouter/Ollama"],
     url: "https://strummy.vercel.app",
     urlLabel: "strummy.vercel.app",
     sourceUrl: "github.com/PiotrRomanczuk/guitar-crm",
   },
   {
     name: "Instagram Stories Webhook",
-    description:
-      "Automated content pipeline that captures Instagram stories via Meta webhooks, processes media, and publishes to a client-facing dashboard. Features cron jobs, content queue management, and Supabase realtime.",
-    tech: ["TypeScript", "Next.js", "Supabase", "Meta API", "Vercel Cron"],
+    bullets: [
+      "SaaS for programmatic Instagram Story publishing with swipe-to-approve review queue",
+      "3-tier video pipeline: FFmpeg.wasm client validation → server transcoding → signed-URL uploads",
+      "Distributed cron locking for serverless deduplication on Vercel edge functions",
+      "Meta Graph API 3-step container flow with error classification and retry logic",
+      "Drag-and-drop calendar scheduling, Supabase realtime sync — 656 tests, 35 releases",
+    ],
+    tech: ["TypeScript", "Next.js", "Supabase", "Meta Graph API", "FFmpeg", "Vercel Cron"],
     url: "https://stories-webhook.vercel.app",
     urlLabel: "stories-webhook.vercel.app",
     sourceUrl: "github.com/PiotrRomanczuk/instagram-stories-webhook",
@@ -31,18 +41,18 @@ export function CVProjects() {
             key={project.name}
             className="page-break-avoid border border-[var(--cv-divider)] rounded p-3.5 hover:border-[var(--cv-accent)] transition-colors group"
           >
-            {/* Project name + links */}
-            <div className="flex items-start justify-between gap-2 mb-1.5">
-              <h3 className="text-sm font-semibold text-foreground leading-tight font-sans">
+            {/* Project name with inline links */}
+            <div className="flex items-baseline gap-2 mb-1.5">
+              <h3 className="text-sm font-semibold text-foreground leading-tight font-sans whitespace-nowrap">
                 {project.name}
               </h3>
-              <div className="flex-shrink-0 flex items-center gap-2">
+              <div className="flex items-center gap-2">
                 {project.url && (
                   <a
                     href={project.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-0.5 text-[10px] font-medium hover:underline"
+                    className="flex items-center gap-0.5 text-[10px] font-medium hover:underline whitespace-nowrap"
                     style={{ color: "var(--cv-accent)" }}
                     aria-label={`Visit ${project.name}`}
                   >
@@ -55,7 +65,7 @@ export function CVProjects() {
                     href={`https://${project.sourceUrl}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-0.5 text-[10px] font-medium text-[var(--cv-subtle)] hover:underline"
+                    className="flex items-center gap-0.5 text-[10px] font-medium text-[var(--cv-subtle)] hover:underline whitespace-nowrap"
                     aria-label={`Source code for ${project.name}`}
                   >
                     source
@@ -65,10 +75,12 @@ export function CVProjects() {
               </div>
             </div>
 
-            {/* Description */}
-            <p className="text-xs text-[var(--cv-subtle)] leading-relaxed mb-2">
-              {project.description}
-            </p>
+            {/* Bullet points */}
+            <ul className="text-xs text-[var(--cv-subtle)] leading-snug mb-2.5 space-y-0.5 list-disc pl-4">
+              {project.bullets.map((bullet) => (
+                <li key={bullet}>{bullet}</li>
+              ))}
+            </ul>
 
             {/* Tech tags */}
             <div className="flex flex-wrap gap-1">
