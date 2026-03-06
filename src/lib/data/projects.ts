@@ -40,6 +40,7 @@ export const projects: Project[] = [
       { type: "output", text: "google-calendar: lesson sync" },
       { type: "comment", text: "20-30 daily active users since Oct 2024" },
     ],
+    stat: { value: "1,200+", label: "commits across 80+ releases" },
     status: "active",
   },
   {
@@ -87,6 +88,7 @@ export const projects: Project[] = [
         text: "→ Tinder-style swipe UI for content review",
       },
     ],
+    stat: { value: "500+", label: "unit tests, 113 E2E tests" },
     status: "active",
   },
   {

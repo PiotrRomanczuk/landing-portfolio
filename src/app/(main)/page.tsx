@@ -1,28 +1,21 @@
-import { Navbar } from "@/components/layout/Navbar";
-import { Footer } from "@/components/layout/Footer";
-import { SectionConnector } from "@/components/SectionConnector";
-import { HeroSection } from "@/components/sections/HeroSection";
-import { AboutSection } from "@/components/sections/AboutSection";
-import { ProjectsSection } from "@/components/sections/ProjectsSection";
-import { TimelineSection } from "@/components/sections/TimelineSection";
-import { ContactSection } from "@/components/sections/ContactSection";
+import {
+  V4Header,
+  V4Hero,
+  V4Projects,
+  V4Timeline,
+  V4Contact,
+  V4Footer,
+} from "@/components/v4";
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen flex-col">
-      <Navbar />
-      <main className="mx-auto w-full max-w-[1400px] flex-1 px-6 pt-24 pb-20 lg:px-20">
-        <HeroSection />
-        <SectionConnector />
-        <AboutSection />
-        <SectionConnector />
-        <ProjectsSection />
-        <SectionConnector />
-        <TimelineSection />
-        <SectionConnector />
-        <ContactSection />
-      </main>
-      <Footer />
+    <div className="min-h-screen font-[family-name:var(--font-inter)] bg-[var(--background)] text-[var(--foreground)]">
+      <V4Header />
+      <V4Hero />
+      <V4Projects />
+      <V4Timeline />
+      <V4Contact />
+      <V4Footer />
     </div>
   );
 }

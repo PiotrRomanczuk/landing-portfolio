@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Space_Grotesk, Space_Mono } from "next/font/google";
+import { Space_Grotesk, Space_Mono, Inter, Playfair_Display, Source_Serif_4, JetBrains_Mono } from "next/font/google";
 import { Providers } from "@/components/Providers";
 import "./globals.css";
 
@@ -12,6 +12,27 @@ const spaceMono = Space_Mono({
   variable: "--font-space-mono",
   weight: ["400", "700"],
   subsets: ["latin"],
+});
+
+const inter = Inter({
+  variable: "--font-inter",
+  subsets: ["latin"],
+});
+
+const playfair = Playfair_Display({
+  variable: "--font-playfair",
+  subsets: ["latin"],
+});
+
+const sourceSerif = Source_Serif_4({
+  variable: "--font-source-serif",
+  subsets: ["latin"],
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  variable: "--font-jetbrains",
+  subsets: ["latin"],
+  weight: ["400", "500", "700"],
 });
 
 export const metadata: Metadata = {
@@ -50,12 +71,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <head>
-        {/* Temporary: Figma capture script - remove after design capture */}
-        <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
-      </head>
       <body
-        className={`${spaceGrotesk.variable} ${spaceMono.variable} font-sans antialiased selection:bg-primary/30 selection:text-white`}
+        className={`${spaceGrotesk.variable} ${spaceMono.variable} ${inter.variable} ${playfair.variable} ${sourceSerif.variable} ${jetbrainsMono.variable} font-sans antialiased selection:bg-primary/30 selection:text-white`}
       >
         <Providers>{children}</Providers>
       </body>

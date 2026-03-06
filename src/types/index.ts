@@ -30,6 +30,7 @@ export interface Project {
   terminalPath: string;
   terminalLines: TerminalLine[];
   status: "active" | "archived" | "completed";
+  stat?: { value: string; label: string };
 }
 
 export interface TimelineMilestone {
