@@ -125,7 +125,7 @@ export const projects: Project[] = [
     description:
       "E-commerce demo with interactive ordering, cart management, and payments.",
     tech: ["TypeScript", "React", "Stripe", "Framer Motion", "Swiper"],
-    liveUrl: "https://pizza-store-pearl.vercel.app",
+    liveUrl: "https://pizzayolo-pr.vercel.app",
     sourceUrl: "https://github.com/PiotrRomanczuk/pizza-store",
     screenshot: "/projects/PizzaStore.jpg",
     variant: "compact",
