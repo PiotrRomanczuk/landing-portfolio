@@ -104,39 +104,76 @@ export function V4Projects() {
 
       {/* Compact project cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mt-3">
-        {compact.map((project) => {
-          const initials = project.title
-            .split(/[\s—-]+/)
-            .map((w) => w[0])
-            .filter(Boolean)
-            .slice(0, 2)
-            .join("")
-            .toUpperCase();
-
-          return (
-            <div
-              key={project.id}
-              className="bg-white rounded-2xl border border-[var(--border)] p-6 flex flex-col gap-4 shadow-[0_1px_3px_rgba(0,0,0,0.02)]"
-            >
-              <div className="flex gap-4 items-start">
-                <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-[var(--v4-light-blue)] to-[#D6E0F5] flex-shrink-0 flex items-center justify-center font-[family-name:var(--font-jetbrains)] text-lg font-bold text-[#6B88BF]">
-                  {initials}
-                </div>
-                <div>
-                  <div className="font-[family-name:var(--font-jetbrains)] text-[10px] text-[#AAA] uppercase tracking-[1.5px] mb-1">
-                    {project.category} / {project.year}
-                  </div>
-                  <div className="font-[family-name:var(--font-source-serif)] text-lg font-bold text-[#1A1A1A] mb-1.5">
-                    {project.title}
-                  </div>
+        {compact.map((project) => (
+          <div
+            key={project.id}
+            className="group bg-white rounded-[20px] border border-[var(--border)] overflow-hidden shadow-[0_1px_3px_rgba(0,0,0,0.02)] flex flex-col"
+          >
+            {/* Screenshot */}
+            {project.screenshot && (
+              <div className="aspect-[16/9] bg-[#F0F0EC] overflow-hidden">
+                <div className="relative w-full h-full">
+                  <Image
+                    src={project.screenshot}
+                    alt={project.title}
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                    sizes="(max-width: 768px) 100vw, 500px"
+                  />
                 </div>
               </div>
-              <div className="text-[13px] leading-[1.6] text-[#888]">
-                {project.description}
+            )}
+
+            {/* Content */}
+            <div className="p-6 flex flex-col gap-4 flex-1">
+              <div>
+                <div className="font-[family-name:var(--font-jetbrains)] text-[10px] text-[#AAA] uppercase tracking-[1.5px] mb-1.5">
+                  {project.category} / {project.year}
+                </div>
+                <h3 className="font-[family-name:var(--font-source-serif)] text-xl font-bold text-[#1A1A1A] mb-2">
+                  {project.title}
+                </h3>
+                <p className="text-[13px] leading-[1.7] text-[#666]">
+                  {project.description}
+                </p>
+              </div>
+
+              {/* Tech tags */}
+              <div className="flex flex-wrap gap-1.5">
+                {project.tech.slice(0, 4).map((t) => (
+                  <span
+                    key={t}
+                    className="font-[family-name:var(--font-jetbrains)] text-[10px] px-2.5 py-0.5 bg-[var(--muted)] border border-[var(--border)] rounded-md text-[#777]"
+                  >
+                    {t}
+                  </span>
+                ))}
+              </div>
+
+              {/* Links */}
+              <div className="flex gap-2.5 mt-auto pt-1">
+                {project.liveUrl && (
+                  <a
+                    href={project.liveUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 text-[12px] font-semibold px-4 py-2 rounded-[8px] bg-[var(--v4-navy)] text-white hover:opacity-90 transition-opacity"
+                  >
+                    View Live &#8599;
+                  </a>
+                )}
+                <a
+                  href={project.sourceUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 text-[12px] font-semibold px-4 py-2 rounded-[8px] border border-[#D0D0CC] text-[#555] hover:border-[#999] transition-colors"
+                >
+                  Source Code
+                </a>
               </div>
             </div>
-          );
-        })}
+          </div>
+        ))}
       </div>
     </section>
   );
