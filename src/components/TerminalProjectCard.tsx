@@ -43,9 +43,9 @@ function TerminalBlock({
     <div className="flex flex-1 flex-col">
       {/* Title bar */}
       <div className="flex items-center gap-2 border-b border-border px-4 py-3">
-        <span className="h-3 w-3 rounded-full bg-red-500 dark:bg-red-400/50" />
-        <span className="h-3 w-3 rounded-full bg-yellow-500 dark:bg-yellow-400/50" />
-        <span className="h-3 w-3 rounded-full bg-green-500 dark:bg-green-400/50" />
+        <span className="h-3 w-3 rounded-full bg-red-500/80 dark:bg-red-500/70" />
+        <span className="h-3 w-3 rounded-full bg-yellow-500/80 dark:bg-yellow-500/70" />
+        <span className="h-3 w-3 rounded-full bg-green-500/80 dark:bg-green-500/70" />
         <span className="ml-2 font-mono text-xs text-muted-foreground">
           {project.terminalPath}
         </span>
@@ -100,8 +100,8 @@ function ScreenshotBlock({
         className="object-cover transition-transform duration-500 group-hover:scale-105"
         sizes={
           project.variant === "large"
-            ? "(max-width: 768px) 100vw, 50vw"
-            : "(max-width: 768px) 100vw, 50vw"
+            ? "(max-width: 768px) 100vw, 700px"
+            : "(max-width: 768px) 100vw, 400px"
         }
       />
     </div>
@@ -157,6 +157,7 @@ export function TerminalProjectCard({
 
   return (
     <motion.article
+      aria-label={`${project.title} — ${project.category}`}
       initial={prefersReducedMotion ? false : { opacity: 0 }}
       whileInView={{ opacity: 1 }}
       viewport={{ once: true, margin: "-40px" }}

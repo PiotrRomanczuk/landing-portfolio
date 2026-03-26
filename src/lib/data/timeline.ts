@@ -22,7 +22,7 @@ export const timeline: TimelineMilestone[] = [
     title: "Real-Time Data Visualization",
     period: "2024",
     description:
-      "Engineered a WebSocket-powered dashboard rendering 1 000+ live data points at 60 fps with zero dropped frames.",
+      "Engineered a WebSocket-powered dashboard rendering 1,000+ live data points at 60 fps with zero dropped frames.",
     tech: ["React", "WebSocket", "D3.js", "TypeScript"],
   },
   {

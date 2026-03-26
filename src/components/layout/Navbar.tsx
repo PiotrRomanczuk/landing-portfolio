@@ -75,7 +75,7 @@ export function Navbar() {
       <nav className="mx-auto flex h-16 max-w-[1400px] items-center justify-between px-6 lg:px-20">
         {/* Logo */}
         <motion.a
-          href="#"
+          href="/"
           className="flex size-8 items-center justify-center rounded bg-primary font-mono text-lg font-bold text-primary-foreground"
           initial={{ opacity: 0, y: -8 }}
           animate={{ opacity: 1, y: 0 }}

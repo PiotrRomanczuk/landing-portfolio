@@ -25,9 +25,9 @@ export function TimelineSection() {
       <div className="overflow-hidden rounded-lg border border-border bg-card shadow-lg">
         {/* Title bar */}
         <div className="flex items-center gap-2 border-b border-border px-4 py-3">
-          <span className="h-3 w-3 rounded-full bg-red-500 dark:bg-red-400/50" />
-          <span className="h-3 w-3 rounded-full bg-yellow-500 dark:bg-yellow-400/50" />
-          <span className="h-3 w-3 rounded-full bg-green-500 dark:bg-green-400/50" />
+          <span className="h-3 w-3 rounded-full bg-red-500/80 dark:bg-red-500/70" />
+          <span className="h-3 w-3 rounded-full bg-yellow-500/80 dark:bg-yellow-500/70" />
+          <span className="h-3 w-3 rounded-full bg-green-500/80 dark:bg-green-500/70" />
           <span className="ml-2 font-mono text-xs text-muted-foreground">
             ~/career
           </span>

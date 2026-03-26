@@ -1,8 +1,13 @@
 "use client";
 
 import { Mail, Phone, MapPin, Github, Globe } from "lucide-react";
+import { personalInfo } from "@/data/cv-data";
 
-export function CVHeader() {
+interface CVHeaderProps {
+  title?: string;
+}
+
+export function CVHeader({ title = "Software Engineer" }: CVHeaderProps) {
   return (
     <header className="flex flex-col gap-3 pb-4 border-b border-[var(--cv-divider)]">
       {/* Name + Title row */}
@@ -12,7 +17,7 @@ export function CVHeader() {
             Piotr Romanczuk
           </h1>
           <p className="mt-1 text-base font-medium tracking-wide font-sans" style={{ color: "var(--cv-accent)" }}>
-            Software Engineer
+            {title}
           </p>
         </div>
         {/* Print button - hidden when printing */}
@@ -31,48 +36,48 @@ export function CVHeader() {
         <ul className="flex flex-wrap gap-x-5 gap-y-2">
           <li>
             <a
-              href="mailto:p.romanczuk@gmail.com"
+              href={`mailto:${personalInfo.email}`}
               className="flex items-center gap-1.5 text-xs text-[var(--cv-subtle)] hover:text-foreground transition-colors"
             >
               <Mail size={13} aria-hidden="true" />
-              p.romanczuk@gmail.com
+              {personalInfo.email}
             </a>
           </li>
           <li>
             <a
-              href="tel:+48513602768"
+              href={`tel:${personalInfo.phone.replace(/\s/g, "")}`}
               className="flex items-center gap-1.5 text-xs text-[var(--cv-subtle)] hover:text-foreground transition-colors"
             >
               <Phone size={13} aria-hidden="true" />
-              +48 513 602 768
+              {personalInfo.phone}
             </a>
           </li>
           <li>
             <span className="flex items-center gap-1.5 text-xs text-[var(--cv-subtle)]">
               <MapPin size={13} aria-hidden="true" />
-              Warsaw, Poland
+              {personalInfo.location}
             </span>
           </li>
           <li>
             <a
-              href="https://github.com/PiotrRomanczuk"
+              href={personalInfo.githubUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-1.5 text-xs text-[var(--cv-subtle)] hover:text-foreground transition-colors"
             >
               <Github size={13} aria-hidden="true" />
-              github.com/PiotrRomanczuk
+              {personalInfo.github}
             </a>
           </li>
           <li>
             <a
-              href="https://romanczuk.vercel.app"
+              href={personalInfo.portfolioUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-1.5 text-xs text-[var(--cv-subtle)] hover:text-foreground transition-colors"
             >
               <Globe size={13} aria-hidden="true" />
-              romanczuk.vercel.app
+              {personalInfo.portfolio}
             </a>
           </li>
         </ul>

@@ -15,10 +15,9 @@ export function ContactForm() {
     const data = new FormData(form);
 
     try {
-      const res = await fetch("https://formspree.io/f/mnjbeoje", {
+      const res = await fetch("/api/contact", {
         method: "POST",
         body: data,
-        headers: { Accept: "application/json" },
       });
 
       if (res.ok) {
@@ -59,7 +58,7 @@ export function ContactForm() {
             name="name"
             required
             placeholder="John Doe"
-            className="border-0 border-b border-border bg-transparent px-0 py-2 text-foreground outline-none transition-colors placeholder:text-muted-foreground/30 focus:border-primary focus:ring-0 dark:border-white/10"
+            className="border-0 border-b border-border bg-transparent px-0 py-2 text-foreground outline-none transition-colors placeholder:text-muted-foreground/30 focus:border-primary focus:ring-0"
           />
         </div>
 
@@ -76,7 +75,7 @@ export function ContactForm() {
             name="email"
             required
             placeholder="john@example.com"
-            className="border-0 border-b border-border bg-transparent px-0 py-2 text-foreground outline-none transition-colors placeholder:text-muted-foreground/30 focus:border-primary focus:ring-0 dark:border-white/10"
+            className="border-0 border-b border-border bg-transparent px-0 py-2 text-foreground outline-none transition-colors placeholder:text-muted-foreground/30 focus:border-primary focus:ring-0"
           />
         </div>
 
@@ -93,21 +92,24 @@ export function ContactForm() {
             required
             rows={4}
             placeholder="Tell me about your project..."
-            className="resize-none border-0 border-b border-border bg-transparent px-0 py-2 text-foreground outline-none transition-colors placeholder:text-muted-foreground/30 focus:border-primary focus:ring-0 dark:border-white/10"
+            className="resize-none border-0 border-b border-border bg-transparent px-0 py-2 text-foreground outline-none transition-colors placeholder:text-muted-foreground/30 focus:border-primary focus:ring-0"
           />
         </div>
 
         <button
           type="submit"
           disabled={status === "sending"}
-          className="mt-4 self-start rounded bg-foreground px-8 py-3 text-sm font-bold uppercase tracking-wide text-background transition-colors hover:bg-primary disabled:opacity-50 dark:bg-primary dark:text-primary-foreground dark:hover:bg-primary/90"
+          className="mt-4 self-start rounded bg-primary px-8 py-3 text-sm font-bold uppercase tracking-wide text-primary-foreground transition-colors hover:bg-primary/90 disabled:opacity-50"
         >
           {status === "sending" ? "Sending..." : "Send Message"}
         </button>
 
         {status === "error" && (
           <p className="text-sm text-destructive">
-            Something went wrong. Please try emailing me directly.
+            Something went wrong. Please try emailing me directly at{" "}
+            <a href="mailto:p.romanczuk@gmail.com" className="underline hover:text-foreground">
+              p.romanczuk@gmail.com
+            </a>.
           </p>
         )}
       </form>

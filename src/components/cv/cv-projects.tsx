@@ -1,45 +1,106 @@
 import { ArrowUpRight } from "lucide-react";
 import { CVSection } from "./cv-section";
 
-const projects = [
+interface CVProjectItem {
+  name: string;
+  bullets: string[];
+  tech: string[];
+  url: string;
+  urlLabel: string;
+  sourceUrl?: string;
+}
+
+const defaultProjects: CVProjectItem[] = [
   {
     name: "Guitar CRM",
     bullets: [
-      "Production SaaS serving 20–30 daily users — student management, lesson scheduling, practice tracking",
+      "Production SaaS serving 20-30 daily users -- student management, lesson scheduling, practice tracking",
       "Spotify-enriched song library with circuit breaker + 8-strategy fuzzy matching",
       "Bidirectional Google Calendar sync with SSE streaming",
       "9 AI agents (OpenRouter + Ollama) for lesson planning and content generation",
       "50+ RLS policies, event-driven notification pipeline, 1,100+ tests across 7 device profiles",
+      "Animated transitions and micro-interactions using Framer Motion for smooth UX",
+      "Accessible UI with ARIA labels, keyboard navigation, and screen reader support",
     ],
-    tech: ["TypeScript", "Next.js", "Supabase", "Spotify API", "Google Calendar", "OpenRouter/Ollama"],
-    url: "https://strummy.vercel.app",
-    urlLabel: "strummy.vercel.app",
+    tech: [
+      "TypeScript",
+      "Next.js",
+      "Supabase",
+      "Spotify API",
+      "Google Calendar",
+      "OpenRouter/Ollama",
+    ],
+    url: "https://strummy.app",
+    urlLabel: "strummy.app",
     sourceUrl: "github.com/PiotrRomanczuk/guitar-crm",
   },
   {
     name: "Instagram Stories Webhook",
     bullets: [
       "SaaS for programmatic Instagram Story publishing with swipe-to-approve review queue",
-      "3-tier video pipeline: FFmpeg.wasm client validation → server transcoding → signed-URL uploads",
+      "3-tier video pipeline: FFmpeg.wasm client validation -> server transcoding -> signed-URL uploads",
       "Distributed cron locking for serverless deduplication on Vercel edge functions",
       "Meta Graph API 3-step container flow with error classification and retry logic",
-      "Drag-and-drop calendar scheduling, Supabase realtime sync — 656 tests, 35 releases",
+      "Drag-and-drop calendar scheduling, Supabase realtime sync \u2014 656 tests, 35 releases",
+      "Real-time UI updates via Supabase channel subscriptions and optimistic mutations",
+      "Component library with 40+ reusable UI components following atomic design patterns",
     ],
-    tech: ["TypeScript", "Next.js", "Supabase", "Meta Graph API", "FFmpeg", "Vercel Cron"],
+    tech: [
+      "TypeScript",
+      "Next.js",
+      "Supabase",
+      "Meta Graph API",
+      "FFmpeg",
+      "Vercel Cron",
+    ],
     url: "https://stories-webhook.vercel.app",
     urlLabel: "stories-webhook.vercel.app",
     sourceUrl: "github.com/PiotrRomanczuk/instagram-stories-webhook",
   },
+  {
+    name: "Portfolio & INBORR",
+    bullets: [
+      "Personal portfolio site with dynamic CV generation and project showcase",
+      "Commercial client site (inborr.pl) with i18n, production deployment, domain management",
+      "Vercel deployment with preview branches, automatic SSL, edge CDN",
+      "Next.js 16 with ISR caching and optimized build pipelines",
+      "Playwright E2E testing in pre-deploy validation workflow",
+      "Print-optimized CSS with @media print rules for pixel-perfect PDF CV generation",
+    ],
+    tech: [
+      "TypeScript",
+      "Next.js 16",
+      "Tailwind CSS",
+      "Framer Motion",
+      "Playwright",
+    ],
+    url: "https://romanczuk.vercel.app",
+    urlLabel: "romanczuk.vercel.app | inborr.pl",
+  },
 ];
 
-export function CVProjects() {
+interface CVProjectsProps {
+  projects?: CVProjectItem[];
+  sectionTitle?: string;
+}
+
+export function CVProjects({
+  projects: projectsProp,
+  sectionTitle = "Selected Projects",
+}: CVProjectsProps) {
+  const displayProjects = projectsProp || defaultProjects;
+
   return (
-    <CVSection title="Selected Projects">
+    <CVSection title={sectionTitle}>
       <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
-        {projects.map((project) => (
+        {displayProjects.map((project, index) => (
           <article
             key={project.name}
-            className="page-break-avoid border border-[var(--cv-divider)] rounded p-3.5 hover:border-[var(--cv-accent)] transition-colors group"
+            className={`page-break-avoid border border-[var(--cv-divider)] rounded p-3.5 hover:border-[var(--cv-accent)] transition-colors group${
+              index === displayProjects.length - 1 && displayProjects.length % 2 === 1
+                ? " sm:col-span-2"
+                : ""
+            }`}
           >
             {/* Project name with inline links */}
             <div className="flex items-baseline gap-2 mb-1.5">
@@ -57,7 +118,11 @@ export function CVProjects() {
                     aria-label={`Visit ${project.name}`}
                   >
                     {project.urlLabel}
-                    <ArrowUpRight size={10} aria-hidden="true" className="flex-shrink-0" />
+                    <ArrowUpRight
+                      size={10}
+                      aria-hidden="true"
+                      className="flex-shrink-0"
+                    />
                   </a>
                 )}
                 {project.sourceUrl && (
@@ -69,7 +134,11 @@ export function CVProjects() {
                     aria-label={`Source code for ${project.name}`}
                   >
                     source
-                    <ArrowUpRight size={10} aria-hidden="true" className="flex-shrink-0" />
+                    <ArrowUpRight
+                      size={10}
+                      aria-hidden="true"
+                      className="flex-shrink-0"
+                    />
                   </a>
                 )}
               </div>
