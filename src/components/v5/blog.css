@@ -202,15 +202,18 @@
   letter-spacing:-0.005em;
 }
 .v5-prose > * + *{margin-top:1.1em}
+/* heading + immediate next sibling: pull closer so heading "owns" the content below it */
+.v5-prose h2 + *,
+.v5-prose h3 + *{margin-top:0.55em}
 .v5-prose h2{
   font-family:var(--font-newsreader),'Newsreader',serif;font-weight:500;font-style:italic;
-  font-size:28px;line-height:1.1;letter-spacing:-0.012em;
-  margin-top:2em;color:var(--v5-ink);
+  font-size:28px;line-height:1.15;letter-spacing:-0.012em;
+  margin-top:2.2em;color:var(--v5-ink);
 }
 .v5-prose h3{
   font-family:var(--font-newsreader),'Newsreader',serif;font-weight:500;
   font-size:22px;line-height:1.2;letter-spacing:-0.01em;
-  margin-top:1.6em;color:var(--v5-ink);
+  margin-top:1.7em;color:var(--v5-ink);
 }
 .v5-prose p{margin:0}
 .v5-prose strong{font-weight:600;color:var(--v5-ink)}
@@ -224,7 +227,8 @@
 .v5-prose code{
   font-family:var(--font-jetbrains),'JetBrains Mono',monospace;
   font-size:0.9em;color:var(--v5-ink-2);
-  background:transparent;padding:0;border:0;border-radius:0;
+  background:transparent;padding:0 0.15em;border:0;border-radius:0;
+  word-break:break-word;
 }
 .v5-prose ul,.v5-prose ol{padding-left:1.4em;margin:0}
 .v5-prose ul{list-style:disc}
