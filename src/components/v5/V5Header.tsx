@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useSyncExternalStore } from "react";
 import { useTheme } from "next-themes";
 
@@ -32,9 +33,10 @@ export function V5Header() {
       </div>
       <div className="v5-subnav">
         <nav aria-label="Primary">
-          <a href="#work">Work</a>
-          <a href="#path">Path</a>
-          <a href="#contact">Contact</a>
+          <Link href="/#work">Work</Link>
+          <Link href="/blog">Writing</Link>
+          <Link href="/#path">Path</Link>
+          <Link href="/#contact">Contact</Link>
           <a
             href="https://github.com/PiotrRomanczuk"
             target="_blank"

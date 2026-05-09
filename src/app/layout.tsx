@@ -1,31 +1,12 @@
 import type { Metadata } from "next";
-import { Space_Grotesk, Space_Mono, Inter, Playfair_Display, Source_Serif_4, JetBrains_Mono, Newsreader } from "next/font/google";
+import { Inter, JetBrains_Mono, Newsreader } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Providers } from "@/components/Providers";
 import "./globals.css";
 
-const spaceGrotesk = Space_Grotesk({
-  variable: "--font-space-grotesk",
-  subsets: ["latin"],
-});
-
-const spaceMono = Space_Mono({
-  variable: "--font-space-mono",
-  weight: ["400", "700"],
-  subsets: ["latin"],
-});
-
 const inter = Inter({
   variable: "--font-inter",
-  subsets: ["latin"],
-});
-
-const playfair = Playfair_Display({
-  variable: "--font-playfair",
-  subsets: ["latin"],
-});
-
-const sourceSerif = Source_Serif_4({
-  variable: "--font-source-serif",
   subsets: ["latin"],
 });
 
@@ -84,6 +65,12 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head>
         <link rel="dns-prefetch" href="https://formspree.io" />
+        <link
+          rel="alternate"
+          type="application/atom+xml"
+          title="The Writing Desk — Piotr Romanczuk"
+          href="/blog/rss.xml"
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -105,9 +92,11 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${spaceGrotesk.variable} ${spaceMono.variable} ${inter.variable} ${playfair.variable} ${sourceSerif.variable} ${jetbrainsMono.variable} ${newsreader.variable} font-sans antialiased selection:bg-primary/30 selection:text-white`}
+        className={`${inter.variable} ${jetbrainsMono.variable} ${newsreader.variable} font-sans antialiased selection:bg-primary/30 selection:text-white`}
       >
         <Providers>{children}</Providers>
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
