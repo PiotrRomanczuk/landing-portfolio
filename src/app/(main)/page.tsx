@@ -1,30 +1,38 @@
+import "@/components/v5/v5.css";
 import {
-  V4Header,
-  V4Hero,
-  V4Projects,
-  V4Timeline,
-  V4Contact,
-  V4Footer,
-} from "@/components/v4";
-import { ErrorBoundary } from "@/components/ErrorBoundary";
+  V5Header,
+  V5Hero,
+  V5Projects,
+  V5Path,
+  V5Contact,
+  V5Footer,
+  V5SectionBoundary,
+} from "@/components/v5";
 
 export default function Home() {
   return (
-    <div className="min-h-screen font-[family-name:var(--font-inter)] bg-[var(--background)] text-[var(--foreground)]">
-      <V4Header />
-      <ErrorBoundary>
-        <V4Hero />
-      </ErrorBoundary>
-      <ErrorBoundary>
-        <V4Projects />
-      </ErrorBoundary>
-      <ErrorBoundary>
-        <V4Timeline />
-      </ErrorBoundary>
-      <ErrorBoundary>
-        <V4Contact />
-      </ErrorBoundary>
-      <V4Footer />
+    <div className="v5">
+      <a className="v5-skip" href="#work">
+        Skip to work
+      </a>
+      <div className="v5-page">
+        <V5SectionBoundary name="Header">
+          <V5Header />
+        </V5SectionBoundary>
+        <V5SectionBoundary name="Hero">
+          <V5Hero />
+        </V5SectionBoundary>
+        <V5SectionBoundary name="Projects">
+          <V5Projects />
+        </V5SectionBoundary>
+        <V5SectionBoundary name="Path">
+          <V5Path />
+        </V5SectionBoundary>
+        <V5SectionBoundary name="Contact">
+          <V5Contact />
+        </V5SectionBoundary>
+        <V5Footer />
+      </div>
     </div>
   );
 }

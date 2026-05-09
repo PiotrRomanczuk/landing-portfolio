@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Space_Grotesk, Space_Mono, Inter, Playfair_Display, Source_Serif_4, JetBrains_Mono } from "next/font/google";
+import { Space_Grotesk, Space_Mono, Inter, Playfair_Display, Source_Serif_4, JetBrains_Mono, Newsreader } from "next/font/google";
 import { Providers } from "@/components/Providers";
 import "./globals.css";
 
@@ -33,6 +33,14 @@ const jetbrainsMono = JetBrains_Mono({
   variable: "--font-jetbrains",
   subsets: ["latin"],
   weight: ["400", "500", "700"],
+});
+
+const newsreader = Newsreader({
+  variable: "--font-newsreader",
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600"],
+  style: ["normal", "italic"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -97,7 +105,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${spaceGrotesk.variable} ${spaceMono.variable} ${inter.variable} ${playfair.variable} ${sourceSerif.variable} ${jetbrainsMono.variable} font-sans antialiased selection:bg-primary/30 selection:text-white`}
+        className={`${spaceGrotesk.variable} ${spaceMono.variable} ${inter.variable} ${playfair.variable} ${sourceSerif.variable} ${jetbrainsMono.variable} ${newsreader.variable} font-sans antialiased selection:bg-primary/30 selection:text-white`}
       >
         <Providers>{children}</Providers>
       </body>
