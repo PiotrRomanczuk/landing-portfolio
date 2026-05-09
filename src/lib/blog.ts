@@ -38,6 +38,29 @@ export function readingTime(blocks: PortableTextBlock[] | undefined): number {
   return Math.max(1, Math.round(words / WORDS_PER_MINUTE));
 }
 
+export function slugify(text: string): string {
+  return text
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+export type TocItem = { text: string; slug: string };
+
+export function extractToc(
+  blocks: PortableTextBlock[] | undefined,
+): TocItem[] {
+  if (!blocks?.length) return [];
+  return blocks
+    .filter((b) => b._type === "block" && (b as { style?: string }).style === "h2")
+    .map((b) => {
+      const block = b as { children?: ReadonlyArray<{ text?: string }> };
+      const text = block.children?.map((c) => c.text ?? "").join("").trim() ?? "";
+      return { text, slug: slugify(text) };
+    })
+    .filter((item) => item.text.length > 0);
+}
+
 export function groupByYear<T extends { publishedAt: string }>(
   posts: T[],
 ): Array<{ year: number; posts: T[] }> {

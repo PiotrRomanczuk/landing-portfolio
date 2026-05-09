@@ -12,7 +12,7 @@ import { urlForImage } from "@/sanity/lib/image";
 import type { Post } from "@/sanity/lib/types";
 import { ArticleMasthead } from "@/components/blog/ArticleMasthead";
 import { BlogPortableText } from "@/components/blog/PortableText";
-import { readingTime } from "@/lib/blog";
+import { extractToc, readingTime } from "@/lib/blog";
 
 type Params = { slug: string };
 
@@ -60,6 +60,7 @@ export default async function PostPage({
   if (!post) notFound();
 
   const minutes = readingTime(post.body);
+  const toc = extractToc(post.body);
   const coverUrl = urlForImage(post.coverImage)?.width(1600).url();
 
   const jsonLd = {
@@ -100,6 +101,19 @@ export default async function PostPage({
 
       <div className="v5-article-grid">
         <aside className="v5-article-margin" aria-label="Marginalia">
+          {toc.length > 1 ? (
+            <div>
+              <h4>Sections</h4>
+              <ol className="v5-article-toc">
+                {toc.map((item, i) => (
+                  <li key={item.slug}>
+                    <span className="num">{String(i + 1).padStart(2, "0")}</span>
+                    <a href={`#${item.slug}`}>{item.text}</a>
+                  </li>
+                ))}
+              </ol>
+            </div>
+          ) : null}
           <div>
             <h4>Filed under</h4>
             <div>
@@ -113,7 +127,7 @@ export default async function PostPage({
           </div>
           <div>
             <h4>Read</h4>
-            <div>{minutes} min · {post.body.length} blocks</div>
+            <div>{minutes} min</div>
           </div>
         </aside>
         <div>

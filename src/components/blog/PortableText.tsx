@@ -11,6 +11,12 @@ import type {
   InlineImage,
   PullQuote,
 } from "@/sanity/lib/types";
+import { slugify } from "@/lib/blog";
+
+function headingText(value: unknown): string {
+  const block = value as { children?: ReadonlyArray<{ text?: string }> };
+  return block.children?.map((c) => c.text ?? "").join("").trim() ?? "";
+}
 
 function makeComponents(): PortableTextComponents {
   let figureCounter = 0;
@@ -18,8 +24,12 @@ function makeComponents(): PortableTextComponents {
   return {
     block: {
       normal: ({ children }) => <p>{children}</p>,
-      h2: ({ children }) => <h2>{children}</h2>,
-      h3: ({ children }) => <h3>{children}</h3>,
+      h2: ({ children, value }) => (
+        <h2 id={slugify(headingText(value))}>{children}</h2>
+      ),
+      h3: ({ children, value }) => (
+        <h3 id={slugify(headingText(value))}>{children}</h3>
+      ),
       blockquote: ({ children }) => <blockquote>{children}</blockquote>,
     },
     marks: {
