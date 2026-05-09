@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "sanity:extract": "sanity schema extract --path src/sanity/schema.json",
+    "sanity:typegen": "npm run sanity:extract && sanity typegen generate",
+    "sanity:cors:add-localhost": "sanity cors add http://localhost:3000 --credentials"
   },
   "dependencies": {
     "@portabletext/react": "^6.2.0",
@@ -29,6 +32,7 @@
   },
   "devDependencies": {
     "@playwright/test": "^1.58.2",
+    "@sanity/cli": "^6.5.1",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",

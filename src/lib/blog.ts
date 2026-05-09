@@ -23,14 +23,13 @@ export function getYear(iso: string): number {
 export function readingTime(blocks: PortableTextBlock[] | undefined): number {
   if (!blocks?.length) return 1;
   const text = blocks
-    .map((b) => {
-      if (b._type === "block" && Array.isArray((b as { children?: unknown[] }).children)) {
-        return (b as { children: { text?: string }[] }).children
-          .map((c) => c.text ?? "")
-          .join(" ");
+    .map((block) => {
+      if (block._type === "block") {
+        const b = block as { children?: ReadonlyArray<{ text?: string }> };
+        return b.children?.map((c) => c.text ?? "").join(" ") ?? "";
       }
-      if (b._type === "codeBlock") {
-        return (b as { code?: string }).code ?? "";
+      if (block._type === "codeBlock") {
+        return (block as { code?: string }).code ?? "";
       }
       return "";
     })
@@ -44,6 +43,7 @@ export function groupByYear<T extends { publishedAt: string }>(
 ): Array<{ year: number; posts: T[] }> {
   const groups = new Map<number, T[]>();
   for (const post of posts) {
+    if (!post.publishedAt) continue;
     const year = getYear(post.publishedAt);
     const existing = groups.get(year);
     if (existing) {

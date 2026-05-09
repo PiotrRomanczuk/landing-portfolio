@@ -4,7 +4,9 @@ import { dataset, projectId } from "./env";
 
 const builder = createImageUrlBuilder({ projectId, dataset });
 
-export function urlForImage(source: Image | undefined | null) {
-  if (!source) return undefined;
-  return builder.image(source).auto("format").fit("max");
+type ImageInput = Image | { asset?: unknown; _type?: string };
+
+export function urlForImage(source: ImageInput | undefined | null) {
+  if (!source || !("asset" in source) || !source.asset) return undefined;
+  return builder.image(source as Image).auto("format").fit("max");
 }

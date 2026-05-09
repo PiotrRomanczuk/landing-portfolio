@@ -5,31 +5,12 @@ import {
 import type { PortableTextBlock } from "@portabletext/types";
 import Image from "next/image";
 import { urlForImage } from "@/sanity/lib/image";
-import type { SanityImageRef } from "@/sanity/lib/types";
-
-type CodeBlock = {
-  _type: "codeBlock";
-  language?: string;
-  filename?: string;
-  code: string;
-};
-
-type CalloutBlock = {
-  _type: "callout";
-  tone: "note" | "warning" | "tip";
-  body: PortableTextBlock[];
-};
-
-type PullQuoteBlock = {
-  _type: "pullQuote";
-  text: string;
-  attribution?: string;
-};
-
-type InlineImageBlock = Omit<SanityImageRef, "_type"> & {
-  _type: "inlineImage";
-  caption?: string;
-};
+import type {
+  Callout,
+  CodeBlock,
+  InlineImage,
+  PullQuote,
+} from "@/sanity/lib/types";
 
 function makeComponents(): PortableTextComponents {
   let figureCounter = 0;
@@ -80,7 +61,7 @@ function makeComponents(): PortableTextComponents {
         );
       },
       inlineImage: ({ value }) => {
-        const block = value as InlineImageBlock;
+        const block = value as InlineImage;
         figureCounter += 1;
         const url = urlForImage(block)?.width(1600).url();
         return (
@@ -104,19 +85,23 @@ function makeComponents(): PortableTextComponents {
         );
       },
       callout: ({ value }) => {
-        const block = value as CalloutBlock;
+        const block = value as Callout;
         return (
           <aside className={`v5-callout ${block.tone}`}>
             <span className="v5-callout-tone">{block.tone}</span>
-            <PortableText
-              value={block.body}
-              components={{ block: { normal: ({ children }) => <p>{children}</p> } }}
-            />
+            {block.body ? (
+              <PortableText
+                value={block.body as PortableTextBlock[]}
+                components={{
+                  block: { normal: ({ children }) => <p>{children}</p> },
+                }}
+              />
+            ) : null}
           </aside>
         );
       },
       pullQuote: ({ value }) => {
-        const block = value as PullQuoteBlock;
+        const block = value as PullQuote;
         return (
           <blockquote className="v5-pullquote">
             {block.text}
@@ -131,6 +116,7 @@ function makeComponents(): PortableTextComponents {
 }
 
 export function BlogPortableText({ value }: { value: PortableTextBlock[] }) {
+  if (!value?.length) return null;
   return (
     <div className="v5-prose">
       <PortableText value={value} components={makeComponents()} />

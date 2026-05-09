@@ -40,3 +40,10 @@ export type Tag = {
   description: string;
   accent?: string;
 };
+
+export type {
+  CodeBlock,
+  Callout,
+  InlineImage,
+  PullQuote,
+} from "../sanity.types";
