@@ -255,10 +255,11 @@
   font-size:10px;letter-spacing:0.14em;color:var(--v5-muted);text-transform:uppercase;
   background:color-mix(in srgb,var(--v5-paper) 80%,transparent);padding:2px 6px;border-radius:2px;
 }
-.v5-figure-code-caption{
+.v5-figure-code figcaption{
+  border-top:1px solid var(--v5-rule);
+  padding:9px 20px 10px;
   font-family:var(--font-jetbrains),'JetBrains Mono',monospace;
   font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--v5-muted);
-  margin-top:8px;
 }
 
 .v5-figure-image{

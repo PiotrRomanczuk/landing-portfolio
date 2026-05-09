@@ -55,19 +55,15 @@ function makeComponents(): PortableTextComponents {
       codeBlock: ({ value }) => {
         const block = value as CodeBlock;
         return (
-          <div>
-            <figure className="v5-figure-code">
-              {block.language ? (
-                <span className="lang">{block.language}</span>
-              ) : null}
-              <pre>
-                <code>{block.code}</code>
-              </pre>
-            </figure>
-            {block.filename ? (
-              <div className="v5-figure-code-caption">{block.filename}</div>
+          <figure className="v5-figure-code">
+            {block.language ? (
+              <span className="lang">{block.language}</span>
             ) : null}
-          </div>
+            <pre>
+              <code>{block.code}</code>
+            </pre>
+            {block.filename ? <figcaption>{block.filename}</figcaption> : null}
+          </figure>
         );
       },
       inlineImage: ({ value }) => {
