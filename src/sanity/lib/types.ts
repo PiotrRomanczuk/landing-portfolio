@@ -26,6 +26,7 @@ export type PostListItem = {
   publishedAt: string;
   coverImage?: SanityImageRef;
   tags: TagRef[];
+  readingMinutes?: number;
 };
 
 export type Post = PostListItem & {

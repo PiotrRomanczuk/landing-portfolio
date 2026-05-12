@@ -9,9 +9,9 @@ import {
   tagBySlugQuery,
 } from "@/sanity/lib/queries";
 import type { PostListItem, Tag, TagWithCount } from "@/sanity/lib/types";
-import { ArchiveRow } from "@/components/blog/ArchiveRow";
-import { TagChips } from "@/components/blog/TagChips";
-import { groupByYear } from "@/lib/blog";
+import { BlogShell } from "@/components/v5d/blog/BlogShell";
+import { BlogTagPills } from "@/components/v5d/blog/BlogTagPills";
+import { BlogArchive } from "@/components/v5d/blog/BlogArchive";
 
 type Params = { slug: string };
 
@@ -59,44 +59,25 @@ export default async function TagPage({
   const { tag, posts, allTags } = await getData(slug);
   if (!tag) notFound();
 
-  const byYear = groupByYear(posts);
-
   return (
-    <>
-      <section className="v5-tag-head">
-        <div className="eyebrow">Tag · The Writing Desk</div>
-        <h1>
-          <em>{tag.name}</em>
-        </h1>
-        <p className="desc">{tag.description}</p>
-      </section>
-
-      <div className="v5-writing-tools">
-        <TagChips
+    <BlogShell
+      eyebrow={`§ writing · tag · ${tag.name.toLowerCase()}`}
+      title={tag.name}
+      meta={tag.description}
+    >
+      <div className="blog-tools">
+        <BlogTagPills
           tags={allTags.filter((t) => t.postCount > 0)}
           activeSlug={slug}
         />
       </div>
-
       {posts.length === 0 ? (
-        <div className="v5-empty">
+        <div className="blog-empty">
           <b>No posts</b> filed under {tag.name} yet.
         </div>
       ) : (
-        <section className="v5-archive" aria-label={`Posts tagged ${tag.name}`}>
-          {byYear.map(({ year, posts: yearPosts }) => (
-            <div key={year}>
-              <div className="v5-year">
-                {year} · {yearPosts.length} issue
-                {yearPosts.length === 1 ? "" : "s"}
-              </div>
-              {yearPosts.map((post) => (
-                <ArchiveRow key={post._id} post={post} />
-              ))}
-            </div>
-          ))}
-        </section>
+        <BlogArchive posts={posts} />
       )}
-    </>
+    </BlogShell>
   );
 }

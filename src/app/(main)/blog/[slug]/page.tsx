@@ -10,9 +10,10 @@ import {
 } from "@/sanity/lib/queries";
 import { urlForImage } from "@/sanity/lib/image";
 import type { Post } from "@/sanity/lib/types";
-import { ArticleMasthead } from "@/components/blog/ArticleMasthead";
 import { BlogPortableText } from "@/components/blog/PortableText";
-import { extractToc, readingTime } from "@/lib/blog";
+import { BlogShell } from "@/components/v5d/blog/BlogShell";
+import { BlogArticleHead } from "@/components/v5d/blog/BlogArticleHead";
+import { readingTime } from "@/lib/blog";
 
 type Params = { slug: string };
 
@@ -60,7 +61,6 @@ export default async function PostPage({
   if (!post) notFound();
 
   const minutes = readingTime(post.body);
-  const toc = extractToc(post.body);
   const coverUrl = urlForImage(post.coverImage)?.width(1600).url();
 
   const jsonLd = {
@@ -79,61 +79,42 @@ export default async function PostPage({
   };
 
   return (
-    <article className="v5-article">
+    <BlogShell>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <ArticleMasthead post={post} readingMinutes={minutes} />
+      <article className="blog-article">
+        <BlogArticleHead post={post} minutes={minutes} />
 
-      {coverUrl ? (
-        <figure className="v5-article-cover">
-          <Image
-            src={coverUrl}
-            alt={post.coverImage?.alt ?? post.title}
-            width={1600}
-            height={900}
-            priority
-            sizes="(min-width:1240px) 1180px, 100vw"
-          />
-        </figure>
-      ) : null}
+        {coverUrl ? (
+          <figure className="blog-cover">
+            <Image
+              src={coverUrl}
+              alt={post.coverImage?.alt ?? post.title}
+              width={1600}
+              height={900}
+              priority
+              sizes="(min-width:1240px) 720px, 100vw"
+            />
+          </figure>
+        ) : null}
 
-      <div className="v5-article-grid">
-        <aside className="v5-article-margin" aria-label="Marginalia">
-          {toc.length > 1 ? (
-            <div>
-              <h4>Sections</h4>
-              <ol className="v5-article-toc">
-                {toc.map((item, i) => (
-                  <li key={item.slug}>
-                    <span className="num">{String(i + 1).padStart(2, "0")}</span>
-                    <a href={`#${item.slug}`}>{item.text}</a>
-                  </li>
-                ))}
-              </ol>
-            </div>
-          ) : null}
-          <div>
-            <h4>Filed under</h4>
-            <div>
-              {post.tags?.map((t, i) => (
-                <span key={t._id}>
-                  {i > 0 ? " · " : null}
-                  <Link href={`/blog/tag/${t.slug}`}>{t.name}</Link>
-                </span>
-              ))}
-            </div>
-          </div>
-          <div>
-            <h4>Read</h4>
-            <div>{minutes} min</div>
-          </div>
-        </aside>
-        <div>
-          <BlogPortableText value={post.body} />
-        </div>
-      </div>
-    </article>
+        <BlogPortableText value={post.body} />
+
+        <footer className="blog-article-foot">
+          <span>
+            filed under{" "}
+            {post.tags?.map((t, i) => (
+              <span key={t._id}>
+                {i > 0 ? " · " : null}
+                <Link href={`/blog/tag/${t.slug}`}>{t.name}</Link>
+              </span>
+            ))}
+          </span>
+          <Link href="/blog">← back to writing</Link>
+        </footer>
+      </article>
+    </BlogShell>
   );
 }

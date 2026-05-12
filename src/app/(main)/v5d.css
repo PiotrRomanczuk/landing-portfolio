@@ -246,6 +246,12 @@ button.v5d-root .pill,
   font-family: "JetBrains Mono", var(--font-jetbrains), ui-monospace, monospace;
   font-size: 11px; color: var(--muted);
 }
+.v5d-root .section-head .section-link {
+  font-family: "JetBrains Mono", var(--font-jetbrains), ui-monospace, monospace;
+  font-size: 11px; color: var(--muted);
+  transition: color 0.15s ease;
+}
+.v5d-root .section-head .section-link:hover { color: var(--accent); }
 .v5d-root section { scroll-margin-top: 60px; }
 .v5d-root section + section { margin-top: 88px; }
 

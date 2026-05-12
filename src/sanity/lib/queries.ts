@@ -8,7 +8,8 @@ const postFields = `
   excerpt,
   publishedAt,
   coverImage,
-  "tags": tags[]->{ _id, name, "slug": slug.current, accent }
+  "tags": tags[]->{ _id, name, "slug": slug.current, accent },
+  "readingMinutes": round(length(pt::text(body)) / 5 / 200)
 `;
 
 export const latestPostsQuery = groq`

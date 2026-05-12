@@ -6,11 +6,10 @@ import {
   allTagsQuery,
 } from "@/sanity/lib/queries";
 import type { PostListItem, TagWithCount } from "@/sanity/lib/types";
-import { PostCard } from "@/components/blog/PostCard";
-import { ArchiveRow } from "@/components/blog/ArchiveRow";
-import { TagChips } from "@/components/blog/TagChips";
-import { FuseSearch } from "@/components/blog/FuseSearch";
-import { groupByYear } from "@/lib/blog";
+import { BlogShell } from "@/components/v5d/blog/BlogShell";
+import { BlogTagPills } from "@/components/v5d/blog/BlogTagPills";
+import { BlogSearch } from "@/components/v5d/blog/BlogSearch";
+import { BlogArchive } from "@/components/v5d/blog/BlogArchive";
 
 export const metadata: Metadata = {
   title: "The Writing Desk · Piotr Romanczuk",
@@ -25,77 +24,47 @@ async function getData() {
     return { posts: [] as PostListItem[], tags: [] as TagWithCount[] };
   }
   const [posts, tags] = await Promise.all([
-    client.fetch<PostListItem[]>(
-      allPostsQuery,
-      {},
-      { next: { tags: ["posts"] } },
-    ),
-    client.fetch<TagWithCount[]>(
-      allTagsQuery,
-      {},
-      { next: { tags: ["tags"] } },
-    ),
+    client.fetch<PostListItem[]>(allPostsQuery, {}, { next: { tags: ["posts"] } }),
+    client.fetch<TagWithCount[]>(allTagsQuery, {}, { next: { tags: ["tags"] } }),
   ]);
   return { posts, tags };
 }
 
 export default async function BlogIndex() {
   const { posts, tags } = await getData();
-  const front = posts.slice(0, 5);
-  const archive = posts.slice(5);
-  const archiveByYear = groupByYear(archive);
 
   return (
-    <>
-      <section className="v5-writing-head">
-        <h2>The Writing Desk</h2>
-        <div className="right">{posts.length} issues · archive</div>
-      </section>
-
-      <div className="v5-writing-tools">
-        <TagChips tags={tags.filter((t) => t.postCount > 0)} />
-        {posts.length > 0 ? <FuseSearch posts={posts} /> : null}
-      </div>
-
+    <BlogShell
+      eyebrow="§ writing · archive"
+      title="The Writing Desk"
+      meta={
+        posts.length > 0
+          ? `${posts.length} issue${posts.length === 1 ? "" : "s"} · infrequent, honest`
+          : "infrequent, honest"
+      }
+    >
       {posts.length === 0 ? (
-        <div className="v5-empty">
+        <div className="blog-empty">
           {isSanityConfigured ? (
             <>
               <b>No posts yet.</b> First issue on press soon.
             </>
           ) : (
             <>
-              <b>Sanity not configured.</b> Set
-              {" "}<code>NEXT_PUBLIC_SANITY_PROJECT_ID</code> in .env.local.
+              <b>Sanity not configured.</b> Set{" "}
+              <code>NEXT_PUBLIC_SANITY_PROJECT_ID</code> in <code>.env.local</code>.
             </>
           )}
         </div>
       ) : (
         <>
-          <section className="v5-front" aria-label="Latest">
-            {front.map((post, i) => (
-              <PostCard key={post._id} post={post} index={i} />
-            ))}
-          </section>
-
-          {archive.length > 0 ? (
-            <section className="v5-archive" aria-label="Archive">
-              <div className="v5-archive-head">Archive · all issues</div>
-              {archiveByYear.map(({ year, posts: yearPosts }) => (
-                <div key={year}>
-                  <div className="v5-year">
-                    {year} · {yearPosts.length} issue
-                    {yearPosts.length === 1 ? "" : "s"}
-                  </div>
-                  {yearPosts.map((post) => (
-                    <ArchiveRow key={post._id} post={post} />
-                  ))}
-                </div>
-              ))}
-            </section>
-          ) : null}
+          <div className="blog-tools">
+            <BlogTagPills tags={tags.filter((t) => t.postCount > 0)} />
+            <BlogSearch posts={posts} />
+          </div>
+          <BlogArchive posts={posts} />
         </>
       )}
-    </>
+    </BlogShell>
   );
 }
