@@ -4,9 +4,12 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "prebuild": "node scripts/fetch-github-data.mjs",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
+    "data:github": "node scripts/fetch-github-data.mjs",
+    "screenshots:projects": "node scripts/capture-project-screenshots.mjs",
     "sanity:extract": "sanity schema extract --path src/sanity/schema.json",
     "sanity:typegen": "npm run sanity:extract && sanity typegen generate",
     "sanity:cors:add-localhost": "sanity cors add http://localhost:3000 --credentials"
