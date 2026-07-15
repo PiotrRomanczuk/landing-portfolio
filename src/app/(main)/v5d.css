@@ -855,6 +855,27 @@ button.v5d-root .pill,
   height: 200px; margin: 16px 0 14px;
   border: 1px solid var(--rule); border-radius: 10px;
   overflow: hidden;
+  position: relative;
+}
+.v5d-root .proj-card-mock.shot {
+  height: auto; aspect-ratio: 16 / 9;
+}
+.v5d-root .proj-card-mock.shot img {
+  object-fit: cover; object-position: top;
+}
+.v5d-root .proj-post-link {
+  display: block; margin-top: 16px;
+  padding: 10px 14px;
+  border: 1px solid var(--rule); border-radius: 8px;
+  font-size: 13px; color: var(--ink-soft);
+  background: var(--card-hi);
+}
+.v5d-root .proj-post-link:hover { border-color: var(--rule-hi); color: var(--ink); }
+.v5d-root .proj-post-link .lbl {
+  display: block; margin-bottom: 2px;
+  font-family: "JetBrains Mono", var(--font-jetbrains), ui-monospace, monospace;
+  font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--accent);
 }
 .v5d-root .proj-about {
   margin: 0 0 14px; font-size: 14.5px; line-height: 1.65;

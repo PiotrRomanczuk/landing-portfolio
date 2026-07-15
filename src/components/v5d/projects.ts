@@ -14,11 +14,15 @@ export type Project = {
   live?: string;
   repo?: string;
   mockId: ProjectMockId;
+  /** Real capture shown in the detail card; the SVG mock is the fallback. */
+  screenshot?: string;
   featured?: boolean;
   metrics?: string[];
   details: {
     about: string;
     highlights: string[];
+    /** Related blog post, cross-linked from the detail card. */
+    post?: { href: string; title: string };
   };
 };
 
@@ -39,9 +43,14 @@ export const PROJECTS: Project[] = [
     live: "strummy.app",
     repo: "github.com/PiotrRomanczuk/guitar-crm",
     mockId: "strummy",
+    screenshot: "/projects/Strummy.jpg",
     featured: true,
     metrics: ["~25 dau", "paying since 2024", "stripe billing"],
     details: {
+      post: {
+        href: "/blog/three-production-lessons-from-shipping-strummy",
+        title: "Three production lessons from shipping Strummy",
+      },
       about:
         "Full CRM for independent guitar teachers — students, lesson scheduling, a shared song library, and Stripe subscriptions. Started as a tool for one teacher; it has had paying users since 2024 and ~25 people in it daily.",
       highlights: [
@@ -61,7 +70,12 @@ export const PROJECTS: Project[] = [
     year: 2025,
     status: "internal",
     mockId: "stories",
+    screenshot: "/projects/IGWebhook.jpg",
     details: {
+      post: {
+        href: "/blog/why-im-rebuilding-on-dotnet",
+        title: "Why I'm rebuilding my Instagram automation on .NET and Angular",
+      },
       about:
         "Internal platform that publishes Instagram Stories at scale through the Meta Graph API. Built around a job queue where every publish is idempotent, retried with backoff, and auditable after the fact.",
       highlights: [
@@ -102,9 +116,14 @@ export const PROJECTS: Project[] = [
     type: "tool",
     year: 2025,
     status: "internal",
+    repo: "github.com/PiotrRomanczuk/home-ops",
     mockId: "homeops",
     metrics: ["4 hosts", "uptime kuma + beszel", "nightly restic → nas"],
     details: {
+      post: {
+        href: "/blog/four-boxes-and-a-pi-homelab-devops-classroom",
+        title: "Four boxes and a Pi: the homelab as a DevOps classroom",
+      },
       about:
         "The platform under everything else: four machines on a Tailscale mesh, monitored from a Raspberry Pi hub, with nightly restic backups to a NAS. When a database, deploy target or GPU box misbehaves, this stack tells me before users do.",
       highlights: [
@@ -125,6 +144,7 @@ export const PROJECTS: Project[] = [
     status: "shipping",
     live: "inborr.pl",
     mockId: "inborr",
+    screenshot: "/projects/Inborr.jpg",
     details: {
       about:
         "Landing site for an apartment rental in Białystok — a real client and a real deadline. Scoped tight, shipped in days, and it still quietly does its job.",
@@ -145,6 +165,7 @@ export const PROJECTS: Project[] = [
     status: "archived",
     repo: "github.com/PiotrRomanczuk/pizzayolo",
     mockId: "pizzayolo",
+    screenshot: "/projects/PizzaStore.jpg",
     details: {
       about:
         "A sandbox for ordering-flow UX: the whole checkout is an explicit XState statechart, so every edge case — payment failed, cart emptied mid-checkout — is a modelled transition instead of a bug report.",

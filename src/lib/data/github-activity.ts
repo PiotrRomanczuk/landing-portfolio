@@ -27,6 +27,7 @@ const USER = "PiotrRomanczuk";
 const SHOWCASED_REPOS = [
   "PiotrRomanczuk/guitar-crm",
   "PiotrRomanczuk/ShortsCannon",
+  "PiotrRomanczuk/home-ops",
   "PiotrRomanczuk/pizzayolo",
 ];
 const REVALIDATE_SECONDS = 3600;
