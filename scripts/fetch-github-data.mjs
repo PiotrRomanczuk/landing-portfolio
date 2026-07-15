@@ -145,6 +145,16 @@ function summarise(days) {
 }
 
 async function main() {
+  // Without a token, the public-events fallback sees only public repos
+  // (~90 days, 300-event cap) — strictly worse data than any existing
+  // GraphQL snapshot. Never overwrite a good snapshot with a degraded one.
+  if (!TOKEN && existsSync(OUT)) {
+    console.warn(
+      "[github-data] No GITHUB_TOKEN; keeping existing snapshot instead of degrading it.",
+    );
+    return;
+  }
+
   let days;
   try {
     if (TOKEN) {
