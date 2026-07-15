@@ -15,7 +15,7 @@
  * Or wire into CI; the JSON is checked in so the build is offline-safe.
  */
 
-import { writeFileSync, mkdirSync, existsSync, readFileSync } from "node:fs";
+import { writeFileSync, mkdirSync, existsSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -96,6 +96,44 @@ async function lastPushTimestamp() {
   }
 }
 
+// Repos showcased on the landing page. Slug = "owner/repo".
+const SHOWCASED_REPOS = [
+  "PiotrRomanczuk/guitar-crm",
+  "PiotrRomanczuk/ShortsCannon",
+  "PiotrRomanczuk/pizzayolo",
+];
+
+async function fetchRepoStats(slug) {
+  try {
+    const headers = {
+      "User-Agent": "romanczuk-portfolio",
+      Accept: "application/vnd.github+json",
+    };
+    if (TOKEN) headers.Authorization = `Bearer ${TOKEN}`;
+    const r = await fetch(`https://api.github.com/repos/${slug}`, { headers });
+    if (!r.ok) return null;
+    const j = await r.json();
+    return {
+      slug,
+      stars: j.stargazers_count ?? 0,
+      forks: j.forks_count ?? 0,
+      pushedAt: j.pushed_at ?? null,
+      language: j.language ?? null,
+    };
+  } catch {
+    return null;
+  }
+}
+
+async function fetchAllRepoStats() {
+  const results = await Promise.all(SHOWCASED_REPOS.map(fetchRepoStats));
+  const map = {};
+  for (const r of results) {
+    if (r) map[r.slug] = r;
+  }
+  return map;
+}
+
 function trim(days, n) {
   return days.slice(-n);
 }
@@ -135,6 +173,7 @@ async function main() {
   const cells = window.map((d) => ({ date: d.date, intensity: bucket(d.count) }));
   const { commitsLast30d, commitsThisWeek } = summarise(window);
   const lastPush = await lastPushTimestamp();
+  const repos = await fetchAllRepoStats();
 
   const payload = {
     user: USER,
@@ -143,6 +182,7 @@ async function main() {
     commitsLast30d,
     commitsThisWeek,
     lastPush,
+    repos,
   };
 
   mkdirSync(dirname(OUT), { recursive: true });
