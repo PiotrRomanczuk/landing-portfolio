@@ -8,7 +8,7 @@ import type { ReactElement, ReactNode } from "react";
  * sketch — not a real screenshot, but the silhouette is honest.
  */
 
-type Key = "strummy" | "stories" | "shortscannon" | "inborr" | "pizzayolo";
+type Key = "strummy" | "stories" | "shortscannon" | "homeops" | "inborr" | "pizzayolo";
 
 function Shell({ title, host, children }: { title: string; host: string; children: ReactNode }) {
   return (
@@ -90,6 +90,28 @@ function ShortsCannon() {
   );
 }
 
+function HomeOps() {
+  return (
+    <Shell title="Home-ops monitoring" host="pi.tailnet · uptime-kuma">
+      <div className="mk-row mk-head">
+        <span className="mk-pill on">9 monitors · up</span>
+        <span className="mk-pill">restic ✓ 02:00</span>
+      </div>
+      {[
+        ["supabase @ elitedesk", "ok"],
+        ["ollama @ gpu-box", "ok"],
+        ["cloudflared tunnel", "ok"],
+        ["nas · nightly backup", "run"],
+      ].map(([t, s]) => (
+        <div className="mk-row mk-job" key={t}>
+          <span className="mk-dot" data-state={s} />
+          <span className="mk-tag mono">{t}</span>
+        </div>
+      ))}
+    </Shell>
+  );
+}
+
 function Inborr() {
   return (
     <Shell title="INBORR" host="inborr.pl">
@@ -131,6 +153,7 @@ const REGISTRY: Record<Key, () => ReactElement> = {
   strummy: Strummy,
   stories: Stories,
   shortscannon: ShortsCannon,
+  homeops: HomeOps,
   inborr: Inborr,
   pizzayolo: Pizzayolo,
 };

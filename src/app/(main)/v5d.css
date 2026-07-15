@@ -34,11 +34,12 @@
   --card-hi: #f0efe9;
   --ink: #15171b;
   --ink-soft: #2d3038;
-  --muted: #686b73;
-  --faint: #b0b3ba;
+  --muted: #5e6168;
+  --faint: #a4a7ae;
   --rule: rgba(0, 0, 0, 0.08);
   --rule-hi: rgba(0, 0, 0, 0.14);
-  --accent: #c46a1a;
+  /* #a05612 → 4.95:1 on bg, passes WCAG AA for normal text */
+  --accent: #a05612;
 }
 
 .v5d-root * { box-sizing: border-box; }
@@ -301,6 +302,10 @@ button.v5d-root .pill,
 }
 .v5d-root .btn.ghost:hover { color: var(--ink); border-color: var(--rule-hi); }
 .v5d-root .btn .accent-dot { width: 6px; height: 6px; border-radius: 99px; background: var(--accent); }
+.v5d-root .btn .btn-suffix {
+  font-family: "JetBrains Mono", var(--font-jetbrains), ui-monospace, monospace;
+  font-size: 11px; opacity: 0.7; margin-left: 2px;
+}
 
 /* not looking for */
 .v5d-root .not-for {
@@ -333,6 +338,44 @@ button.v5d-root .pill,
   font-size: 10.5px; color: var(--muted); margin-top: 6px;
 }
 
+/* ── approach (how i work) ──────────────────────────────────── */
+.v5d-root .approach { margin-top: 72px; }
+.v5d-root .approach-eyebrow {
+  font-family: "JetBrains Mono", var(--font-jetbrains), ui-monospace, monospace;
+  font-size: 11px; letter-spacing: 0.14em; text-transform: lowercase;
+  color: var(--muted); margin-bottom: 14px;
+}
+.v5d-root .approach-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 1px; background: var(--rule);
+  border: 1px solid var(--rule); border-radius: 10px; overflow: hidden;
+}
+.v5d-root .approach-tile {
+  background: var(--surface);
+  padding: 22px 20px 20px;
+  display: flex; flex-direction: column; gap: 8px;
+  position: relative;
+}
+.v5d-root .approach-num {
+  font-family: "JetBrains Mono", var(--font-jetbrains), ui-monospace, monospace;
+  font-size: 10.5px; color: var(--faint); letter-spacing: 0.14em;
+}
+.v5d-root .approach-tile h4 {
+  font-size: 14.5px; font-weight: 600; letter-spacing: -0.01em;
+  color: var(--ink); margin: 0;
+}
+.v5d-root .approach-tile p {
+  font-size: 13px; line-height: 1.55; color: var(--ink-soft);
+  margin: 0;
+}
+.v5d-root .approach-tile p i {
+  font-family: "Newsreader", var(--font-newsreader), Georgia, serif;
+  font-style: italic;
+}
+@media (max-width: 760px) {
+  .v5d-root .approach-grid { grid-template-columns: 1fr; }
+}
+
 /* ── work rows ──────────────────────────────────────────────── */
 .v5d-root .filters { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 8px; }
 .v5d-root .filters .pill { cursor: pointer; transition: color 0.12s ease, border-color 0.12s ease, background 0.12s ease; }
@@ -340,6 +383,35 @@ button.v5d-root .pill,
 
 .v5d-root .work-row { display: block; }
 .v5d-root .work-row.hidden { display: none; }
+.v5d-root .work-row.featured .work-row-inner {
+  background: color-mix(in oklab, var(--card) 55%, transparent);
+  border-left: 2px solid var(--accent);
+  padding-left: 16px;
+  margin-left: -16px;
+}
+.v5d-root .work-row.featured .work-row-inner:hover {
+  background: color-mix(in oklab, var(--card) 80%, transparent);
+}
+.v5d-root .featured-eyebrow {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-family: "JetBrains Mono", var(--font-jetbrains), ui-monospace, monospace;
+  font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 8px;
+}
+.v5d-root .metrics-row {
+  display: flex; flex-wrap: wrap; gap: 14px;
+  margin-top: 10px;
+  font-family: "JetBrains Mono", var(--font-jetbrains), ui-monospace, monospace;
+  font-size: 11px; color: var(--ink-soft);
+}
+.v5d-root .metrics-row .metric {
+  position: relative; padding-left: 12px;
+}
+.v5d-root .metrics-row .metric::before {
+  content: ""; position: absolute; left: 0; top: 50%;
+  width: 5px; height: 5px; margin-top: -2.5px;
+  background: var(--accent); border-radius: 99px;
+}
 .v5d-root .work-row-inner {
   display: grid; grid-template-columns: 44px 1fr 110px;
   gap: 18px; padding: 20px 0; border-bottom: 1px solid var(--rule);
@@ -367,6 +439,7 @@ button.v5d-root .pill,
   font-family: "JetBrains Mono", var(--font-jetbrains), ui-monospace, monospace;
   font-size: 11px; color: var(--muted); text-align: right; line-height: 1.8;
 }
+.v5d-root .work-row-inner .meta span,
 .v5d-root .work-row-inner .meta a { display: block; }
 .v5d-root .work-row-inner .meta .live { color: var(--accent); }
 .v5d-root .work-row-inner .meta a:hover { color: var(--ink); }
@@ -697,6 +770,37 @@ button.v5d-root .pill,
 }
 .v5d-root .channels a:hover .sla { color: var(--accent); }
 
+/* Copy-email button styled to match channels rows */
+.v5d-root .channels .channel-btn {
+  display: grid; grid-template-columns: 70px 1fr auto;
+  align-items: center; gap: 12px; width: 100%;
+  padding: 13px 0; border: 0; border-bottom: 1px solid var(--rule);
+  background: transparent; color: var(--ink);
+  font: inherit; font-size: 14.5px; text-align: left; cursor: pointer;
+  transition: padding 0.15s ease, color 0.15s ease;
+}
+.v5d-root .channels .channel-btn:hover { padding-left: 8px; color: var(--accent); }
+.v5d-root .channels .channel-btn .href {
+  font-family: "JetBrains Mono", var(--font-jetbrains), ui-monospace, monospace;
+  font-size: 12px; color: var(--muted);
+}
+.v5d-root .channels .channel-btn:hover .href,
+.v5d-root .channels .channel-btn:hover .sla { color: var(--accent); }
+.v5d-root .channels .channel-btn .sla {
+  font-family: "JetBrains Mono", var(--font-jetbrains), ui-monospace, monospace;
+  font-size: 10.5px; color: var(--faint); letter-spacing: 0.04em;
+}
+
+/* Inline "copy" button after the email in the pitch paragraph */
+.v5d-root .copy-inline {
+  background: transparent; border: 0; padding: 0;
+  color: var(--muted); cursor: pointer;
+  font: inherit; font-size: inherit;
+  border-bottom: 1px dashed var(--rule-hi);
+  transition: color 0.12s ease;
+}
+.v5d-root .copy-inline:hover { color: var(--accent); }
+
 /* ── colophon ───────────────────────────────────────────────── */
 .v5d-root .colophon {
   margin-top: 88px; padding-top: 24px; border-top: 1px solid var(--rule);
@@ -705,6 +809,77 @@ button.v5d-root .pill,
   font-size: 11px; color: var(--muted);
 }
 .v5d-root .colophon a:hover { color: var(--ink); }
+
+/* ── project detail card ────────────────────────────────────── */
+.v5d-root .work-row-inner { cursor: pointer; }
+.v5d-root .work-row-inner .meta .details-link {
+  display: block; margin-left: auto;
+  background: none; border: none; padding: 0;
+  font: inherit; color: var(--accent);
+  cursor: pointer;
+}
+.v5d-root .work-row-inner .meta .details-link:hover { color: var(--ink); }
+
+.v5d-root .proj-overlay {
+  position: fixed; inset: 0; z-index: 40;
+  background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(4px);
+  display: flex; align-items: flex-start; justify-content: center;
+  padding: 9vh 16px 40px;
+  overflow-y: auto;
+}
+.v5d-root .proj-card {
+  width: 640px; max-width: 92vw;
+  background: var(--card); border: 1px solid var(--rule-hi);
+  border-radius: 12px; padding: 22px 26px 26px;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
+}
+.v5d-root .proj-card-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.v5d-root .proj-card-head .num {
+  font-family: "JetBrains Mono", var(--font-jetbrains), ui-monospace, monospace;
+  font-size: 12px; color: var(--accent);
+}
+.v5d-root .proj-card-head h3 { margin: 0; font-size: 22px; font-weight: 600; letter-spacing: -0.015em; }
+.v5d-root .proj-card-meta {
+  margin-left: auto;
+  font-family: "JetBrains Mono", var(--font-jetbrains), ui-monospace, monospace;
+  font-size: 11px; color: var(--muted);
+}
+.v5d-root .proj-close {
+  font-family: "JetBrains Mono", var(--font-jetbrains), ui-monospace, monospace;
+  font-size: 10.5px; color: var(--muted);
+  background: var(--card-hi); border: 1px solid var(--rule-hi);
+  border-radius: 6px; padding: 4px 8px; cursor: pointer;
+}
+.v5d-root .proj-close:hover { color: var(--ink); }
+.v5d-root .proj-card-mock {
+  height: 200px; margin: 16px 0 14px;
+  border: 1px solid var(--rule); border-radius: 10px;
+  overflow: hidden;
+}
+.v5d-root .proj-about {
+  margin: 0 0 14px; font-size: 14.5px; line-height: 1.65;
+  color: var(--ink-soft); text-wrap: pretty;
+}
+.v5d-root .proj-highlights {
+  margin: 0 0 4px; padding: 0; list-style: none;
+  display: grid; gap: 8px;
+}
+.v5d-root .proj-highlights li {
+  position: relative; padding-left: 18px;
+  font-size: 13.5px; line-height: 1.55; color: var(--muted);
+}
+.v5d-root .proj-highlights li::before {
+  content: "→"; position: absolute; left: 0; color: var(--accent);
+}
+.v5d-root .proj-card .metrics-row { margin-top: 12px; }
+.v5d-root .proj-card .stack { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 12px; }
+.v5d-root .proj-links {
+  margin-top: 16px; display: flex; flex-wrap: wrap; gap: 18px;
+  font-family: "JetBrains Mono", var(--font-jetbrains), ui-monospace, monospace;
+  font-size: 12px;
+}
+.v5d-root .proj-links a { color: var(--accent); }
+.v5d-root .proj-links a:hover { color: var(--ink); }
 
 /* ── command hint (bottom-right) ────────────────────────────── */
 .v5d-root .cmd-hint {
@@ -723,6 +898,10 @@ button.v5d-root .pill,
   padding: 2px 6px; border-radius: 4px;
   border: 1px solid var(--rule-hi);
   color: var(--ink-soft); font-family: inherit; font-size: 10.5px;
+}
+/* No physical ⌘/Ctrl on touch devices — the hint is noise there. */
+@media (pointer: coarse) {
+  .v5d-root .cmd-hint { display: none; }
 }
 
 /* ── command palette ────────────────────────────────────────── */
@@ -796,7 +975,9 @@ button.v5d-root .pill,
   .v5d-root .stat-row.stat-row-2 { grid-template-columns: 1fr; }
   .v5d-root .work-row-inner { grid-template-columns: 28px 1fr; }
   .v5d-root .work-row-inner .meta { grid-column: 2; text-align: left; display: flex; gap: 12px; }
+  .v5d-root .work-row-inner .meta span,
   .v5d-root .work-row-inner .meta a { display: inline; }
+  .v5d-root .cmd-hint { display: none; }
   .v5d-root .work-row-inner .shot-pop { display: none; }
   .v5d-root .now-grid,
   .v5d-root .contact-grid { grid-template-columns: 1fr; }
@@ -804,6 +985,13 @@ button.v5d-root .pill,
   .v5d-root .fluency-row { grid-template-columns: 110px 1fr 60px; gap: 8px; }
   .v5d-root .contact-pitch { font-size: 24px; }
   .v5d-root .channels a { grid-template-columns: 60px 1fr auto; }
+}
+
+@media print {
+  .v5d-root .v5d-reveal { opacity: 1 !important; transform: none !important; }
+  .v5d-root .cmd-hint,
+  .v5d-root .v5d-reticle,
+  .v5d-root .v5d-progress { display: none !important; }
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -99,7 +99,7 @@ export const projects: Project[] = [
     tech: ["TypeScript", "Next.js", "Tailwind CSS", "Google Maps", "i18n"],
     liveUrl: "https://inborr-landing-page.vercel.app",
     sourceUrl: "https://github.com/PiotrRomanczuk/INBORR---LandingPage",
-    screenshot: "/projects/Inborr.jpg",
+    screenshot: "/projects/Inborr.png",
     variant: "compact",
     year: "2023",
     category: "Frontend",
