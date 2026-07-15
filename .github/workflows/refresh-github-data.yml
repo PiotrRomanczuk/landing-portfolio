@@ -1,0 +1,44 @@
+name: refresh-github-data
+
+# Keeps the checked-in contribution snapshot (heatmap grids) fresh without
+# manual deploys. The commit it pushes triggers a Vercel production build.
+#
+# Requires the GH_CONTRIB_TOKEN repo secret: a fine-grained PAT with
+# read-only user access, so the GraphQL contributions calendar includes
+# private-repo activity. Without it the fetch script keeps the existing
+# snapshot and this workflow is a no-op.
+
+on:
+  schedule:
+    - cron: "0 6 * * 1" # Mondays 06:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Fetch GitHub activity snapshot
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_CONTRIB_TOKEN }}
+        run: node scripts/fetch-github-data.mjs
+
+      - name: Commit and push if changed
+        run: |
+          if git diff --quiet src/data/github-contrib.json; then
+            echo "Snapshot unchanged — nothing to commit."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/data/github-contrib.json
+          git commit -m "chore(data): weekly GitHub contribution snapshot refresh"
+          git push
