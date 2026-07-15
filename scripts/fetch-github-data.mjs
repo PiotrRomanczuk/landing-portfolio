@@ -100,6 +100,7 @@ async function lastPushTimestamp() {
 const SHOWCASED_REPOS = [
   "PiotrRomanczuk/guitar-crm",
   "PiotrRomanczuk/ShortsCannon",
+  "PiotrRomanczuk/home-ops",
   "PiotrRomanczuk/pizzayolo",
 ];
 

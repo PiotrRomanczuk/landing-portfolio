@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import Image from "next/image";
+import Link from "next/link";
 import { ProjectMock } from "@/components/v5d/ProjectMock";
 import type { Project } from "@/components/v5d/projects";
 
@@ -15,10 +17,34 @@ type Props = {
  */
 export function ProjectDetail({ project, onClose }: Props) {
   const closeRef = useRef<HTMLButtonElement | null>(null);
+  const cardRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
+      if (e.key === "Escape") {
+        onClose();
+        return;
+      }
+      // Focus trap: keep Tab cycling inside the dialog.
+      if (e.key === "Tab") {
+        const card = cardRef.current;
+        if (!card) return;
+        const focusables = card.querySelectorAll<HTMLElement>(
+          'a[href], button:not([disabled])',
+        );
+        if (focusables.length === 0) return;
+        const first = focusables[0];
+        const last = focusables[focusables.length - 1];
+        const active = document.activeElement;
+        const inside = active instanceof Node && card.contains(active);
+        if (e.shiftKey && (active === first || !inside)) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && (active === last || !inside)) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
     };
     window.addEventListener("keydown", onKey);
     const prevOverflow = document.body.style.overflow;
@@ -38,7 +64,13 @@ export function ProjectDetail({ project, onClose }: Props) {
         if (e.target === e.currentTarget) onClose();
       }}
     >
-      <div className="proj-card" role="dialog" aria-modal="true" aria-label={`${p.title} — details`}>
+      <div
+        ref={cardRef}
+        className="proj-card"
+        role="dialog"
+        aria-modal="true"
+        aria-label={`${p.title} — details`}
+      >
         <div className="proj-card-head">
           <span className="num">{p.num}</span>
           <h3>{p.title}</h3>
@@ -58,9 +90,20 @@ export function ProjectDetail({ project, onClose }: Props) {
           </button>
         </div>
 
-        <div className="proj-card-mock" aria-hidden>
-          <ProjectMock id={p.mockId} />
-        </div>
+        {p.screenshot ? (
+          <div className="proj-card-mock shot">
+            <Image
+              src={p.screenshot}
+              alt={`${p.title} — screenshot`}
+              fill
+              sizes="(max-width: 700px) 92vw, 640px"
+            />
+          </div>
+        ) : (
+          <div className="proj-card-mock" aria-hidden>
+            <ProjectMock id={p.mockId} />
+          </div>
+        )}
 
         <p className="proj-about">{p.details.about}</p>
 
@@ -87,6 +130,13 @@ export function ProjectDetail({ project, onClose }: Props) {
             </span>
           ))}
         </div>
+
+        {p.details.post && (
+          <Link className="proj-post-link" href={p.details.post.href} onClick={onClose}>
+            <span className="lbl">from the blog</span>
+            {p.details.post.title} ↗
+          </Link>
+        )}
 
         {(p.live || p.repo) && (
           <div className="proj-links">

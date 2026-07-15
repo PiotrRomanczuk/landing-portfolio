@@ -763,6 +763,11 @@ export default function V5DLanding({ posts, activity, stamp }: Props) {
                   <span className="href">Romanczuk_Piotr_CV.pdf</span>
                   <span className="sla">latest</span>
                 </a>
+                <Link href="/cv/fullstack">
+                  <span>CV (web)</span>
+                  <span className="href">/cv/fullstack</span>
+                  <span className="sla">4 variants</span>
+                </Link>
               </div>
             </div>
 
@@ -871,7 +876,9 @@ export default function V5DLanding({ posts, activity, stamp }: Props) {
       </div>
 
       {/* TOAST */}
-      <div className={`toast${toast ? " show" : ""}`}>{toast ?? ""}</div>
+      <div role="status" aria-live="polite" className={`toast${toast ? " show" : ""}`}>
+        {toast ?? ""}
+      </div>
     </div>
   );
 }

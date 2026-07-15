@@ -25,32 +25,33 @@ const newsreader = Newsreader({
 });
 
 export const metadata: Metadata = {
-  title: "Piotr Romanczuk | Software Developer",
+  title: "Piotr Romanczuk | Fullstack Engineer",
   description:
-    "Software developer based in Warsaw, Poland. Building production-ready web applications with TypeScript, React, and Next.js.",
+    "Fullstack engineer in Warsaw, Poland. I build and run production web apps end-to-end — Next.js and .NET on top; Linux, monitoring, and CI/CD underneath.",
   keywords: [
+    "fullstack engineer",
     "software developer",
-    "web developer",
+    "DevOps",
     "React",
     "Next.js",
     "TypeScript",
+    ".NET",
     "Warsaw",
-    "freelance",
   ],
   authors: [{ name: "Piotr Romanczuk" }],
   openGraph: {
-    title: "Piotr Romanczuk | Software Developer",
+    title: "Piotr Romanczuk | Fullstack Engineer",
     description:
-      "Building production-ready web applications with TypeScript, React, and Next.js.",
+      "I make products that survive their first users — and run the infrastructure underneath.",
     type: "website",
     locale: "en_US",
     url: "https://romanczuk.vercel.app",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Piotr Romanczuk | Software Developer",
+    title: "Piotr Romanczuk | Fullstack Engineer",
     description:
-      "Building production-ready web applications with TypeScript, React, and Next.js.",
+      "I make products that survive their first users — and run the infrastructure underneath.",
   },
   metadataBase: new URL("https://romanczuk.vercel.app"),
   icons: { icon: "/icon.svg" },

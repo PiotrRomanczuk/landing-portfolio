@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
-export const alt = "Piotr Romanczuk — Software Developer";
+export const alt = "Piotr Romanczuk — Fullstack Engineer";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -45,7 +45,7 @@ export default async function Image() {
               lineHeight: 1.4,
             }}
           >
-            Software Developer — Warsaw, Poland
+            Fullstack engineer — code on top, infra underneath — Warsaw, Poland
           </div>
           <div
             style={{
@@ -54,7 +54,7 @@ export default async function Image() {
               marginTop: "24px",
             }}
           >
-            {["TypeScript", "React", "Next.js", "Supabase", "Node.js"].map(
+            {["TypeScript", "Next.js", ".NET", "Supabase", "Linux"].map(
               (tech) => (
                 <div
                   key={tech}
