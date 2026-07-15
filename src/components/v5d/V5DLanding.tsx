@@ -8,8 +8,15 @@ import { MagneticBtn } from "@/components/v5d/MagneticBtn";
 import { CursorReticle } from "@/components/v5d/CursorReticle";
 import { Reveal } from "@/components/v5d/Reveal";
 import { ScrollProgress } from "@/components/v5d/ScrollProgress";
-import { ProjectMock, type ProjectMockId } from "@/components/v5d/ProjectMock";
+import { ProjectMock } from "@/components/v5d/ProjectMock";
 import { FluencyTimeline, type FluencyRow } from "@/components/v5d/FluencyTimeline";
+import { ProjectDetail } from "@/components/v5d/ProjectDetail";
+import {
+  PROJECTS,
+  FILTERS,
+  repoSlugFromUrl,
+  type FilterKey,
+} from "@/components/v5d/projects";
 import type { GithubActivity, RepoStats } from "@/lib/data/github-activity";
 
 export type WritingEntry = {
@@ -27,111 +34,6 @@ type Props = {
   /** Current "mon yyyy" label, computed server-side so it never goes stale. */
   stamp: string;
 };
-
-type Status = "shipping" | "active" | "internal" | "archived";
-type ProjectType = "saas" | "tool" | "oss" | "site" | "experiment";
-
-type Project = {
-  num: string;
-  title: string;
-  short: string;
-  stack: string[];
-  type: ProjectType;
-  year: number;
-  status: Status;
-  live?: string;
-  repo?: string;
-  mockId: ProjectMockId;
-  featured?: boolean;
-  metrics?: string[];
-};
-
-function repoSlugFromUrl(url: string | undefined): string | undefined {
-  if (!url) return undefined;
-  return url.replace(/^github\.com\//, "");
-}
-
-const PROJECTS: Project[] = [
-  {
-    num: "01",
-    title: "Strummy",
-    short: "CRM for guitar teachers. Paying users since 2024.",
-    stack: ["Next.js 16", "TypeScript", "Supabase", "Stripe", "Tailwind"],
-    type: "saas",
-    year: 2024,
-    status: "shipping",
-    live: "strummy.app",
-    repo: "github.com/PiotrRomanczuk/guitar-crm",
-    mockId: "strummy",
-    featured: true,
-    metrics: ["~25 dau", "paying since 2024", "stripe billing"],
-  },
-  {
-    num: "02",
-    title: "Stories Automation",
-    short: "IG Stories at scale. Queues, retries, idempotency.",
-    stack: ["Next.js 16", "TypeScript", "Supabase", "Playwright", "Meta Graph"],
-    type: "tool",
-    year: 2025,
-    status: "internal",
-    mockId: "stories",
-  },
-  {
-    num: "03",
-    title: "ShortsCannon",
-    short: "Video job pipeline. Learning .NET + Angular in anger.",
-    stack: [".NET 9", "C#", "Angular 19", "EF Core", "SQL Server"],
-    type: "oss",
-    year: 2025,
-    status: "active",
-    repo: "github.com/PiotrRomanczuk/ShortsCannon",
-    mockId: "shortscannon",
-  },
-  {
-    num: "04",
-    title: "Home-Ops",
-    short: "Self-hosted platform on real hardware. Pi monitoring hub, Tailscale mesh, systemd services, nightly restic backups.",
-    stack: ["Linux", "systemd", "Docker", "Tailscale", "Postgres", "Cloudflare Tunnel"],
-    type: "tool",
-    year: 2025,
-    status: "internal",
-    mockId: "homeops",
-    metrics: ["4 hosts", "uptime kuma + beszel", "nightly restic → nas"],
-  },
-  {
-    num: "05",
-    title: "INBORR",
-    short: "Apartment rental landing site. Shipped fast, still live.",
-    stack: ["Next.js", "TypeScript", "Tailwind", "Playwright"],
-    type: "site",
-    year: 2024,
-    status: "shipping",
-    live: "inborr.pl",
-    mockId: "inborr",
-  },
-  {
-    num: "06",
-    title: "Pizzayolo",
-    short: "Ordering UX sandbox. State machines + a11y.",
-    stack: ["React", "TypeScript", "XState", "Vitest"],
-    type: "experiment",
-    year: 2023,
-    status: "archived",
-    repo: "github.com/PiotrRomanczuk/pizzayolo",
-    mockId: "pizzayolo",
-  },
-];
-
-type FilterKey = "all" | "shipping" | ProjectType;
-
-const FILTERS: { key: FilterKey; label: string }[] = [
-  { key: "all", label: "all" },
-  { key: "shipping", label: "shipping" },
-  { key: "oss", label: "oss" },
-  { key: "tool", label: "tooling" },
-  { key: "site", label: "sites" },
-  { key: "experiment", label: "experiments" },
-];
 
 function buildAnchors(hasWriting: boolean) {
   const bases = hasWriting
@@ -209,6 +111,7 @@ export default function V5DLanding({ posts, activity, stamp }: Props) {
   // hex string only when overriding (e.g. konami).
   const [accentOverride, setAccentOverride] = useState<string | null>(null);
   const [filter, setFilter] = useState<FilterKey>("all");
+  const [openNum, setOpenNum] = useState<string | null>(null);
   const [active, setActive] = useState("intro");
   const [cmdOpen, setCmdOpen] = useState(false);
   const [cmdQuery, setCmdQuery] = useState("");
@@ -237,6 +140,11 @@ export default function V5DLanding({ posts, activity, stamp }: Props) {
     setTheme(next);
     try { localStorage.setItem("v5d-theme", next); } catch {}
   }, []);
+
+  const openProject = useMemo(
+    () => PROJECTS.find((p) => p.num === openNum) ?? null,
+    [openNum],
+  );
 
   // Visible projects after filter
   const visible = useMemo(() => {
@@ -573,6 +481,20 @@ export default function V5DLanding({ posts, activity, stamp }: Props) {
                       data-type={p.type}
                       data-status={p.status}
                       data-reticle
+                      role="button"
+                      tabIndex={0}
+                      aria-label={`Open ${p.title} details`}
+                      onClick={(e) => {
+                        // Links inside the row (live / repo) keep their own behavior.
+                        if ((e.target as HTMLElement).closest("a")) return;
+                        setOpenNum(p.num);
+                      }}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter" || e.key === " ") {
+                          e.preventDefault();
+                          setOpenNum(p.num);
+                        }
+                      }}
                     >
                       <div className="num">{p.num}</div>
                       <div>
@@ -645,6 +567,14 @@ export default function V5DLanding({ posts, activity, stamp }: Props) {
                             ↗ repo
                           </a>
                         )}
+                        <button
+                          type="button"
+                          className="details-link"
+                          onClick={() => setOpenNum(p.num)}
+                          tabIndex={-1}
+                        >
+                          + details
+                        </button>
                       </div>
                       <div
                         className="shot-pop"
@@ -881,6 +811,11 @@ export default function V5DLanding({ posts, activity, stamp }: Props) {
           </div>
         </aside>
       </div>
+
+      {/* PROJECT DETAIL CARD */}
+      {openProject && (
+        <ProjectDetail project={openProject} onClose={() => setOpenNum(null)} />
+      )}
 
       {/* COMMAND HINT */}
       <div className="cmd-hint" onClick={openCmd} title="Open command palette">

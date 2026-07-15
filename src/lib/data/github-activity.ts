@@ -1,4 +1,5 @@
 import snapshot from "@/data/github-contrib.json";
+import { fetchContributionCounts } from "@/lib/data/github-counts";
 
 /**
  * Live GitHub activity, fetched server-side with ISR so the numbers
@@ -41,18 +42,21 @@ function apiHeaders(): Record<string, string> {
   return headers;
 }
 
-function fromSnapshot(): GithubActivity {
+function fromSnapshot(): GithubActivity & { ageDays: number } {
   const s = snapshot as {
+    generatedAt?: string;
     lastPush?: string | null;
     commitsLast30d?: number;
     commitsThisWeek?: number;
     repos?: Record<string, RepoStats>;
   };
+  const generated = s.generatedAt ? new Date(s.generatedAt).getTime() : 0;
   return {
     lastPush: s.lastPush ?? null,
     commitsLast30d: s.commitsLast30d ?? 0,
     commitsThisWeek: s.commitsThisWeek ?? 0,
     repos: s.repos ?? {},
+    ageDays: (Date.now() - generated) / 86_400_000,
   };
 }
 
@@ -113,17 +117,28 @@ async function fetchRepoStats(slug: string): Promise<RepoStats | null> {
 }
 
 export async function getGithubActivity(): Promise<GithubActivity> {
-  const fallback = fromSnapshot();
+  const { ageDays, ...fallback } = fromSnapshot();
   try {
-    const [pushActivity, repoResults] = await Promise.all([
+    const [pushActivity, repoResults, calendarCounts] = await Promise.all([
       fetchPushActivity(),
       Promise.all(SHOWCASED_REPOS.map(fetchRepoStats)),
+      fetchContributionCounts(USER, REVALIDATE_SECONDS).catch(() => null),
     ]);
     const repos = { ...fallback.repos };
     for (const stats of repoResults) {
       if (stats) repos[stats.slug] = stats;
     }
-    return { ...pushActivity, repos };
+    // Public events miss private-repo pushes and undercount badly. Prefer
+    // the GraphQL calendar (token required); otherwise a fresh build-time
+    // snapshot (regenerated on every deploy) is the more complete count.
+    let { commitsLast30d, commitsThisWeek } = pushActivity;
+    if (calendarCounts) {
+      ({ commitsLast30d, commitsThisWeek } = calendarCounts);
+    } else if (ageDays < 7) {
+      commitsLast30d = Math.max(commitsLast30d, fallback.commitsLast30d);
+      commitsThisWeek = Math.max(commitsThisWeek, fallback.commitsThisWeek);
+    }
+    return { lastPush: pushActivity.lastPush, commitsLast30d, commitsThisWeek, repos };
   } catch (err) {
     console.warn(`[github-activity] live fetch failed, using snapshot: ${String(err)}`);
     return fallback;

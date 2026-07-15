@@ -810,6 +810,77 @@ button.v5d-root .pill,
 }
 .v5d-root .colophon a:hover { color: var(--ink); }
 
+/* ── project detail card ────────────────────────────────────── */
+.v5d-root .work-row-inner { cursor: pointer; }
+.v5d-root .work-row-inner .meta .details-link {
+  display: block; margin-left: auto;
+  background: none; border: none; padding: 0;
+  font: inherit; color: var(--accent);
+  cursor: pointer;
+}
+.v5d-root .work-row-inner .meta .details-link:hover { color: var(--ink); }
+
+.v5d-root .proj-overlay {
+  position: fixed; inset: 0; z-index: 40;
+  background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(4px);
+  display: flex; align-items: flex-start; justify-content: center;
+  padding: 9vh 16px 40px;
+  overflow-y: auto;
+}
+.v5d-root .proj-card {
+  width: 640px; max-width: 92vw;
+  background: var(--card); border: 1px solid var(--rule-hi);
+  border-radius: 12px; padding: 22px 26px 26px;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
+}
+.v5d-root .proj-card-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.v5d-root .proj-card-head .num {
+  font-family: "JetBrains Mono", var(--font-jetbrains), ui-monospace, monospace;
+  font-size: 12px; color: var(--accent);
+}
+.v5d-root .proj-card-head h3 { margin: 0; font-size: 22px; font-weight: 600; letter-spacing: -0.015em; }
+.v5d-root .proj-card-meta {
+  margin-left: auto;
+  font-family: "JetBrains Mono", var(--font-jetbrains), ui-monospace, monospace;
+  font-size: 11px; color: var(--muted);
+}
+.v5d-root .proj-close {
+  font-family: "JetBrains Mono", var(--font-jetbrains), ui-monospace, monospace;
+  font-size: 10.5px; color: var(--muted);
+  background: var(--card-hi); border: 1px solid var(--rule-hi);
+  border-radius: 6px; padding: 4px 8px; cursor: pointer;
+}
+.v5d-root .proj-close:hover { color: var(--ink); }
+.v5d-root .proj-card-mock {
+  height: 200px; margin: 16px 0 14px;
+  border: 1px solid var(--rule); border-radius: 10px;
+  overflow: hidden;
+}
+.v5d-root .proj-about {
+  margin: 0 0 14px; font-size: 14.5px; line-height: 1.65;
+  color: var(--ink-soft); text-wrap: pretty;
+}
+.v5d-root .proj-highlights {
+  margin: 0 0 4px; padding: 0; list-style: none;
+  display: grid; gap: 8px;
+}
+.v5d-root .proj-highlights li {
+  position: relative; padding-left: 18px;
+  font-size: 13.5px; line-height: 1.55; color: var(--muted);
+}
+.v5d-root .proj-highlights li::before {
+  content: "→"; position: absolute; left: 0; color: var(--accent);
+}
+.v5d-root .proj-card .metrics-row { margin-top: 12px; }
+.v5d-root .proj-card .stack { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 12px; }
+.v5d-root .proj-links {
+  margin-top: 16px; display: flex; flex-wrap: wrap; gap: 18px;
+  font-family: "JetBrains Mono", var(--font-jetbrains), ui-monospace, monospace;
+  font-size: 12px;
+}
+.v5d-root .proj-links a { color: var(--accent); }
+.v5d-root .proj-links a:hover { color: var(--ink); }
+
 /* ── command hint (bottom-right) ────────────────────────────── */
 .v5d-root .cmd-hint {
   position: fixed; bottom: 22px; right: 26px; z-index: 30;
