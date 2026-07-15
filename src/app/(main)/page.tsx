@@ -5,6 +5,7 @@ import type { PostListItem } from "@/sanity/lib/types";
 import V5DLanding, {
   type WritingEntry,
 } from "@/components/v5d/V5DLanding";
+import { getGithubActivity } from "@/lib/data/github-activity";
 
 export const revalidate = 3600;
 
@@ -33,12 +34,16 @@ async function getPosts(): Promise<WritingEntry[]> {
       { next: { tags: ["posts"] } },
     );
     return posts.map(toEntry);
-  } catch {
+  } catch (err) {
+    console.warn(`[landing] Sanity posts fetch failed: ${String(err)}`);
     return [];
   }
 }
 
 export default async function Page() {
-  const posts = await getPosts();
-  return <V5DLanding posts={posts} />;
+  const [posts, activity] = await Promise.all([getPosts(), getGithubActivity()]);
+  const stamp = new Date()
+    .toLocaleDateString("en-US", { month: "short", year: "numeric" })
+    .toLowerCase();
+  return <V5DLanding posts={posts} activity={activity} stamp={stamp} />;
 }

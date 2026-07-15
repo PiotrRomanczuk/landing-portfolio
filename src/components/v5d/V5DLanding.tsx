@@ -10,6 +10,7 @@ import { Reveal } from "@/components/v5d/Reveal";
 import { ScrollProgress } from "@/components/v5d/ScrollProgress";
 import { ProjectMock, type ProjectMockId } from "@/components/v5d/ProjectMock";
 import { FluencyTimeline, type FluencyRow } from "@/components/v5d/FluencyTimeline";
+import type { GithubActivity, RepoStats } from "@/lib/data/github-activity";
 
 export type WritingEntry = {
   date: string;
@@ -22,6 +23,9 @@ export type WritingEntry = {
 
 type Props = {
   posts: WritingEntry[];
+  activity: GithubActivity;
+  /** Current "mon yyyy" label, computed server-side so it never goes stale. */
+  stamp: string;
 };
 
 type Status = "shipping" | "active" | "internal" | "archived";
@@ -38,7 +42,14 @@ type Project = {
   live?: string;
   repo?: string;
   mockId: ProjectMockId;
+  featured?: boolean;
+  metrics?: string[];
 };
+
+function repoSlugFromUrl(url: string | undefined): string | undefined {
+  if (!url) return undefined;
+  return url.replace(/^github\.com\//, "");
+}
 
 const PROJECTS: Project[] = [
   {
@@ -52,6 +63,8 @@ const PROJECTS: Project[] = [
     live: "strummy.app",
     repo: "github.com/PiotrRomanczuk/guitar-crm",
     mockId: "strummy",
+    featured: true,
+    metrics: ["~25 dau", "paying since 2024", "stripe billing"],
   },
   {
     num: "02",
@@ -76,6 +89,17 @@ const PROJECTS: Project[] = [
   },
   {
     num: "04",
+    title: "Home-Ops",
+    short: "Self-hosted platform on real hardware. Pi monitoring hub, Tailscale mesh, systemd services, nightly restic backups.",
+    stack: ["Linux", "systemd", "Docker", "Tailscale", "Postgres", "Cloudflare Tunnel"],
+    type: "tool",
+    year: 2025,
+    status: "internal",
+    mockId: "homeops",
+    metrics: ["4 hosts", "uptime kuma + beszel", "nightly restic → nas"],
+  },
+  {
+    num: "05",
     title: "INBORR",
     short: "Apartment rental landing site. Shipped fast, still live.",
     stack: ["Next.js", "TypeScript", "Tailwind", "Playwright"],
@@ -86,7 +110,7 @@ const PROJECTS: Project[] = [
     mockId: "inborr",
   },
   {
-    num: "05",
+    num: "06",
     title: "Pizzayolo",
     short: "Ordering UX sandbox. State machines + a11y.",
     stack: ["React", "TypeScript", "XState", "Vitest"],
@@ -109,23 +133,20 @@ const FILTERS: { key: FilterKey; label: string }[] = [
   { key: "experiment", label: "experiments" },
 ];
 
-const ANCHORS = [
-  { id: "intro", label: "00 intro" },
-  { id: "work", label: "01 work" },
-  { id: "stack", label: "02 stack" },
-  { id: "writing", label: "03 writing" },
-  { id: "now", label: "04 now" },
-  { id: "contact", label: "05 contact" },
-];
+function buildAnchors(hasWriting: boolean) {
+  const bases = hasWriting
+    ? ["intro", "work", "stack", "writing", "now", "contact"]
+    : ["intro", "work", "stack", "now", "contact"];
+  return bases.map((id, i) => ({
+    id,
+    label: `${String(i).padStart(2, "0")} ${id}`,
+  }));
+}
 
 const KONAMI = [
   "ArrowUp", "ArrowUp", "ArrowDown", "ArrowDown",
   "ArrowLeft", "ArrowRight", "ArrowLeft", "ArrowRight",
   "b", "a",
-];
-
-const WRITING_FALLBACK: WritingEntry[] = [
-  { date: "soon", title: "First issue on press.", kind: "draft", minutes: 0, state: "draft", href: "/blog" },
 ];
 
 const FLUENCY: FluencyRow[] = [
@@ -140,7 +161,11 @@ const FLUENCY: FluencyRow[] = [
   { name: "Angular", startYear: 2025, endYear: 2026, use: "occasional", group: "frontend" },
   { name: "Python 3", startYear: 2023, endYear: 2026, use: "weekly", group: "backend" },
   { name: "Docker / Compose", startYear: 2021, endYear: 2026, use: "weekly", group: "infra" },
+  { name: "Linux / systemd", startYear: 2021, endYear: 2026, use: "weekly", group: "infra" },
+  { name: "GitHub Actions (CI)", startYear: 2022, endYear: 2026, use: "weekly", group: "infra" },
   { name: "Vercel / Fly", startYear: 2022, endYear: 2026, use: "weekly", group: "infra" },
+  { name: "Tailscale / networking", startYear: 2024, endYear: 2026, use: "weekly", group: "infra" },
+  { name: "Monitoring (Kuma · Beszel)", startYear: 2025, endYear: 2026, use: "weekly", group: "infra" },
   { name: "Playwright", startYear: 2023, endYear: 2026, use: "weekly", group: "testing" },
   { name: "Vitest / Jest", startYear: 2022, endYear: 2026, use: "daily", group: "testing" },
   { name: "XState", startYear: 2023, endYear: 2024, use: "past", group: "testing" },
@@ -167,13 +192,22 @@ const BIG_CONTRIB = contrib.days.map((d) => ({
   opacity: [0, 0.25, 0.55, 0.9][d.intensity] ?? 0,
 }));
 
-const DEFAULT_ACCENT = "#F5B453";
 const KONAMI_ACCENT = "#22c55e";
 
-export default function V5DLanding({ posts }: Props) {
-  const writing = posts.length > 0 ? posts : WRITING_FALLBACK;
+const EMAIL = "p.romanczuk@gmail.com";
+const MAILTO = `mailto:${EMAIL}?subject=${encodeURIComponent(
+  "Hi Piotr — about a role",
+)}&body=${encodeURIComponent(
+  "Hi Piotr,\n\nI came across your site and wanted to talk about a role at [company].\n\n— ",
+)}`;
+
+export default function V5DLanding({ posts, activity, stamp }: Props) {
+  const hasWriting = posts.length > 0;
+  const anchors = useMemo(() => buildAnchors(hasWriting), [hasWriting]);
   const [theme, setTheme] = useState<"dark" | "light">("dark");
-  const [accent, setAccent] = useState(DEFAULT_ACCENT);
+  // Accent override: null lets CSS pick a theme-appropriate accent. Set to a
+  // hex string only when overriding (e.g. konami).
+  const [accentOverride, setAccentOverride] = useState<string | null>(null);
   const [filter, setFilter] = useState<FilterKey>("all");
   const [active, setActive] = useState("intro");
   const [cmdOpen, setCmdOpen] = useState(false);
@@ -192,7 +226,6 @@ export default function V5DLanding({ posts }: Props) {
   useEffect(() => {
     const saved = typeof window !== "undefined" ? localStorage.getItem("v5d-theme") : null;
     if (saved === "light" || saved === "dark") {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
       setTheme(saved);
       return;
     }
@@ -229,7 +262,7 @@ export default function V5DLanding({ posts }: Props) {
 
   // Scroll-spy via IntersectionObserver
   useEffect(() => {
-    const ids = ANCHORS.map((a) => a.id);
+    const ids = anchors.map((a) => a.id);
     const sections = ids
       .map((id) => document.getElementById(id))
       .filter((el): el is HTMLElement => Boolean(el));
@@ -243,7 +276,7 @@ export default function V5DLanding({ posts }: Props) {
     );
     sections.forEach((s) => io.observe(s));
     return () => io.disconnect();
-  }, []);
+  }, [anchors]);
 
   // Toast helper
   const flashToast = useCallback((msg: string) => {
@@ -252,11 +285,20 @@ export default function V5DLanding({ posts }: Props) {
     toastTimer.current = setTimeout(() => setToast(null), 2200);
   }, []);
 
+  const copyEmail = useCallback(async () => {
+    try {
+      await navigator.clipboard.writeText(EMAIL);
+      flashToast(`copied · ${EMAIL}`);
+    } catch {
+      flashToast("copy failed — long-press to copy");
+    }
+  }, [flashToast]);
+
   const triggerKonami = useCallback(() => {
-    setAccent(KONAMI_ACCENT);
+    setAccentOverride(KONAMI_ACCENT);
     flashToast("konami unlocked · accent: terminal green (6s)");
     if (accentTimer.current) clearTimeout(accentTimer.current);
-    accentTimer.current = setTimeout(() => setAccent(DEFAULT_ACCENT), 6000);
+    accentTimer.current = setTimeout(() => setAccentOverride(null), 6000);
   }, [flashToast]);
 
   // Command palette
@@ -267,13 +309,20 @@ export default function V5DLanding({ posts }: Props) {
     { l: "Jump → Intro", h: "g i", a: () => jumpTo("intro") },
     { l: "Jump → Work", h: "g w", a: () => jumpTo("work") },
     { l: "Jump → Stack", h: "g s", a: () => jumpTo("stack") },
-    { l: "Jump → Writing", h: "g b", a: () => jumpTo("writing") },
+    ...(hasWriting
+      ? [{ l: "Jump → Writing", h: "g b", a: () => jumpTo("writing") }]
+      : []),
     { l: "Jump → Now", h: "g n", a: () => jumpTo("now") },
     { l: "Jump → Contact", h: "g c", a: () => jumpTo("contact") },
     {
-      l: "Email p.romanczuk@gmail.com",
+      l: `Email ${EMAIL}`,
       h: "↗",
-      a: () => window.open("mailto:p.romanczuk@gmail.com", "_self"),
+      a: () => window.open(MAILTO, "_self"),
+    },
+    {
+      l: "Copy email to clipboard",
+      h: "⌘c",
+      a: () => { void copyEmail(); },
     },
     {
       l: "Open GitHub",
@@ -293,6 +342,10 @@ export default function V5DLanding({ posts }: Props) {
   ];
 
   const q = cmdQuery.toLowerCase();
+  // Each palette entry holds an action closure that may eventually touch a
+  // ref (toast timer). The lint rule traces transitively but the closures
+  // only run on user input, never during render.
+  // eslint-disable-next-line react-hooks/refs
   const filteredCmds = palette.filter((c) => c.l.toLowerCase().includes(q));
 
   const openCmd = useCallback(() => {
@@ -354,13 +407,17 @@ export default function V5DLanding({ posts }: Props) {
   const accentBg = (opacity: number) =>
     opacity === 0
       ? undefined
-      : `color-mix(in oklab, ${accent} ${opacity * 100}%, transparent)`;
+      : `color-mix(in oklab, var(--accent) ${opacity * 100}%, transparent)`;
+
+  const rootStyle = accentOverride
+    ? ({ ["--accent" as string]: accentOverride } as React.CSSProperties)
+    : undefined;
 
   return (
     <div
       className="v5d-root"
       data-theme={theme}
-      style={{ ["--accent" as string]: accent }}
+      style={rootStyle}
     >
       <ScrollProgress />
       <CursorReticle />
@@ -390,7 +447,7 @@ export default function V5DLanding({ posts }: Props) {
           <section className="hero" id="intro" data-anchor="intro">
             <div className="status">
               <span className="dot accent"></span>
-              <span>piotr romanczuk / fullstack / open to mid+senior</span>
+              <span>piotr romanczuk / fullstack + infra / open to work</span>
             </div>
             <h1>
               I make products that{" "}
@@ -400,22 +457,22 @@ export default function V5DLanding({ posts }: Props) {
               , then keep shipping past them.
             </h1>
             <p className="deck">
-              Seven years between Next.js and .NET. One SaaS live with paying
-              users, a tooling stack in Python, and a long backlog of side
-              things. I write code, run the boxes, answer the support, and read
-              the receipts.
+              Fullstack between Next.js and .NET. One SaaS live with paying
+              users, a self-hosted ops stack on real hardware, and a long
+              backlog of side things. I write code, run the boxes, answer the
+              support, and read the receipts.
             </p>
             <div className="ctas">
-              <MagneticBtn href="#contact" className="btn">
-                <span className="accent-dot"></span> Get in touch
-              </MagneticBtn>
               <MagneticBtn
                 href="/Romanczuk_Piotr_CV.pdf"
-                className="btn ghost"
-                target="_blank"
-                rel="noopener noreferrer"
+                className="btn"
+                download
               >
-                cv.pdf ↗
+                <span className="accent-dot"></span> Download CV
+                <span className="btn-suffix">↓ pdf</span>
+              </MagneticBtn>
+              <MagneticBtn href="#contact" className="btn ghost">
+                Get in touch ↗
               </MagneticBtn>
             </div>
             <div className="not-for">
@@ -434,10 +491,44 @@ export default function V5DLanding({ posts }: Props) {
               </div>
               <div className="stat">
                 <div className="lbl">Last GitHub push</div>
-                <div className="val">{formatRelative(contrib.lastPush)}</div>
+                <div className="val">{formatRelative(activity.lastPush)}</div>
                 <div className="sub">
-                  {contrib.commitsLast30d} commits · last 30d
+                  {activity.commitsLast30d} commits · last 30d
                 </div>
+              </div>
+            </div>
+          </section>
+
+          {/* APPROACH */}
+          <section id="approach" className="approach" aria-label="How I work">
+            <div className="approach-eyebrow">{"// how i work"}</div>
+            <div className="approach-grid">
+              <div className="approach-tile">
+                <div className="approach-num">01</div>
+                <h4>Ship to real users early</h4>
+                <p>
+                  Production teaches faster than staging. I get a thin slice
+                  in front of someone within a week, then iterate on what
+                  actually breaks.
+                </p>
+              </div>
+              <div className="approach-tile">
+                <div className="approach-num">02</div>
+                <h4>Own the receipts</h4>
+                <p>
+                  Logs, alerts, on-call, Stripe disputes, support email — I
+                  write the code <i>and</i> read the inbox. The feedback loop
+                  is the product.
+                </p>
+              </div>
+              <div className="approach-tile">
+                <div className="approach-num">03</div>
+                <h4>Code that survives Monday</h4>
+                <p>
+                  Types at boundaries, tests on the hot paths, small files,
+                  honest names. Future-me has to debug this at 11pm and
+                  deserves a fair chance.
+                </p>
               </div>
             </div>
           </section>
@@ -448,7 +539,8 @@ export default function V5DLanding({ posts }: Props) {
               <span className="lbl">§ 01 · work</span>
               <div className="rule"></div>
               <span className="meta">
-                {String(visible.length).padStart(2, "0")} / 05
+                {String(visible.length).padStart(2, "0")} /{" "}
+                {String(PROJECTS.length).padStart(2, "0")}
               </span>
             </div>
 
@@ -468,11 +560,13 @@ export default function V5DLanding({ posts }: Props) {
             <div style={{ marginTop: 14 }}>
               {PROJECTS.map((p, i) => {
                 const hidden = !visible.includes(p);
+                const repoStats: RepoStats | undefined =
+                  activity.repos[repoSlugFromUrl(p.repo) ?? ""];
                 return (
                   <Reveal
                     key={p.num}
                     delay={i * 60}
-                    className={`work-row${hidden ? " hidden" : ""}`}
+                    className={`work-row${hidden ? " hidden" : ""}${p.featured ? " featured" : ""}`}
                   >
                     <div
                       className="work-row-inner"
@@ -482,6 +576,12 @@ export default function V5DLanding({ posts }: Props) {
                     >
                       <div className="num">{p.num}</div>
                       <div>
+                        {p.featured && (
+                          <div className="featured-eyebrow">
+                            <span className="dot accent s5"></span>
+                            featured · live saas
+                          </div>
+                        )}
                         <div className="title-row">
                           <h3>{p.title}</h3>
                           {p.status === "shipping" && (
@@ -500,6 +600,13 @@ export default function V5DLanding({ posts }: Props) {
                           )}
                         </div>
                         <p>{p.short}</p>
+                        {p.metrics && p.metrics.length > 0 && (
+                          <div className="metrics-row">
+                            {p.metrics.map((m) => (
+                              <span className="metric" key={m}>{m}</span>
+                            ))}
+                          </div>
+                        )}
                         <div className="stack">
                           {p.stack.map((s) => (
                             <span className="chip" key={s}>
@@ -511,6 +618,14 @@ export default function V5DLanding({ posts }: Props) {
                       <div className="meta">
                         <span>{p.year}</span>
                         <span>{p.type}</span>
+                        {repoStats?.pushedAt && (
+                          <span title={`last push ${repoStats.pushedAt}`}>
+                            ↳ {formatRelative(repoStats.pushedAt)}
+                          </span>
+                        )}
+                        {repoStats && repoStats.stars > 0 && (
+                          <span>★ {repoStats.stars}</span>
+                        )}
                         {p.live && (
                           <a
                             className="live"
@@ -559,36 +674,38 @@ export default function V5DLanding({ posts }: Props) {
             <FluencyTimeline rows={FLUENCY} />
           </section>
 
-          {/* WRITING */}
-          <section id="writing" data-anchor="writing">
-            <div className="section-head">
-              <span className="lbl">§ 03 · writing</span>
-              <div className="rule"></div>
-              <Link className="section-link" href="/blog">
-                archive ↗
-              </Link>
-            </div>
-            <div>
-              {writing.map((w) => (
-                <Link className="write-row" href={w.href} key={w.title}>
-                  <span className="date">{w.date}</span>
-                  <div className="ttl">
-                    {w.title}
-                    {w.kind ? <span className="kind">· {w.kind}</span> : null}
-                  </div>
-                  <div className="write-meta">
-                    {w.state === "draft" ? (
-                      <span className="pill draft">draft</span>
-                    ) : null}
-                    {w.minutes > 0 ? (
-                      <span className="rt">{w.minutes} min</span>
-                    ) : null}
-                    <span className="arr">↗</span>
-                  </div>
+          {/* WRITING (rendered only when posts exist) */}
+          {hasWriting && (
+            <section id="writing" data-anchor="writing">
+              <div className="section-head">
+                <span className="lbl">§ 03 · writing</span>
+                <div className="rule"></div>
+                <Link className="section-link" href="/blog">
+                  archive ↗
                 </Link>
-              ))}
-            </div>
-          </section>
+              </div>
+              <div>
+                {posts.map((w) => (
+                  <Link className="write-row" href={w.href} key={w.title}>
+                    <span className="date">{w.date}</span>
+                    <div className="ttl">
+                      {w.title}
+                      {w.kind ? <span className="kind">· {w.kind}</span> : null}
+                    </div>
+                    <div className="write-meta">
+                      {w.state === "draft" ? (
+                        <span className="pill draft">draft</span>
+                      ) : null}
+                      {w.minutes > 0 ? (
+                        <span className="rt">{w.minutes} min</span>
+                      ) : null}
+                      <span className="arr">↗</span>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </section>
+          )}
 
           {/* NOW */}
           <section id="now" data-anchor="now">
@@ -604,7 +721,7 @@ export default function V5DLanding({ posts }: Props) {
                 </h5>
                 <p>
                   Shipping <b>Strummy v3</b> — invoicing &amp; reminders. Last
-                  push <b>{formatRelative(contrib.lastPush)}</b>, three open
+                  push <b>{formatRelative(activity.lastPush)}</b>, three open
                   issues, none on fire. Side: re-reading{" "}
                   <i>Designing Data-Intensive Applications</i>.
                 </p>
@@ -615,10 +732,10 @@ export default function V5DLanding({ posts }: Props) {
                 </div>
                 <div className="contrib-foot">
                   <span>
-                    {contrib.commitsLast30d} commits · last 30d
+                    {activity.commitsLast30d} commits · last 30d
                   </span>
                   <span className="accent-text">
-                    +{contrib.commitsThisWeek} this week
+                    +{activity.commitsThisWeek} this week
                   </span>
                 </div>
               </div>
@@ -648,21 +765,29 @@ export default function V5DLanding({ posts }: Props) {
           {/* CONTACT */}
           <section id="contact" data-anchor="contact">
             <div className="section-head">
-              <span className="lbl">§ 05 · contact</span>
+              <span className="lbl">{`§ ${hasWriting ? "05" : "04"} · contact`}</span>
               <div className="rule"></div>
-              <span className="meta">may 2026</span>
+              <span className="meta">{stamp}</span>
             </div>
             <p className="contact-pitch">
-              Looking for a <span>senior fullstack</span> role.
+              Looking for a <span>fullstack or devops</span> role.
               <br />
               Write to{" "}
               <a
-                href="mailto:p.romanczuk@gmail.com"
+                href={MAILTO}
                 style={{ borderBottom: "1px solid var(--rule-hi)" }}
               >
-                p.romanczuk@gmail.com
+                {EMAIL}
               </a>
-              .
+              {" · "}
+              <button
+                type="button"
+                className="copy-inline"
+                onClick={copyEmail}
+                aria-label="Copy email to clipboard"
+              >
+                copy
+              </button>
             </p>
             <div className="contact-grid">
               <div className="contact-blurb">
@@ -671,11 +796,20 @@ export default function V5DLanding({ posts }: Props) {
                 across EU; happy to travel for onsites in the first weeks.
               </div>
               <div className="channels">
-                <a href="mailto:p.romanczuk@gmail.com">
+                <a href={MAILTO}>
                   <span>Email</span>
-                  <span className="href">p.romanczuk@gmail.com</span>
+                  <span className="href">{EMAIL}</span>
                   <span className="sla">~24h</span>
                 </a>
+                <button
+                  type="button"
+                  className="channel-btn"
+                  onClick={copyEmail}
+                >
+                  <span>Copy email</span>
+                  <span className="href">to clipboard</span>
+                  <span className="sla">↗</span>
+                </button>
                 <a
                   href="https://github.com/PiotrRomanczuk"
                   target="_blank"
@@ -719,7 +853,7 @@ export default function V5DLanding({ posts }: Props) {
           <div className="gutter-r-sticky">
             <nav className="anchors">
               <div className="eyebrow">on this page</div>
-              {ANCHORS.map((a) => (
+              {anchors.map((a) => (
                 <a
                   key={a.id}
                   href={`#${a.id}`}

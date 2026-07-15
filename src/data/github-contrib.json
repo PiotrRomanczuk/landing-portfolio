@@ -1,263 +1,7 @@
 {
   "user": "PiotrRomanczuk",
-  "generatedAt": "2026-05-12T10:24:01.923Z",
+  "generatedAt": "2026-07-15T15:35:36.255Z",
   "days": [
-    {
-      "date": "2025-11-12",
-      "intensity": 0
-    },
-    {
-      "date": "2025-11-13",
-      "intensity": 0
-    },
-    {
-      "date": "2025-11-14",
-      "intensity": 0
-    },
-    {
-      "date": "2025-11-15",
-      "intensity": 0
-    },
-    {
-      "date": "2025-11-16",
-      "intensity": 0
-    },
-    {
-      "date": "2025-11-17",
-      "intensity": 0
-    },
-    {
-      "date": "2025-11-18",
-      "intensity": 0
-    },
-    {
-      "date": "2025-11-19",
-      "intensity": 0
-    },
-    {
-      "date": "2025-11-20",
-      "intensity": 0
-    },
-    {
-      "date": "2025-11-21",
-      "intensity": 0
-    },
-    {
-      "date": "2025-11-22",
-      "intensity": 0
-    },
-    {
-      "date": "2025-11-23",
-      "intensity": 0
-    },
-    {
-      "date": "2025-11-24",
-      "intensity": 0
-    },
-    {
-      "date": "2025-11-25",
-      "intensity": 0
-    },
-    {
-      "date": "2025-11-26",
-      "intensity": 0
-    },
-    {
-      "date": "2025-11-27",
-      "intensity": 0
-    },
-    {
-      "date": "2025-11-28",
-      "intensity": 0
-    },
-    {
-      "date": "2025-11-29",
-      "intensity": 0
-    },
-    {
-      "date": "2025-11-30",
-      "intensity": 0
-    },
-    {
-      "date": "2025-12-01",
-      "intensity": 0
-    },
-    {
-      "date": "2025-12-02",
-      "intensity": 0
-    },
-    {
-      "date": "2025-12-03",
-      "intensity": 0
-    },
-    {
-      "date": "2025-12-04",
-      "intensity": 0
-    },
-    {
-      "date": "2025-12-05",
-      "intensity": 0
-    },
-    {
-      "date": "2025-12-06",
-      "intensity": 0
-    },
-    {
-      "date": "2025-12-07",
-      "intensity": 0
-    },
-    {
-      "date": "2025-12-08",
-      "intensity": 0
-    },
-    {
-      "date": "2025-12-09",
-      "intensity": 0
-    },
-    {
-      "date": "2025-12-10",
-      "intensity": 0
-    },
-    {
-      "date": "2025-12-11",
-      "intensity": 0
-    },
-    {
-      "date": "2025-12-12",
-      "intensity": 0
-    },
-    {
-      "date": "2025-12-13",
-      "intensity": 0
-    },
-    {
-      "date": "2025-12-14",
-      "intensity": 0
-    },
-    {
-      "date": "2025-12-15",
-      "intensity": 0
-    },
-    {
-      "date": "2025-12-16",
-      "intensity": 0
-    },
-    {
-      "date": "2025-12-17",
-      "intensity": 0
-    },
-    {
-      "date": "2025-12-18",
-      "intensity": 0
-    },
-    {
-      "date": "2025-12-19",
-      "intensity": 0
-    },
-    {
-      "date": "2025-12-20",
-      "intensity": 0
-    },
-    {
-      "date": "2025-12-21",
-      "intensity": 0
-    },
-    {
-      "date": "2025-12-22",
-      "intensity": 0
-    },
-    {
-      "date": "2025-12-23",
-      "intensity": 0
-    },
-    {
-      "date": "2025-12-24",
-      "intensity": 0
-    },
-    {
-      "date": "2025-12-25",
-      "intensity": 0
-    },
-    {
-      "date": "2025-12-26",
-      "intensity": 0
-    },
-    {
-      "date": "2025-12-27",
-      "intensity": 0
-    },
-    {
-      "date": "2025-12-28",
-      "intensity": 0
-    },
-    {
-      "date": "2025-12-29",
-      "intensity": 0
-    },
-    {
-      "date": "2025-12-30",
-      "intensity": 0
-    },
-    {
-      "date": "2025-12-31",
-      "intensity": 0
-    },
-    {
-      "date": "2026-01-01",
-      "intensity": 0
-    },
-    {
-      "date": "2026-01-02",
-      "intensity": 0
-    },
-    {
-      "date": "2026-01-03",
-      "intensity": 0
-    },
-    {
-      "date": "2026-01-04",
-      "intensity": 0
-    },
-    {
-      "date": "2026-01-05",
-      "intensity": 0
-    },
-    {
-      "date": "2026-01-06",
-      "intensity": 0
-    },
-    {
-      "date": "2026-01-07",
-      "intensity": 0
-    },
-    {
-      "date": "2026-01-08",
-      "intensity": 0
-    },
-    {
-      "date": "2026-01-09",
-      "intensity": 0
-    },
-    {
-      "date": "2026-01-10",
-      "intensity": 0
-    },
-    {
-      "date": "2026-01-11",
-      "intensity": 0
-    },
-    {
-      "date": "2026-01-12",
-      "intensity": 0
-    },
-    {
-      "date": "2026-01-13",
-      "intensity": 0
-    },
-    {
-      "date": "2026-01-14",
-      "intensity": 0
-    },
     {
       "date": "2026-01-15",
       "intensity": 0
@@ -720,18 +464,290 @@
     },
     {
       "date": "2026-05-10",
-      "intensity": 3
+      "intensity": 0
     },
     {
       "date": "2026-05-11",
-      "intensity": 3
+      "intensity": 0
     },
     {
       "date": "2026-05-12",
+      "intensity": 0
+    },
+    {
+      "date": "2026-05-13",
+      "intensity": 0
+    },
+    {
+      "date": "2026-05-14",
+      "intensity": 0
+    },
+    {
+      "date": "2026-05-15",
+      "intensity": 0
+    },
+    {
+      "date": "2026-05-16",
+      "intensity": 0
+    },
+    {
+      "date": "2026-05-17",
+      "intensity": 0
+    },
+    {
+      "date": "2026-05-18",
+      "intensity": 0
+    },
+    {
+      "date": "2026-05-19",
+      "intensity": 0
+    },
+    {
+      "date": "2026-05-20",
+      "intensity": 0
+    },
+    {
+      "date": "2026-05-21",
+      "intensity": 0
+    },
+    {
+      "date": "2026-05-22",
+      "intensity": 0
+    },
+    {
+      "date": "2026-05-23",
+      "intensity": 0
+    },
+    {
+      "date": "2026-05-24",
+      "intensity": 0
+    },
+    {
+      "date": "2026-05-25",
+      "intensity": 0
+    },
+    {
+      "date": "2026-05-26",
+      "intensity": 0
+    },
+    {
+      "date": "2026-05-27",
+      "intensity": 0
+    },
+    {
+      "date": "2026-05-28",
+      "intensity": 0
+    },
+    {
+      "date": "2026-05-29",
+      "intensity": 0
+    },
+    {
+      "date": "2026-05-30",
+      "intensity": 0
+    },
+    {
+      "date": "2026-05-31",
+      "intensity": 0
+    },
+    {
+      "date": "2026-06-01",
+      "intensity": 0
+    },
+    {
+      "date": "2026-06-02",
+      "intensity": 0
+    },
+    {
+      "date": "2026-06-03",
+      "intensity": 0
+    },
+    {
+      "date": "2026-06-04",
+      "intensity": 0
+    },
+    {
+      "date": "2026-06-05",
+      "intensity": 0
+    },
+    {
+      "date": "2026-06-06",
+      "intensity": 0
+    },
+    {
+      "date": "2026-06-07",
+      "intensity": 0
+    },
+    {
+      "date": "2026-06-08",
+      "intensity": 0
+    },
+    {
+      "date": "2026-06-09",
+      "intensity": 0
+    },
+    {
+      "date": "2026-06-10",
+      "intensity": 0
+    },
+    {
+      "date": "2026-06-11",
+      "intensity": 0
+    },
+    {
+      "date": "2026-06-12",
+      "intensity": 0
+    },
+    {
+      "date": "2026-06-13",
+      "intensity": 0
+    },
+    {
+      "date": "2026-06-14",
+      "intensity": 0
+    },
+    {
+      "date": "2026-06-15",
+      "intensity": 0
+    },
+    {
+      "date": "2026-06-16",
+      "intensity": 0
+    },
+    {
+      "date": "2026-06-17",
+      "intensity": 0
+    },
+    {
+      "date": "2026-06-18",
+      "intensity": 0
+    },
+    {
+      "date": "2026-06-19",
+      "intensity": 0
+    },
+    {
+      "date": "2026-06-20",
+      "intensity": 0
+    },
+    {
+      "date": "2026-06-21",
+      "intensity": 0
+    },
+    {
+      "date": "2026-06-22",
+      "intensity": 0
+    },
+    {
+      "date": "2026-06-23",
+      "intensity": 0
+    },
+    {
+      "date": "2026-06-24",
+      "intensity": 0
+    },
+    {
+      "date": "2026-06-25",
+      "intensity": 0
+    },
+    {
+      "date": "2026-06-26",
+      "intensity": 0
+    },
+    {
+      "date": "2026-06-27",
+      "intensity": 0
+    },
+    {
+      "date": "2026-06-28",
+      "intensity": 0
+    },
+    {
+      "date": "2026-06-29",
+      "intensity": 0
+    },
+    {
+      "date": "2026-06-30",
+      "intensity": 0
+    },
+    {
+      "date": "2026-07-01",
+      "intensity": 0
+    },
+    {
+      "date": "2026-07-02",
+      "intensity": 0
+    },
+    {
+      "date": "2026-07-03",
+      "intensity": 0
+    },
+    {
+      "date": "2026-07-04",
+      "intensity": 0
+    },
+    {
+      "date": "2026-07-05",
+      "intensity": 0
+    },
+    {
+      "date": "2026-07-06",
+      "intensity": 0
+    },
+    {
+      "date": "2026-07-07",
+      "intensity": 0
+    },
+    {
+      "date": "2026-07-08",
+      "intensity": 0
+    },
+    {
+      "date": "2026-07-09",
+      "intensity": 0
+    },
+    {
+      "date": "2026-07-10",
+      "intensity": 0
+    },
+    {
+      "date": "2026-07-11",
+      "intensity": 0
+    },
+    {
+      "date": "2026-07-12",
+      "intensity": 0
+    },
+    {
+      "date": "2026-07-13",
+      "intensity": 0
+    },
+    {
+      "date": "2026-07-14",
+      "intensity": 3
+    },
+    {
+      "date": "2026-07-15",
       "intensity": 2
     }
   ],
-  "commitsLast30d": 25,
-  "commitsThisWeek": 25,
-  "lastPush": "2026-05-12T10:07:10Z"
+  "commitsLast30d": 26,
+  "commitsThisWeek": 26,
+  "lastPush": "2026-07-15T09:43:23Z",
+  "repos": {
+    "PiotrRomanczuk/guitar-crm": {
+      "slug": "PiotrRomanczuk/guitar-crm",
+      "stars": 0,
+      "forks": 0,
+      "pushedAt": "2026-07-15T09:43:23Z",
+      "language": "TypeScript"
+    },
+    "PiotrRomanczuk/ShortsCannon": {
+      "slug": "PiotrRomanczuk/ShortsCannon",
+      "stars": 0,
+      "forks": 0,
+      "pushedAt": "2026-03-07T22:24:57Z",
+      "language": "C#"
+    }
+  }
 }
