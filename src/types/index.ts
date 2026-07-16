@@ -33,10 +33,3 @@ export interface Project {
   stat?: { value: string; label: string };
 }
 
-export interface TimelineMilestone {
-  id: string;
-  title: string;
-  period: string;
-  description: string;
-  tech: string[];
-}

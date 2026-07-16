@@ -25,7 +25,7 @@ const newsreader = Newsreader({
 });
 
 export const metadata: Metadata = {
-  title: "Piotr Romanczuk | Fullstack Engineer",
+  title: "Piotr Romanczuk | Fullstack Engineer + Infra",
   description:
     "Fullstack engineer in Warsaw, Poland. I build and run production web apps end-to-end — Next.js and .NET on top; Linux, monitoring, and CI/CD underneath.",
   keywords: [
@@ -41,8 +41,9 @@ export const metadata: Metadata = {
     "Warsaw",
   ],
   authors: [{ name: "Piotr Romanczuk" }],
+  alternates: { canonical: "/" },
   openGraph: {
-    title: "Piotr Romanczuk | Fullstack Engineer",
+    title: "Piotr Romanczuk | Fullstack Engineer + Infra",
     description:
       "I make products that survive their first users — and run the infrastructure underneath.",
     type: "website",
@@ -51,7 +52,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Piotr Romanczuk | Fullstack Engineer",
+    title: "Piotr Romanczuk | Fullstack Engineer + Infra",
     description:
       "I make products that survive their first users — and run the infrastructure underneath.",
   },
@@ -81,7 +82,7 @@ export default function RootLayout({
               "@context": "https://schema.org",
               "@type": "Person",
               name: "Piotr Romanczuk",
-              jobTitle: "Software Engineer",
+              jobTitle: "Fullstack Engineer + Infra",
               url: "https://romanczuk.vercel.app",
               email: "mailto:p.romanczuk@gmail.com",
               address: {

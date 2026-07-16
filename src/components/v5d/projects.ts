@@ -1,6 +1,6 @@
 import type { ProjectMockId } from "@/components/v5d/ProjectMock";
 
-export type Status = "shipping" | "active" | "internal" | "archived";
+export type Status = "shipping" | "active" | "paused" | "internal" | "archived";
 export type ProjectType = "saas" | "tool" | "oss" | "site" | "experiment";
 
 export type Project = {
@@ -16,6 +16,8 @@ export type Project = {
   mockId: ProjectMockId;
   /** Real capture shown in the detail card; the SVG mock is the fallback. */
   screenshot?: string;
+  /** Shown under the mock when there's no real screenshot yet, so it doesn't read as a real capture. */
+  mockNote?: string;
   featured?: boolean;
   metrics?: string[];
   details: {
@@ -40,12 +42,12 @@ export const PROJECTS: Project[] = [
     type: "saas",
     year: 2024,
     status: "shipping",
-    live: "strummy.app",
-    repo: "github.com/PiotrRomanczuk/guitar-crm",
+    live: "strummy.vercel.app",
+    repo: "github.com/PiotrRomanczuk/strummy",
     mockId: "strummy",
     screenshot: "/projects/Strummy.jpg",
     featured: true,
-    metrics: ["~25 dau", "paying since 2024", "stripe billing"],
+    metrics: ["~25 users/day", "paying since 2024", "stripe billing"],
     details: {
       post: {
         href: "/blog/three-production-lessons-from-shipping-strummy",
@@ -73,12 +75,8 @@ export const PROJECTS: Project[] = [
     mockId: "stories",
     screenshot: "/projects/IGWebhook.jpg",
     details: {
-      post: {
-        href: "/blog/why-im-rebuilding-on-dotnet",
-        title: "Why I'm rebuilding my Instagram automation on .NET and Angular",
-      },
       about:
-        "Internal platform that publishes Instagram Stories at scale through the Meta Graph API. Built around a job queue where every publish is idempotent, retried with backoff, and auditable after the fact.",
+        "Internal platform that publishes Instagram Stories at scale through the Meta Graph API. Built around a job queue where every publish is idempotent, retried with backoff, and auditable after the fact. Client project under NDA — code and dashboards aren't public. This is v1 of the pipeline; ShortsCannon is the v2 rebuild on .NET + Angular.",
       highlights: [
         "Queue with idempotency keys — a retried job can never double-post",
         "Meta webhook ingestion with signature validation at the boundary",
@@ -90,21 +88,25 @@ export const PROJECTS: Project[] = [
   {
     num: "03",
     title: "ShortsCannon",
-    short: "Video job pipeline. Learning .NET + Angular in anger.",
+    short: "Video job pipeline. Learning .NET + Angular on a real project, not a tutorial.",
     stack: [".NET 9", "C#", "Angular 19", "EF Core", "SQL Server"],
     type: "oss",
     year: 2025,
-    status: "active",
+    status: "paused",
     repo: "github.com/PiotrRomanczuk/ShortsCannon",
     mockId: "shortscannon",
+    mockNote: "concept sketch — API not built yet",
     details: {
+      post: {
+        href: "/blog/why-im-rebuilding-on-dotnet",
+        title: "Why I'm rebuilding my Instagram automation on .NET and Angular",
+      },
       about:
-        "Multi-platform short-video dispatcher and a deliberate learning project: the goal is to internalise .NET the way I know Next.js. Clean Architecture, CQRS via MediatR, EF Core against SQL Server, Angular 19 up front.",
+        "Multi-platform short-video dispatcher and a deliberate learning project: the goal is to internalise .NET the way I know Next.js. Early-stage — the 4-layer Clean Architecture skeleton is scaffolded; CQRS, EF Core, and the Angular front end are the next commits, not yet shipped.",
       highlights: [
-        "4-layer Clean Architecture — the domain never references infrastructure",
-        "CQRS command/query handlers via MediatR, validation at the boundary",
-        "EF Core migrations against SQL Server; tests on domain + application layers",
-        "Angular 19 standalone components consuming the API",
+        "4-layer Clean Architecture skeleton scaffolded — Domain, Application, Infrastructure, API projects, kept dependency-clean by design",
+        "Deliberate rebuild-to-learn: internalising .NET + Angular on a real project instead of a tutorial (see the write-up)",
+        "3 commits in — CQRS/MediatR, EF Core migrations, and the Angular front end are planned, not yet built",
       ],
     },
   },
@@ -112,7 +114,7 @@ export const PROJECTS: Project[] = [
     num: "04",
     title: "Home-Ops",
     short:
-      "Self-hosted platform on real hardware. Pi monitoring hub, Tailscale mesh, systemd services, nightly restic backups.",
+      "Infra I run and monitor myself — same on-call/ops muscle as a production job, minus the pager.",
     stack: ["Linux", "systemd", "Docker", "Tailscale", "Postgres", "Cloudflare Tunnel"],
     type: "tool",
     year: 2025,
@@ -164,7 +166,8 @@ export const PROJECTS: Project[] = [
     type: "experiment",
     year: 2023,
     status: "archived",
-    repo: "github.com/PiotrRomanczuk/pizzayolo",
+    live: "pizzayolo-pr.vercel.app",
+    repo: "github.com/PiotrRomanczuk/pizza-store",
     mockId: "pizzayolo",
     screenshot: "/projects/PizzaStore.jpg",
     details: {
