@@ -56,6 +56,7 @@ export const PROJECTS: Project[] = [
       highlights: [
         "Supabase Postgres with row-level security — every table policy-locked per teacher",
         "Stripe billing driven by webhooks; subscription state, invoices and disputes handled in production",
+        "9 LLM agents (OpenRouter + self-hosted Ollama) for lesson planning and content generation",
         "Jest suite on the hot paths; lint + tests gate every deploy",
         "v3 in flight: invoicing & lesson reminders",
       ],
