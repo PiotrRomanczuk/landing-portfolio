@@ -32,6 +32,8 @@ export const metadata: Metadata = {
     "fullstack engineer",
     "software developer",
     "DevOps",
+    "AI-assisted development",
+    "Claude Code",
     "React",
     "Next.js",
     "TypeScript",

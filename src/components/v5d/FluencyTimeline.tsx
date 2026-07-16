@@ -5,7 +5,7 @@ export type FluencyRow = {
   startYear: number;
   endYear: number;
   use: "daily" | "weekly" | "occasional" | "past";
-  group: "frontend" | "backend" | "infra" | "testing";
+  group: "frontend" | "backend" | "infra" | "testing" | "ai";
 };
 
 const NOW = new Date().getUTCFullYear();

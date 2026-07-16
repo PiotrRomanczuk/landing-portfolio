@@ -68,6 +68,9 @@ const FLUENCY: FluencyRow[] = [
   { name: "Vercel / Fly", startYear: 2022, endYear: 2026, use: "weekly", group: "infra" },
   { name: "Tailscale / networking", startYear: 2024, endYear: 2026, use: "weekly", group: "infra" },
   { name: "Monitoring (Kuma · Beszel)", startYear: 2025, endYear: 2026, use: "weekly", group: "infra" },
+  { name: "Claude Code / agents", startYear: 2025, endYear: 2026, use: "daily", group: "ai" },
+  { name: "Copilot / Codex", startYear: 2023, endYear: 2026, use: "daily", group: "ai" },
+  { name: "LLM APIs (OpenRouter · Ollama)", startYear: 2024, endYear: 2026, use: "weekly", group: "ai" },
   { name: "Playwright", startYear: 2023, endYear: 2026, use: "weekly", group: "testing" },
   { name: "Vitest / Jest", startYear: 2022, endYear: 2026, use: "daily", group: "testing" },
   { name: "XState", startYear: 2023, endYear: 2024, use: "past", group: "testing" },
@@ -438,6 +441,17 @@ export default function V5DLanding({ posts, activity, stamp }: Props) {
                   deserves a fair chance.
                 </p>
               </div>
+              <div className="approach-tile wide">
+                <div className="approach-num">04</div>
+                <h4>Agents on the team</h4>
+                <p>
+                  Claude Code and Codex are in my daily loop — driven like
+                  sharp junior pairs: tight specs in, reviewed diffs out,
+                  tests before merge. I also ship LLM features (OpenRouter,
+                  self-hosted Ollama), and I stay accountable for every line
+                  that ships. Leverage, not autopilot.
+                </p>
+              </div>
             </div>
           </section>
 
@@ -703,20 +717,14 @@ export default function V5DLanding({ posts, activity, stamp }: Props) {
               Looking for a <span>fullstack or devops</span> role.
               <br />
               Write to{" "}
-              <a
-                href={MAILTO}
-                style={{ borderBottom: "1px solid var(--rule-hi)" }}
-              >
-                {EMAIL}
-              </a>
-              {" · "}
               <button
                 type="button"
-                className="copy-inline"
+                className="pitch-email"
                 onClick={copyEmail}
                 aria-label="Copy email to clipboard"
+                title="Click to copy"
               >
-                copy
+                {EMAIL}
               </button>
             </p>
             <div className="contact-grid">
@@ -726,19 +734,14 @@ export default function V5DLanding({ posts, activity, stamp }: Props) {
                 across EU; happy to travel for onsites in the first weeks.
               </div>
               <div className="channels">
-                <a href={MAILTO}>
-                  <span>Email</span>
-                  <span className="href">{EMAIL}</span>
-                  <span className="sla">~24h</span>
-                </a>
                 <button
                   type="button"
                   className="channel-btn"
                   onClick={copyEmail}
                 >
-                  <span>Copy email</span>
-                  <span className="href">to clipboard</span>
-                  <span className="sla">↗</span>
+                  <span>Email</span>
+                  <span className="href">{EMAIL}</span>
+                  <span className="sla">click to copy</span>
                 </button>
                 <a
                   href="https://github.com/PiotrRomanczuk"
@@ -749,25 +752,11 @@ export default function V5DLanding({ posts, activity, stamp }: Props) {
                   <span className="href">@PiotrRomanczuk</span>
                   <span className="sla">DMs open</span>
                 </a>
-                <a
-                  href="https://www.linkedin.com/in/piotr-romanczuk/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <span>LinkedIn</span>
-                  <span className="href">/in/piotr-romanczuk</span>
-                  <span className="sla">~3d</span>
-                </a>
                 <a href="/Romanczuk_Piotr_CV.pdf" target="_blank" rel="noopener noreferrer">
                   <span>CV (PDF)</span>
                   <span className="href">Romanczuk_Piotr_CV.pdf</span>
                   <span className="sla">latest</span>
                 </a>
-                <Link href="/cv/fullstack">
-                  <span>CV (web)</span>
-                  <span className="href">/cv/fullstack</span>
-                  <span className="sla">4 variants</span>
-                </Link>
               </div>
             </div>
 
