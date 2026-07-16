@@ -142,9 +142,9 @@ export const projects: Project[] = [
         "Node.js 20",
       ],
     },
-    url: "https://strummy.app",
-    urlLabel: "strummy.app",
-    sourceUrl: "github.com/PiotrRomanczuk/guitar-crm",
+    url: "https://strummy.vercel.app",
+    urlLabel: "strummy.vercel.app",
+    sourceUrl: "github.com/PiotrRomanczuk/strummy",
   },
   {
     key: "webhook",

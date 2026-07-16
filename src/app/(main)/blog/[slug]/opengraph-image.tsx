@@ -23,12 +23,15 @@ async function loadFont(family: string, weight: number, italic = false) {
   return fetch(url).then((r) => r.arrayBuffer());
 }
 
-export default async function PostOG({ params }: { params: { slug: string } }) {
+export default async function PostOG({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
   let post: Post | null = null;
   if (isSanityConfigured) {
-    post = await client.fetch<Post | null>(postBySlugQuery, {
-      slug: params.slug,
-    });
+    post = await client.fetch<Post | null>(postBySlugQuery, { slug });
   }
 
   const title = post?.title ?? "The Writing Desk";
@@ -38,7 +41,7 @@ export default async function PostOG({ params }: { params: { slug: string } }) {
   const [newsreaderRegular, newsreaderItalic, jetbrains] = await Promise.all([
     loadFont("Newsreader", 500),
     loadFont("Newsreader", 500, true),
-    loadFont("JetBrains+Mono", 500),
+    loadFont("JetBrains Mono", 500),
   ]);
 
   return new ImageResponse(

@@ -15,6 +15,7 @@ export const metadata: Metadata = {
   title: "The Writing Desk · Piotr Romanczuk",
   description:
     "Engineering writeups on shipping production software — Next.js + Supabase, .NET + Clean Architecture, Python + Node tooling.",
+  alternates: { canonical: "/blog" },
 };
 
 export const revalidate = 3600;

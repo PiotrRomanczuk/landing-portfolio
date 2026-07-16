@@ -80,6 +80,7 @@ export function ProjectDetail({ project, onClose }: Props) {
             </span>
           )}
           {p.status === "active" && <span className="pill accent">active</span>}
+          {p.status === "paused" && <span className="pill">paused</span>}
           {p.status === "internal" && <span className="pill">internal</span>}
           {p.status === "archived" && <span className="pill">archived</span>}
           <span className="proj-card-meta">
@@ -100,9 +101,12 @@ export function ProjectDetail({ project, onClose }: Props) {
             />
           </div>
         ) : (
-          <div className="proj-card-mock" aria-hidden>
-            <ProjectMock id={p.mockId} />
-          </div>
+          <>
+            <div className="proj-card-mock" aria-hidden>
+              <ProjectMock id={p.mockId} />
+            </div>
+            {p.mockNote && <p className="proj-mock-note">{p.mockNote}</p>}
+          </>
         )}
 
         <p className="proj-about">{p.details.about}</p>

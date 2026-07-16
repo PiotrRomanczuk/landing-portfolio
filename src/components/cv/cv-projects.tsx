@@ -30,9 +30,9 @@ const defaultProjects: CVProjectItem[] = [
       "Google Calendar",
       "OpenRouter/Ollama",
     ],
-    url: "https://strummy.app",
-    urlLabel: "strummy.app",
-    sourceUrl: "github.com/PiotrRomanczuk/guitar-crm",
+    url: "https://strummy.vercel.app",
+    urlLabel: "strummy.vercel.app",
+    sourceUrl: "github.com/PiotrRomanczuk/strummy",
   },
   {
     name: "Instagram Stories Webhook",

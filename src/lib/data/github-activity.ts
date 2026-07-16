@@ -25,10 +25,10 @@ export type GithubActivity = {
 
 const USER = "PiotrRomanczuk";
 const SHOWCASED_REPOS = [
-  "PiotrRomanczuk/guitar-crm",
+  "PiotrRomanczuk/strummy",
   "PiotrRomanczuk/ShortsCannon",
   "PiotrRomanczuk/home-ops",
-  "PiotrRomanczuk/pizzayolo",
+  "PiotrRomanczuk/pizza-store",
 ];
 const REVALIDATE_SECONDS = 3600;
 

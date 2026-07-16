@@ -76,10 +76,10 @@ const FLUENCY: FluencyRow[] = [
   { name: "XState", startYear: 2023, endYear: 2024, use: "past", group: "testing" },
 ];
 
-function formatRelative(iso: string | null): string {
+function formatRelative(iso: string | null, now: number): string {
   if (!iso) return "—";
   const t = new Date(iso).getTime();
-  const diff = Date.now() - t;
+  const diff = now - t;
   const mins = Math.round(diff / 60_000);
   if (mins < 60) return `${mins}m ago`;
   const hrs = Math.round(mins / 60);
@@ -88,6 +88,21 @@ function formatRelative(iso: string | null): string {
   if (days < 14) return `${days}d ago`;
   const weeks = Math.round(days / 7);
   return `${weeks}w ago`;
+}
+
+/**
+ * Renders "—" on the server and during the first client render (so the
+ * hydrated DOM always matches), then swaps in the real relative time after
+ * mount. Avoids a hydration mismatch (React #418) against the up-to-an-hour
+ * stale ISR-baked HTML.
+ */
+function RelativeTime({ iso }: { iso: string | null }) {
+  const [now, setNow] = useState<number | null>(null);
+  useEffect(() => {
+    const stamp = () => setNow(Date.now());
+    stamp();
+  }, []);
+  return <>{now === null ? "—" : formatRelative(iso, now)}</>;
 }
 
 const SMALL_CONTRIB = contrib.days.slice(-12 * 7).map((d) => ({
@@ -388,7 +403,7 @@ export default function V5DLanding({ posts, activity, stamp }: Props) {
             </div>
             <div className="not-for">
               <span className="lbl">not looking for</span>
-              <span>agency CTO</span>
+              <span>CTO-for-hire</span>
               <span>·</span>
               <span>crypto</span>
               <span>·</span>
@@ -397,12 +412,12 @@ export default function V5DLanding({ posts, activity, stamp }: Props) {
             <div className="stat-row stat-row-2">
               <div className="stat">
                 <div className="lbl">Strummy · live</div>
-                <div className="val">~25 dau</div>
+                <div className="val">~25 users/day</div>
                 <div className="sub">paying users since 2024</div>
               </div>
               <div className="stat">
                 <div className="lbl">Last GitHub push</div>
-                <div className="val">{formatRelative(activity.lastPush)}</div>
+                <div className="val"><RelativeTime iso={activity.lastPush} /></div>
                 <div className="sub">
                   {activity.commitsLast30d} commits · last 30d
                 </div>
@@ -504,6 +519,7 @@ export default function V5DLanding({ posts, activity, stamp }: Props) {
                         setOpenNum(p.num);
                       }}
                       onKeyDown={(e) => {
+                        if ((e.target as HTMLElement).closest("a")) return;
                         if (e.key === "Enter" || e.key === " ") {
                           e.preventDefault();
                           setOpenNum(p.num);
@@ -527,6 +543,9 @@ export default function V5DLanding({ posts, activity, stamp }: Props) {
                           )}
                           {p.status === "active" && (
                             <span className="pill accent">active</span>
+                          )}
+                          {p.status === "paused" && (
+                            <span className="pill">paused</span>
                           )}
                           {p.status === "internal" && (
                             <span className="pill">internal</span>
@@ -556,7 +575,7 @@ export default function V5DLanding({ posts, activity, stamp }: Props) {
                         <span>{p.type}</span>
                         {repoStats?.pushedAt && (
                           <span title={`last push ${repoStats.pushedAt}`}>
-                            ↳ {formatRelative(repoStats.pushedAt)}
+                            ↳ <RelativeTime iso={repoStats.pushedAt} />
                           </span>
                         )}
                         {repoStats && repoStats.stars > 0 && (
@@ -616,6 +635,10 @@ export default function V5DLanding({ posts, activity, stamp }: Props) {
               versus what I picked up last week.
             </p>
             <FluencyTimeline rows={FLUENCY} />
+            <p className="fluency-footnote">
+              2019–2020 was self-taught, pre-professional coding; daily,
+              on-the-job use starts 2021.
+            </p>
           </section>
 
           {/* WRITING (rendered only when posts exist) */}
@@ -664,12 +687,12 @@ export default function V5DLanding({ posts, activity, stamp }: Props) {
                   <span className="dot accent s5"></span> current focus
                 </h5>
                 <p>
-                  Shipping <b>Strummy v3</b> — invoicing &amp; reminders. Last
-                  push <b>{formatRelative(activity.lastPush)}</b>, three open
+                  Shipping <b>Strummy v3</b> — invoicing &amp; billing. Last
+                  push <b><RelativeTime iso={activity.lastPush} /></b>, three open
                   issues, none on fire. Side: re-reading{" "}
                   <i>Designing Data-Intensive Applications</i>.
                 </p>
-                <div className="contrib-big">
+                <div className="contrib-big" aria-hidden="true">
                   {BIG_CONTRIB.map((c, i) => (
                     <span key={i} style={{ background: accentBg(c.opacity) }} />
                   ))}
@@ -763,7 +786,7 @@ export default function V5DLanding({ posts, activity, stamp }: Props) {
             <div className="colophon">
               <div>piotr romanczuk · v5 · 2026 · warsaw</div>
               <div>
-                built with next · tailwind · framer-motion ·{" "}
+                built with next · tailwind ·{" "}
                 <a href="#intro" style={{ color: "var(--accent)" }}>
                   ↑ to top
                 </a>
@@ -794,9 +817,9 @@ export default function V5DLanding({ posts, activity, stamp }: Props) {
                 <span className="dot accent s5"></span> {"// now"}
               </div>
               <div className="focus">
-                <b>Strummy v3</b> · billing
+                <b>Strummy v3</b> · invoicing &amp; billing
               </div>
-              <div className="contrib">
+              <div className="contrib" aria-hidden="true">
                 {SMALL_CONTRIB.map((c, i) => (
                   <span key={i} style={{ background: accentBg(c.opacity) }} />
                 ))}
@@ -812,11 +835,16 @@ export default function V5DLanding({ posts, activity, stamp }: Props) {
       )}
 
       {/* COMMAND HINT */}
-      <div className="cmd-hint" onClick={openCmd} title="Open command palette">
+      <button
+        type="button"
+        className="cmd-hint"
+        onClick={openCmd}
+        title="Open command palette"
+      >
         <kbd>⌘</kbd>
         <kbd>K</kbd>
         <span>jump anywhere</span>
-      </div>
+      </button>
 
       {/* COMMAND PALETTE */}
       <div

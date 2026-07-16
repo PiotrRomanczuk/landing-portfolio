@@ -28,7 +28,7 @@ function Shell({ title, host, children }: { title: string; host: string; childre
 
 function Strummy() {
   return (
-    <Shell title="Strummy dashboard" host="strummy.app/dashboard">
+    <Shell title="Strummy dashboard" host="strummy.vercel.app/dashboard">
       <div className="mk-row mk-head">
         <span className="mk-pill">12 students</span>
         <span className="mk-pill on">€ 1,840 mrr</span>

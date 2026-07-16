@@ -98,10 +98,10 @@ async function lastPushTimestamp() {
 
 // Repos showcased on the landing page. Slug = "owner/repo".
 const SHOWCASED_REPOS = [
-  "PiotrRomanczuk/guitar-crm",
+  "PiotrRomanczuk/strummy",
   "PiotrRomanczuk/ShortsCannon",
   "PiotrRomanczuk/home-ops",
-  "PiotrRomanczuk/pizzayolo",
+  "PiotrRomanczuk/pizza-store",
 ];
 
 async function fetchRepoStats(slug) {

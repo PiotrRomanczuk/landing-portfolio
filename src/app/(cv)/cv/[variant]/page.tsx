@@ -47,6 +47,9 @@ export async function generateMetadata({
     alternates: {
       canonical: `/cv/${variant}`,
     },
+    // Backing pages for the per-application PDF-generation pipeline, not
+    // public landing pages — keep them out of search results.
+    robots: { index: false, follow: false },
   };
 }
 
