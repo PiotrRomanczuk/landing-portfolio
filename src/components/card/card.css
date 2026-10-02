@@ -1,0 +1,165 @@
+/* Business card at / and /en — same palette and type as the v5d portfolio, one mobile-first column. */
+
+.card-root {
+  --bg: #0a0b0e;
+  --card: #15171d;
+  --card-hi: #1a1d24;
+  --ink: #ecedef;
+  --ink-soft: #c9cbd1;
+  --muted: #8a8e98;
+  --rule: rgba(255, 255, 255, 0.08);
+  --rule-hi: rgba(255, 255, 255, 0.16);
+  --accent: #f5b453;
+  --accent-ink: #0b0c10;
+
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "Geist", "Inter", var(--font-inter), system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+@media (prefers-color-scheme: light) {
+  .card-root {
+    --bg: #f6f5f1;
+    --card: #ffffff;
+    --card-hi: #f0efe9;
+    --ink: #15171b;
+    --ink-soft: #2d3038;
+    --muted: #5e6168;
+    --rule: rgba(0, 0, 0, 0.08);
+    --rule-hi: rgba(0, 0, 0, 0.16);
+    --accent: #a05612;
+    --accent-ink: #ffffff;
+  }
+}
+
+.card-root * { box-sizing: border-box; }
+.card-root a { color: inherit; text-decoration: none; }
+.card-root :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
+
+.card-wrap {
+  max-width: 560px;
+  margin: 0 auto;
+  padding: max(20px, env(safe-area-inset-top)) 20px max(40px, env(safe-area-inset-bottom));
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.card-top { display: flex; justify-content: flex-end; }
+.card-lang {
+  font-family: "JetBrains Mono", var(--font-jetbrains), ui-monospace, monospace;
+  font-size: 13px;
+  color: var(--muted);
+  border: 1px solid var(--rule-hi);
+  border-radius: 999px;
+  padding: 6px 14px;
+  min-height: 36px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.card-hero { display: flex; flex-direction: column; align-items: flex-start; gap: 14px; }
+.card-photo {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center 20%;
+  border: 2px solid var(--rule-hi);
+}
+.card-name {
+  margin: 0;
+  font-family: var(--font-newsreader), Georgia, serif;
+  font-weight: 500;
+  font-size: clamp(2rem, 8vw, 2.6rem);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+.card-role {
+  margin: 0;
+  font-family: "JetBrains Mono", var(--font-jetbrains), ui-monospace, monospace;
+  font-size: 13px;
+  color: var(--accent);
+  letter-spacing: 0.02em;
+}
+.card-intro { margin: 0; color: var(--ink-soft); max-width: 60ch; text-wrap: pretty; }
+
+.card-actions { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.card-action {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 72px;
+  padding: 10px 6px;
+  border-radius: 14px;
+  background: var(--card);
+  border: 1px solid var(--rule);
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+}
+.card-action.primary { background: var(--accent); color: var(--accent-ink); border-color: transparent; }
+.card-action small {
+  font-family: "JetBrains Mono", var(--font-jetbrains), ui-monospace, monospace;
+  font-weight: 400;
+  font-size: 11px;
+  opacity: 0.8;
+}
+
+.card-tiles { display: flex; flex-direction: column; gap: 12px; }
+.card-tile {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 18px;
+  border-radius: 16px;
+  background: var(--card);
+  border: 1px solid var(--rule);
+}
+.card-tile.lead { border-color: var(--accent); }
+.card-tile-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+.card-tile h2 { margin: 0; font-size: 1.15rem; font-weight: 650; letter-spacing: -0.01em; }
+.card-badge {
+  font-family: "JetBrains Mono", var(--font-jetbrains), ui-monospace, monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  border: 1px dashed var(--rule-hi);
+  border-radius: 999px;
+  padding: 2px 10px;
+  white-space: nowrap;
+}
+.card-tile p { margin: 0; color: var(--ink-soft); font-size: 15px; text-wrap: pretty; }
+.card-tile .note { color: var(--muted); font-size: 14px; }
+.card-tile-links { display: flex; flex-wrap: wrap; gap: 4px 20px; margin-top: 4px; }
+.card-tile-link.quiet { color: var(--muted); font-weight: 500; }
+.card-tile-link {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.card-foot {
+  font-family: "JetBrains Mono", var(--font-jetbrains), ui-monospace, monospace;
+  font-size: 12px;
+  color: var(--muted);
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .card-action, .card-tile-link { transition: transform 0.15s ease, opacity 0.15s ease; }
+  .card-action:active { transform: scale(0.97); }
+}

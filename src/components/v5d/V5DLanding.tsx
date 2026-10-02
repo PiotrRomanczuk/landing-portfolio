@@ -348,6 +348,9 @@ export default function V5DLanding({ posts, activity, stamp }: Props) {
               <div>v5 · 2026</div>
               <div>warsaw, pl</div>
               <div className="available">● available</div>
+              <Link href="/" style={{ display: "block", marginTop: 8 }}>
+                ← romanczuk.online
+              </Link>
             </div>
           </div>
         </aside>

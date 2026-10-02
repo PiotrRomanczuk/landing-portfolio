@@ -6,13 +6,13 @@ import { test, expect } from "@playwright/test";
  */
 
 test("landing server-renders every project row (fail-open reveals)", async ({ page }) => {
-  await page.goto("/");
+  await page.goto("/portfolio");
   await expect(page.locator(".work-row")).toHaveCount(6);
   await expect(page.locator(".work-row-inner h3").first()).toHaveText("Strummy");
 });
 
 test("project detail card opens, traps focus, and closes on Escape", async ({ page }) => {
-  await page.goto("/");
+  await page.goto("/portfolio");
   await page.locator(".work-row-inner").first().click();
   const dialog = page.getByRole("dialog", { name: /Strummy/ });
   await expect(dialog).toBeVisible();
@@ -22,7 +22,7 @@ test("project detail card opens, traps focus, and closes on Escape", async ({ pa
 });
 
 test("work filters narrow the list", async ({ page }) => {
-  await page.goto("/");
+  await page.goto("/portfolio");
   await page.getByRole("button", { name: "shipping", exact: true }).click();
   await expect(page.locator(".work-row:not(.hidden)")).toHaveCount(2);
   await page.getByRole("button", { name: "all", exact: true }).click();

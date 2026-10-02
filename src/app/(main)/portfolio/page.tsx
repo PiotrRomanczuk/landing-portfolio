@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { client } from "@/sanity/lib/client";
 import { isSanityConfigured } from "@/sanity/lib/env";
 import { latestPostsQuery } from "@/sanity/lib/queries";
@@ -6,8 +7,14 @@ import V5DLanding, {
   type WritingEntry,
 } from "@/components/v5d/V5DLanding";
 import { getGithubActivity } from "@/lib/data/github-activity";
+import { SITE_URL } from "@/lib/site";
 
 export const revalidate = 3600;
+
+export const metadata: Metadata = {
+  alternates: { canonical: "/portfolio" },
+  openGraph: { url: `${SITE_URL}/portfolio` },
+};
 
 function toEntry(post: PostListItem): WritingEntry {
   const d = new Date(post.publishedAt);

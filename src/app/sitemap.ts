@@ -14,6 +14,8 @@ type SitemapData = {
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticEntries: MetadataRoute.Sitemap = [
     { url: BASE_URL, lastModified: new Date(), priority: 1.0 },
+    { url: `${BASE_URL}/en`, lastModified: new Date(), priority: 0.9 },
+    { url: `${BASE_URL}/portfolio`, lastModified: new Date(), priority: 0.9 },
     { url: `${BASE_URL}/blog`, lastModified: new Date(), priority: 0.9 },
     { url: `${BASE_URL}/cv/fullstack`, lastModified: new Date(), priority: 0.8 },
     { url: `${BASE_URL}/cv/frontend`, lastModified: new Date(), priority: 0.8 },

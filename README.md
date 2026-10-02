@@ -1,6 +1,6 @@
 ---
 created: 2024-11-01
-updated: 2026-07-15
+updated: 2026-10-02
 ---
 
 # romanczuk.online — Personal Portfolio
@@ -13,7 +13,8 @@ Portfolio and blog for Piotr Romanczuk — fullstack engineer (Next.js / .NET) w
 
 ## What's here
 
-- **Landing page** (`v5d`) — editorial/terminal aesthetic with a command palette (`⌘K`), scroll-spy anchor rail, theme persistence, and a Konami code.
+- **Business card** at `/` (Polish) and `/en` — phone, e-mail, "Save contact" (`/kontakt.vcf`, vCard 3.0) and tiles for Vector Digital, portfolio, English tutoring, guitar lessons (Strummy), homelab and the blog. All copy and contact data live in `src/data/card.ts`; set `VECTOR_DIGITAL_URL` / `STATUS_URL` there once those sites exist. Installable on the iPhone home screen (`manifest.ts`, `apple-icon.tsx`); printable QR in `public/qr-romanczuk-online.svg` (`npm run qr`).
+- **Portfolio** (`v5d`) at `/portfolio` — editorial/terminal aesthetic with a command palette (`⌘K`), scroll-spy anchor rail, theme persistence, and a Konami code.
 - **Live GitHub stats** — last push, 30-day/7-day contribution counts, and per-repo stars are fetched server-side with hourly ISR (`src/lib/data/github-activity.ts`), so the hero can never show months-stale numbers. A build-time snapshot (`scripts/fetch-github-data.mjs`) is the offline fallback and feeds the contribution heatmaps; a tokenless run refuses to overwrite dense GraphQL data with the public-events view.
 - **Project detail cards** — every work row opens a modal with an extended write-up, highlight bullets, metrics, and links (Esc / backdrop close, scroll lock).
 - **Blog** — Sanity-backed, with portable-text code blocks, callouts, pull quotes, per-post OG images, RSS, and tag pages. Posts are seeded by idempotent scripts (`scripts/seed-*-post.ts`) and promoted from drafts with `scripts/publish-drafts.ts`.
@@ -56,7 +57,11 @@ npx sanity exec scripts/publish-drafts.ts --with-user-token     # promote drafts
 
 ```
 src/
-  app/(main)/          # landing + blog routes, v5d styles
+  app/(card)/          # business card: / (PL) and /en
+  app/(main)/          # /portfolio + blog routes, v5d styles
+  app/kontakt.vcf/     # vCard download
+  components/card/     # BusinessCard, CardTile, card.css
+  data/card.ts         # card copy (PL/EN), contact data, vCard builder
   components/v5d/      # current landing (V5DLanding, ProjectDetail, projects data, Reveal, mocks)
   lib/data/            # github-activity (ISR fetch), github-counts (GraphQL calendar)
   sanity/              # schema, client, GROQ queries

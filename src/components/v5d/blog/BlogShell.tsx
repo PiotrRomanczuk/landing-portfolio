@@ -19,12 +19,12 @@ export function BlogShell(props: ShellProps) {
       <div className="shell">
         <aside className="gutter-l">
           <div className="gutter-l-sticky">
-            <Link href="/" className="mark" title="Back to home">pr</Link>
+            <Link href="/" className="mark" title="romanczuk.online">pr</Link>
             <div className="gutter-meta">
               <div>v5 · 2026</div>
               <div>warsaw, pl</div>
-              <Link href="/" className="available" style={{ display: "block" }}>
-                ← home
+              <Link href="/portfolio" className="available" style={{ display: "block" }}>
+                ← portfolio
               </Link>
             </div>
           </div>
