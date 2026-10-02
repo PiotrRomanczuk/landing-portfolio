@@ -1,45 +1,46 @@
 import Link from "next/link";
-import { mailHref, type CardTile as Tile } from "@/data/card";
+import type { CardLink, CardTile as Tile } from "@/data/card";
 
-type Props = { tile: Tile; soonLabel: string; askLabel: string };
+type Variant = "lead" | "portfolio" | "more";
 
-function TileLink({ href, label, className }: { href: string; label: string; className: string }) {
-  if (href.startsWith("/")) {
+function TileLink({ link, className }: { link: CardLink; className: string }) {
+  if (link.href.startsWith("/")) {
     return (
-      <Link className={className} href={href}>
-        {label} →
+      <Link className={className} href={link.href}>
+        {link.label} →
       </Link>
     );
   }
-  const isExternal = href.startsWith("http");
+  const isExternal = link.href.startsWith("http");
   return (
-    <a className={className} href={href} {...(isExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}>
-      {label} {isExternal ? "↗" : "→"}
+    <a className={className} href={link.href} {...(isExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}>
+      {link.label} {isExternal ? "↗" : "→"}
     </a>
   );
 }
 
-/** One destination on the card. Tiles without a live href fall back to a pre-filled e-mail. */
-export function CardTile({ tile, soonLabel, askLabel }: Props) {
-  const mainHref = tile.href ?? (tile.mailSubject ? mailHref(tile.mailSubject) : null);
-  const hasSecondaryMail = tile.href !== null && tile.mailSubject !== undefined;
+/**
+ * One destination on the card. "lead" is the dark, filled Vector Digital tile; "portfolio" the framed
+ * second-strongest tile; "more" the light, ruled entries below them.
+ */
+export function CardTile({ tile, variant, footer }: { tile: Tile; variant: Variant; footer?: React.ReactNode }) {
+  const Heading = variant === "more" ? "h3" : "h2";
+  const linkClass = variant === "lead" ? "card-btn" : "card-link";
 
   return (
-    <section className={`card-tile${tile.id === "vector" ? " lead" : ""}`} aria-labelledby={`tile-${tile.id}`}>
+    <article className={`card-tile ${variant}`} aria-labelledby={`tile-${tile.id}`}>
       <div className="card-tile-head">
-        <h2 id={`tile-${tile.id}`}>{tile.title}</h2>
-        {tile.isComingSoon ? <span className="card-badge">{soonLabel}</span> : null}
+        <span className="card-eyebrow">{tile.eyebrow}</span>
+        {variant === "portfolio" ? <span className="card-chip">EN</span> : null}
       </div>
+      <Heading id={`tile-${tile.id}`}>{tile.title}</Heading>
       <p>{tile.body}</p>
-      {tile.note ? <p className="note">{tile.note}</p> : null}
-      {mainHref || hasSecondaryMail ? (
-        <div className="card-tile-links">
-          {mainHref ? <TileLink className="card-tile-link" href={mainHref} label={tile.cta} /> : null}
-          {hasSecondaryMail ? (
-            <TileLink className="card-tile-link quiet" href={mailHref(tile.mailSubject)} label={askLabel} />
-          ) : null}
-        </div>
-      ) : null}
-    </section>
+      <div className="card-tile-links">
+        {tile.links.map((link) => (
+          <TileLink key={link.href} link={link} className={linkClass} />
+        ))}
+      </div>
+      {footer}
+    </article>
   );
 }
