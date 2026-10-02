@@ -2,8 +2,9 @@ import { client } from "@/sanity/lib/client";
 import { isSanityConfigured } from "@/sanity/lib/env";
 import { allPostsQuery } from "@/sanity/lib/queries";
 import type { PostListItem } from "@/sanity/lib/types";
+import { SITE_URL } from "@/lib/site";
 
-const BASE_URL = "https://romanczuk.vercel.app";
+const BASE_URL = SITE_URL;
 const TITLE = "The Writing Desk — Piotr Romanczuk";
 const SUBTITLE =
   "Engineering writeups on shipping production software — Next.js + Supabase, .NET + Clean Architecture, Python + Node tooling.";

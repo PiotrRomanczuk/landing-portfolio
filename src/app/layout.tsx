@@ -4,6 +4,7 @@ import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Providers } from "@/components/Providers";
 import "./globals.css";
+import { SITE_URL } from "@/lib/site";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -47,7 +48,7 @@ export const metadata: Metadata = {
       "I make products that survive their first users — and run the infrastructure underneath.",
     type: "website",
     locale: "en_US",
-    url: "https://romanczuk.vercel.app",
+    url: SITE_URL,
   },
   twitter: {
     card: "summary_large_image",
@@ -55,7 +56,7 @@ export const metadata: Metadata = {
     description:
       "I make products that survive their first users — and run the infrastructure underneath.",
   },
-  metadataBase: new URL("https://romanczuk.vercel.app"),
+  metadataBase: new URL(SITE_URL),
   icons: { icon: "/icon.svg" },
 };
 
@@ -82,7 +83,7 @@ export default function RootLayout({
               "@type": "Person",
               name: "Piotr Romanczuk",
               jobTitle: "Software Engineer",
-              url: "https://romanczuk.vercel.app",
+              url: SITE_URL,
               email: "mailto:p.romanczuk@gmail.com",
               address: {
                 "@type": "PostalAddress",

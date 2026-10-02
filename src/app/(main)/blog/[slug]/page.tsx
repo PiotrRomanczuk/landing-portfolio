@@ -14,6 +14,7 @@ import { BlogPortableText } from "@/components/blog/PortableText";
 import { BlogShell } from "@/components/v5d/blog/BlogShell";
 import { BlogArticleHead } from "@/components/v5d/blog/BlogArticleHead";
 import { readingTime } from "@/lib/blog";
+import { SITE_URL } from "@/lib/site";
 
 type Params = { slug: string };
 
@@ -74,7 +75,7 @@ export default async function PostPage({
     image: coverUrl,
     mainEntityOfPage: {
       "@type": "WebPage",
-      "@id": `https://romanczuk.vercel.app/blog/${post.slug}`,
+      "@id": `${SITE_URL}/blog/${post.slug}`,
     },
   };
 

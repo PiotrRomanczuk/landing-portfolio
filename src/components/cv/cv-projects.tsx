@@ -74,8 +74,8 @@ const defaultProjects: CVProjectItem[] = [
       "Framer Motion",
       "Playwright",
     ],
-    url: "https://romanczuk.vercel.app",
-    urlLabel: "romanczuk.vercel.app | inborr.pl",
+    url: "https://romanczuk.online",
+    urlLabel: "romanczuk.online | inborr.pl",
   },
 ];
 

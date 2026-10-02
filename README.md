@@ -3,13 +3,13 @@ created: 2024-11-01
 updated: 2026-07-15
 ---
 
-# romanczuk.vercel.app — Personal Portfolio
+# romanczuk.online — Personal Portfolio
 
 [![ci](https://github.com/PiotrRomanczuk/landing-portfolio/actions/workflows/ci.yml/badge.svg)](https://github.com/PiotrRomanczuk/landing-portfolio/actions/workflows/ci.yml)
 
 Portfolio and blog for Piotr Romanczuk — fullstack engineer (Next.js / .NET) who also runs the infrastructure underneath. Based in Warsaw, Poland.
 
-**Live:** [romanczuk.vercel.app](https://romanczuk.vercel.app)
+**Live:** [romanczuk.online](https://romanczuk.online)
 
 ## What's here
 

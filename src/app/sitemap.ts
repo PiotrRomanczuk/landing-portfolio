@@ -2,8 +2,9 @@ import type { MetadataRoute } from "next";
 import { client } from "@/sanity/lib/client";
 import { isSanityConfigured } from "@/sanity/lib/env";
 import { sitemapQuery } from "@/sanity/lib/queries";
+import { SITE_URL } from "@/lib/site";
 
-const BASE_URL = "https://romanczuk.vercel.app";
+const BASE_URL = SITE_URL;
 
 type SitemapData = {
   posts: { slug: string; _updatedAt: string }[];

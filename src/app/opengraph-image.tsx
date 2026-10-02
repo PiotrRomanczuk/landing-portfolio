@@ -1,4 +1,5 @@
 import { ImageResponse } from "next/og";
+import { SITE_HOST } from "@/lib/site";
 
 export const runtime = "edge";
 export const alt = "Piotr Romanczuk — Fullstack Engineer";
@@ -81,7 +82,7 @@ export default async function Image() {
             color: "#64748b",
           }}
         >
-          romanczuk.vercel.app
+          {SITE_HOST}
         </div>
       </div>
     ),

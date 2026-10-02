@@ -55,8 +55,8 @@ export const personalInfo: PersonalInfo = {
   location: "Warsaw, Poland",
   github: "github.com/PiotrRomanczuk",
   githubUrl: "https://github.com/PiotrRomanczuk",
-  portfolio: "romanczuk.vercel.app",
-  portfolioUrl: "https://romanczuk.vercel.app",
+  portfolio: "romanczuk.online",
+  portfolioUrl: "https://romanczuk.online",
 };
 
 export const projects: Project[] = [
@@ -296,8 +296,8 @@ export const projects: Project[] = [
         "Edge CDN",
       ],
     },
-    url: "https://romanczuk.vercel.app",
-    urlLabel: "romanczuk.vercel.app | inborr.pl",
+    url: "https://romanczuk.online",
+    urlLabel: "romanczuk.online | inborr.pl",
   },
 ];
 
