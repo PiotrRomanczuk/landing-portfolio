@@ -1,4 +1,12 @@
 import type { Metadata, Viewport } from "next";
+import { Instrument_Sans } from "next/font/google";
+
+const instrumentSans = Instrument_Sans({
+  variable: "--font-instrument",
+  subsets: ["latin", "latin-ext"],
+  weight: ["400", "500", "600"],
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   appleWebApp: { capable: true, title: "Romańczuk", statusBarStyle: "black-translucent" },
@@ -14,5 +22,5 @@ export const viewport: Viewport = {
 };
 
 export default function CardLayout({ children }: LayoutProps<"/">) {
-  return children;
+  return <div className={instrumentSans.variable}>{children}</div>;
 }

@@ -30,3 +30,13 @@ test("vCard downloads with phone and e-mail", async ({ request }) => {
   expect(body).toContain("TEL;TYPE=CELL:+48513602768");
   expect(body).toContain("EMAIL;TYPE=INTERNET:p.romanczuk@gmail.com");
 });
+
+test("card pages advertise a share preview image", async ({ page, request }) => {
+  for (const [path, og] of [["/", "/og/card/pl"], ["/en", "/og/card/en"]]) {
+    await page.goto(path);
+    await expect(page.locator('meta[property="og:image"]')).toHaveAttribute("content", new RegExp(`${og}$`));
+    const res = await request.get(og);
+    expect(res.status()).toBe(200);
+    expect(res.headers()["content-type"]).toContain("image/png");
+  }
+});

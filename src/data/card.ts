@@ -11,24 +11,23 @@ export const CONTACT = {
   city: "Warszawa",
 } as const;
 
-/** Set once Vector Digital has its own domain; until then the tile leads to e-mail. */
+/** Set once Vector Digital has its own domain; until then the tile leads to e-mail and shows "coming soon". */
 export const VECTOR_DIGITAL_URL: string | null = null;
-/** Public homelab status page (phase 2: status.romanczuk.online). */
-export const STATUS_URL: string | null = null;
 export const STRUMMY_URL = "https://strummy.online";
+export const GITHUB_URL = "https://github.com/PiotrRomanczuk";
+/** Footer link; hidden while null. */
+export const LINKEDIN_URL: string | null = null;
+const HOMELAB_POST = "/blog/four-boxes-and-a-pi-homelab-devops-classroom";
+
+export type CardLink = { label: string; href: string };
 
 export type CardTile = {
   id: "vector" | "portfolio" | "english" | "guitar" | "homelab" | "blog";
+  /** Who the tile is for — lets each audience spot "its" tile at a glance. */
+  eyebrow: string;
   title: string;
   body: string;
-  note?: string;
-  /** Where the tile leads; null = falls back to mailHref(mailSubject), or no link at all without a subject. */
-  href: string | null;
-  /** Shows the "coming soon" badge (destination not live yet). */
-  isComingSoon?: boolean;
-  cta: string;
-  /** Pre-filled e-mail subject: the main link when href is null, otherwise a second, quieter link. */
-  mailSubject?: string;
+  links: CardLink[];
 };
 
 export type CardCopy = {
@@ -37,14 +36,24 @@ export type CardCopy = {
   call: string;
   write: string;
   save: string;
+  actionsLabel: string;
+  tilesLabel: string;
+  langLabel: string;
+  city: string;
   soon: string;
-  ask: string;
-  switchLabel: string;
-  switchHref: string;
+  soonText: string;
   title: string;
   description: string;
-  tiles: CardTile[];
+  lead: CardTile;
+  portfolio: CardTile;
+  more: CardTile[];
 };
+
+export function mailHref(subject?: string): string {
+  return `mailto:${CONTACT.email}${subject ? `?subject=${encodeURIComponent(subject)}` : ""}`;
+}
+
+export const IS_VECTOR_SOON = VECTOR_DIGITAL_URL === null;
 
 export const CARD: Record<Locale, CardCopy> = {
   pl: {
@@ -54,62 +63,60 @@ export const CARD: Record<Locale, CardCopy> = {
     call: "Zadzwoń",
     write: "Napisz",
     save: "Zapisz kontakt",
-    soon: "wkrótce",
-    ask: "Zapytaj mailem",
-    switchLabel: "EN",
-    switchHref: "/en",
+    actionsLabel: "Kontakt",
+    tilesLabel: "Czym się zajmuję",
+    langLabel: "Język",
+    city: "Warszawa",
+    soon: "Wkrótce",
+    soonText: "osobna strona Vector Digital",
     title: "Piotr Romańczuk — wizytówka",
     description:
       "Inżynier oprogramowania z Warszawy. Automatyzacja procesów i wdrożenia AI (Vector Digital), portfolio, korepetycje z angielskiego, lekcje gitary.",
-    tiles: [
-      {
-        id: "vector",
-        title: "Vector Digital",
-        body: "Usprawniamy powtarzalną pracę w małych firmach: wyceny, raporty, faktury, przepisywanie danych między mailem a Excelem. Automatyzacja procesów i wdrożenia AI na narzędziach, które już macie.",
-        note: "Prowadzę audyty i wdrożenia.",
-        href: VECTOR_DIGITAL_URL,
-        isComingSoon: VECTOR_DIGITAL_URL === null,
-        cta: "Napisz w sprawie audytu",
-        mailSubject: "Vector Digital — audyt procesów",
-      },
-      {
-        id: "portfolio",
-        title: "Portfolio i CV",
-        body: "Projekty, doświadczenie i CV — po angielsku.",
-        href: "/portfolio",
-        cta: "Zobacz portfolio",
-      },
+    lead: {
+      id: "vector",
+      eyebrow: "Dla firm",
+      title: "Vector Digital",
+      body: "Usprawniamy powtarzalną pracę w małych firmach: wyceny, raporty, faktury, przepisywanie danych między mailem a Excelem. Automatyzacja procesów i wdrożenia AI na narzędziach, które już macie. Prowadzę audyty i wdrożenia.",
+      links: [{ label: "Napisz w sprawie audytu", href: VECTOR_DIGITAL_URL ?? mailHref("Vector Digital — audyt procesów") }],
+    },
+    portfolio: {
+      id: "portfolio",
+      eyebrow: "Dla rekruterów",
+      title: "Portfolio i CV",
+      body: "Projekty, doświadczenie i CV — po angielsku.",
+      links: [{ label: "Zobacz portfolio", href: "/portfolio" }],
+    },
+    more: [
       {
         id: "english",
+        eyebrow: "Dla uczniów i rodziców",
         title: "Korepetycje z angielskiego",
         body: "Lekcje online, przygotowanie do egzaminów i konkursów. Po każdej lekcji notatki i ćwiczenia w aplikacji.",
-        note: "Masz link do swoich notatek? Otwórz go bezpośrednio.",
-        href: null,
-        cta: "Zapytaj o lekcje",
-        mailSubject: "Korepetycje z angielskiego",
+        links: [{ label: "Zapytaj o lekcje", href: mailHref("Korepetycje z angielskiego") }],
       },
       {
         id: "guitar",
+        eyebrow: "Dla chcących grać",
         title: "Lekcje gitary",
         body: "Uczę gry na gitarze. Uczniów prowadzę w Strummy — aplikacji, którą sam zbudowałem.",
-        href: STRUMMY_URL,
-        cta: "Strummy",
-        mailSubject: "Lekcje gitary",
+        links: [
+          { label: "Strummy", href: STRUMMY_URL },
+          { label: "Zapytaj mailem", href: mailHref("Lekcje gitary") },
+        ],
       },
       {
         id: "homelab",
+        eyebrow: "Projekt",
         title: "Homelab",
-        body: "Domowe serwery: monitoring, kopie zapasowe, własne aplikacje. Publiczny status usług.",
-        href: STATUS_URL,
-        isComingSoon: STATUS_URL === null,
-        cta: "Status usług",
+        body: "Domowe serwery: monitoring, kopie zapasowe, własne aplikacje.",
+        links: [{ label: "Jak to zbudowałem", href: HOMELAB_POST }],
       },
       {
         id: "blog",
+        eyebrow: "Pisanie",
         title: "Blog",
-        body: "Piszę o budowaniu i utrzymaniu oprogramowania — po angielsku.",
-        href: "/blog",
-        cta: "Czytaj",
+        body: "Piszę o budowaniu i utrzymywaniu oprogramowania — po angielsku.",
+        links: [{ label: "Czytaj", href: "/blog" }],
       },
     ],
   },
@@ -120,86 +127,61 @@ export const CARD: Record<Locale, CardCopy> = {
     call: "Call",
     write: "E-mail",
     save: "Save contact",
-    soon: "soon",
-    ask: "Ask by e-mail",
-    switchLabel: "PL",
-    switchHref: "/",
+    actionsLabel: "Contact",
+    tilesLabel: "What I do",
+    langLabel: "Language",
+    city: "Warsaw",
+    soon: "Coming soon",
+    soonText: "dedicated Vector Digital site",
     title: "Piotr Romańczuk — business card",
     description:
       "Software engineer in Warsaw. Process automation and AI implementation (Vector Digital), portfolio, English tutoring, guitar lessons.",
-    tiles: [
-      {
-        id: "vector",
-        title: "Vector Digital",
-        body: "We streamline repetitive work in small companies: quotes, reports, invoices, copying data between e-mail and Excel. Process automation and AI built on the tools you already use.",
-        note: "I run the audits and implementations.",
-        href: VECTOR_DIGITAL_URL,
-        isComingSoon: VECTOR_DIGITAL_URL === null,
-        cta: "Ask about an audit",
-        mailSubject: "Vector Digital — process audit",
-      },
-      {
-        id: "portfolio",
-        title: "Portfolio & CV",
-        body: "Projects, experience and CV.",
-        href: "/portfolio",
-        cta: "View portfolio",
-      },
+    lead: {
+      id: "vector",
+      eyebrow: "For businesses",
+      title: "Vector Digital",
+      body: "We streamline repetitive work in small companies: quotes, reports, invoices, copying data between e-mail and Excel. Process automation and AI built on the tools you already use. I run the audits and implementations.",
+      links: [{ label: "Ask about an audit", href: VECTOR_DIGITAL_URL ?? mailHref("Vector Digital — process audit") }],
+    },
+    portfolio: {
+      id: "portfolio",
+      eyebrow: "For recruiters",
+      title: "Portfolio & CV",
+      body: "Projects, experience and CV.",
+      links: [{ label: "View portfolio", href: "/portfolio" }],
+    },
+    more: [
       {
         id: "english",
+        eyebrow: "For students & parents",
         title: "English tutoring",
         body: "Online lessons, exam and competition prep. Notes and exercises in an app after every lesson.",
-        note: "Got a link to your notes? Open it directly.",
-        href: null,
-        cta: "Ask about lessons",
-        mailSubject: "English tutoring",
+        links: [{ label: "Ask about lessons", href: mailHref("English tutoring") }],
       },
       {
         id: "guitar",
+        eyebrow: "For aspiring guitarists",
         title: "Guitar lessons",
         body: "I teach guitar. My students use Strummy — an app I built myself.",
-        href: STRUMMY_URL,
-        cta: "Strummy",
-        mailSubject: "Guitar lessons",
+        links: [
+          { label: "Strummy", href: STRUMMY_URL },
+          { label: "Ask by e-mail", href: mailHref("Guitar lessons") },
+        ],
       },
       {
         id: "homelab",
+        eyebrow: "Project",
         title: "Homelab",
-        body: "Servers at home: monitoring, backups, self-hosted apps. Public service status.",
-        href: STATUS_URL,
-        isComingSoon: STATUS_URL === null,
-        cta: "Service status",
+        body: "Servers at home: monitoring, backups, self-hosted apps.",
+        links: [{ label: "How I built it", href: HOMELAB_POST }],
       },
       {
         id: "blog",
+        eyebrow: "Writing",
         title: "Blog",
         body: "Writing about building and running software.",
-        href: "/blog",
-        cta: "Read",
+        links: [{ label: "Read", href: "/blog" }],
       },
     ],
   },
 };
-
-export function mailHref(subject?: string): string {
-  return `mailto:${CONTACT.email}${subject ? `?subject=${encodeURIComponent(subject)}` : ""}`;
-}
-
-/** vCard 3.0 — what "Save contact" downloads. */
-export function buildVCard(): string {
-  const { firstName, lastName, phone, email, city } = CONTACT;
-  return [
-    "BEGIN:VCARD",
-    "VERSION:3.0",
-    `N:${lastName};${firstName};;;`,
-    `FN:${firstName} ${lastName}`,
-    `TITLE:${CARD.pl.role}`,
-    `TEL;TYPE=CELL:${phone}`,
-    `EMAIL;TYPE=INTERNET:${email}`,
-    "URL:https://romanczuk.online",
-    `ADR;TYPE=WORK:;;;${city};;;Polska`,
-    "NOTE:Vector Digital · portfolio · korepetycje z angielskiego · lekcje gitary — romanczuk.online",
-    "END:VCARD",
-    "",
-  ].join("\r\n");
-}

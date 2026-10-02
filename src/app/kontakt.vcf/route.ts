@@ -1,4 +1,4 @@
-import { buildVCard } from "@/data/card";
+import { buildVCard } from "@/data/vcard";
 
 export const dynamic = "force-static";
 
