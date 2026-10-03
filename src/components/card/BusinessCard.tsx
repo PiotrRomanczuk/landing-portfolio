@@ -1,6 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { CARD, CONTACT, GITHUB_URL, IS_VECTOR_SOON, LINKEDIN_URL, mailHref, type Locale } from "@/data/card";
+import { CardActions } from "./CardActions";
+import { CardMessageForm } from "./CardMessageForm";
 import { CardTile } from "./CardTile";
 import "./card.css";
 
@@ -50,19 +52,7 @@ export function BusinessCard({ locale }: { locale: Locale }) {
             </div>
             <p className="card-role">{copy.role}</p>
             <p className="card-intro">{copy.intro}</p>
-            <nav className="card-actions" aria-label={copy.actionsLabel}>
-              <a className="card-action primary" href={`tel:${CONTACT.phone}`}>
-                <span>{copy.call}</span>
-                <span className="mono">{CONTACT.phoneDisplay}</span>
-              </a>
-              <a className="card-action" href={mailHref()}>
-                {copy.write}
-              </a>
-              <a className="card-action" href="/kontakt.vcf" download="piotr-romanczuk.vcf">
-                <span>{copy.save}</span>
-                <span className="mono small">.vcf</span>
-              </a>
-            </nav>
+            <CardActions copy={copy} />
           </section>
 
           <section className="card-tiles" aria-label={copy.tilesLabel}>
@@ -75,6 +65,7 @@ export function BusinessCard({ locale }: { locale: Locale }) {
                 <CardTile key={tile.id} tile={tile} variant="more" />
               ))}
             </div>
+            <CardMessageForm copy={copy.form} lang={locale} waText={copy.waDefault} />
           </section>
         </main>
 
