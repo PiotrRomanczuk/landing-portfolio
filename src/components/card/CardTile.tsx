@@ -3,7 +3,15 @@ import type { CardLink, CardTile as Tile } from "@/data/card";
 
 type Variant = "lead" | "portfolio" | "more";
 
-function TileLink({ link, className }: { link: CardLink; className: string }) {
+function TileLink({ link, className: base }: { link: CardLink; className: string }) {
+  const className = link.quiet ? `${base} quiet` : base;
+  if (link.href.endsWith(".pdf")) {
+    return (
+      <a className={className} href={link.href} target="_blank" rel="noopener noreferrer">
+        {link.label} ↗
+      </a>
+    );
+  }
   if (link.href.startsWith("/")) {
     return (
       <Link className={className} href={link.href}>
@@ -35,6 +43,7 @@ export function CardTile({ tile, variant, footer }: { tile: Tile; variant: Varia
       </div>
       <Heading id={`tile-${tile.id}`}>{tile.title}</Heading>
       <p>{tile.body}</p>
+      {tile.proof ? <p className="card-proof">{tile.proof}</p> : null}
       <div className="card-tile-links">
         {tile.links.map((link) => (
           <TileLink key={link.href} link={link} className={linkClass} />
