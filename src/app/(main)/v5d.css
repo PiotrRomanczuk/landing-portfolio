@@ -382,6 +382,9 @@ button.v5d-root .pill,
 .v5d-root .filters .pill { cursor: pointer; transition: color 0.12s ease, border-color 0.12s ease, background 0.12s ease; }
 .v5d-root .filters .pill:hover { color: var(--ink-soft); }
 
+/* Rows bleed 12px past the column for the hover tint; clip it so the page never scrolls sideways.
+   overflow-x: clip (not hidden) keeps position: sticky working in the gutters. */
+.v5d-root { overflow-x: clip; }
 .v5d-root .work-row { display: block; }
 .v5d-root .work-row.hidden { display: none; }
 .v5d-root .work-row.featured .work-row-inner {

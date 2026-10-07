@@ -2,7 +2,7 @@ import { ImageResponse } from "next/og";
 import { SITE_HOST } from "@/lib/site";
 
 export const runtime = "edge";
-export const alt = "Piotr Romanczuk — Fullstack Engineer";
+export const alt = "Piotr Romańczuk — Fullstack Engineer";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
