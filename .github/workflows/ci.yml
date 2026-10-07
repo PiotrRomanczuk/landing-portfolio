@@ -28,7 +28,8 @@ jobs:
         run: npm run lint
 
       - name: Typecheck
-        run: npx tsc --noEmit
+        # next typegen emits the global route types (LayoutProps, PageProps) tsc needs.
+        run: npx next typegen && npx tsc --noEmit
 
       - name: Build
         run: npm run build
