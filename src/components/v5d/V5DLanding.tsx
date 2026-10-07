@@ -11,6 +11,7 @@ import { ScrollProgress } from "@/components/v5d/ScrollProgress";
 import { ProjectMock } from "@/components/v5d/ProjectMock";
 import { FluencyTimeline, type FluencyRow } from "@/components/v5d/FluencyTimeline";
 import { ProjectDetail } from "@/components/v5d/ProjectDetail";
+import { CookieSettingsButton } from "@/components/consent/CookieSettingsButton";
 import {
   PROJECTS,
   FILTERS,
@@ -770,6 +771,7 @@ export default function V5DLanding({ posts, activity, stamp }: Props) {
                 <a href="#intro" style={{ color: "var(--accent)" }}>
                   ↑ to top
                 </a>
+                <CookieSettingsButton label="cookie settings" className="colophon-cookie" />
               </div>
             </div>
           </section>

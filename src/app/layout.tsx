@@ -3,6 +3,9 @@ import { Inter, JetBrains_Mono, Newsreader } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Providers } from "@/components/Providers";
+import { GoogleAnalytics } from "@/components/consent/Analytics";
+import { CloudflareBeacon } from "@/components/consent/CloudflareBeacon";
+import { CookieBanner } from "@/components/consent/CookieBanner";
 import "./globals.css";
 import { SITE_URL } from "@/lib/site";
 
@@ -101,6 +104,9 @@ export default function RootLayout({
         <Providers>{children}</Providers>
         <Analytics />
         <SpeedInsights />
+        <CookieBanner />
+        <GoogleAnalytics />
+        <CloudflareBeacon />
       </body>
     </html>
   );
