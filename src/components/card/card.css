@@ -239,6 +239,8 @@ button.card-action { font: inherit; font-weight: 600; font-size: 15px; backgroun
 .card-foot > * { min-height: 44px; display: inline-flex; align-items: center; color: inherit; text-decoration: none; }
 .card-foot a:first-child { font-size: 13px; color: var(--ink); }
 .card-foot a:hover { color: var(--acc); }
+.card-foot .card-cookie { padding: 0; border: 0; background: none; font: inherit; cursor: pointer; }
+.card-foot .card-cookie:hover { color: var(--acc); }
 
 /* Motion — the profile + contact render instantly (they are what a QR scan is for, and the LCP);
    only the tiles rise, briefly. Static "coming soon" dot: motion would spotlight what isn't ready. */

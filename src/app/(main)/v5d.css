@@ -810,6 +810,9 @@ button.v5d-root .pill,
   font-size: 11px; color: var(--muted);
 }
 .v5d-root .colophon a:hover { color: var(--ink); }
+.v5d-root .colophon-cookie { margin-left: 0.5ch; padding: 0; border: 0; background: none; font: inherit; color: inherit; cursor: pointer; }
+.v5d-root .colophon-cookie:hover { color: var(--ink); }
+.v5d-root .colophon-cookie::before { content: "· "; }
 
 /* ── project detail card ────────────────────────────────────── */
 .v5d-root .work-row-inner { cursor: pointer; }

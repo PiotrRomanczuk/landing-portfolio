@@ -68,6 +68,7 @@ export type CardCopy = {
   tilesLabel: string;
   langLabel: string;
   city: string;
+  cookieSettings: string;
   soon: string;
   soonText: string;
   title: string;
@@ -105,6 +106,7 @@ export const CARD: Record<Locale, CardCopy> = {
     tilesLabel: "Czym się zajmuję",
     langLabel: "Język",
     city: "Warszawa",
+    cookieSettings: "Ustawienia cookies",
     soon: "Wkrótce",
     soonText: "osobna strona Vector Digital",
     title: "Piotr Romańczuk — wizytówka",
@@ -211,6 +213,7 @@ export const CARD: Record<Locale, CardCopy> = {
     tilesLabel: "What I do",
     langLabel: "Language",
     city: "Warsaw",
+    cookieSettings: "Cookie settings",
     soon: "Coming soon",
     soonText: "dedicated Vector Digital site",
     title: "Piotr Romańczuk — business card",

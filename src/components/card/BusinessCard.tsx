@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { CARD, CONTACT, GITHUB_URL, IS_VECTOR_SOON, LINKEDIN_URL, mailHref, type Locale } from "@/data/card";
+import { CookieSettingsButton } from "@/components/consent/CookieSettingsButton";
 import { CardActions } from "./CardActions";
 import { CardMessageForm } from "./CardMessageForm";
 import { CardTile } from "./CardTile";
@@ -82,6 +83,7 @@ export function BusinessCard({ locale }: { locale: Locale }) {
           <a href={GITHUB_URL} target="_blank" rel="noopener noreferrer">
             GitHub ↗
           </a>
+          <CookieSettingsButton label={copy.cookieSettings} className="card-cookie" />
         </footer>
       </div>
     </div>
