@@ -70,6 +70,13 @@ test("tutoring tiles link to their own landing pages", async ({ page }) => {
   await expect(page.getByRole("link", { name: /Oferta i zapisy/ })).toHaveAttribute("href", "https://gitarawarszawa.pl");
 });
 
+test("Vector Digital links to its own site and drops the coming-soon note", async ({ page }) => {
+  await page.goto("/");
+  const lead = page.locator(".card-tile.lead");
+  await expect(lead.getByRole("link", { name: /vectordigital\.pl/ })).toHaveAttribute("href", "https://vectordigital.pl");
+  await expect(lead.locator(".card-soon")).toHaveCount(0);
+});
+
 test("Vector Digital offers a pre-filled WhatsApp brief and an e-mail fallback", async ({ page }) => {
   await page.goto("/");
   const lead = page.locator(".card-tile.lead");

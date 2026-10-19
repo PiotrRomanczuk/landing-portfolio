@@ -11,8 +11,8 @@ export const CONTACT = {
   city: "Warszawa",
 } as const;
 
-/** Set once Vector Digital has its own domain; until then the tile leads to e-mail and shows "coming soon". */
-export const VECTOR_DIGITAL_URL: string | null = null;
+/** Vector Digital's own site (live since 2026-10-18); null brings back the "coming soon" footer and contact-only links. */
+export const VECTOR_DIGITAL_URL: string | null = "https://vectordigital.pl";
 export const STRUMMY_URL = "https://strummy.online";
 /** English tutoring landing + students' lesson notes (lesson-notes project). */
 export const ENGLISH_URL = "https://lekcje.romanczuk.online";
@@ -117,17 +117,17 @@ export const CARD: Record<Locale, CardCopy> = {
       eyebrow: "Dla firm",
       title: "Vector Digital",
       body: "Usprawniamy powtarzalną pracę w małych firmach: wyceny, raporty, faktury, przepisywanie danych między mailem a Excelem. Automatyzacja procesów i wdrożenia AI na narzędziach, które już macie. Prowadzę audyty i wdrożenia.",
-      links: VECTOR_DIGITAL_URL
-        ? [{ label: "Napisz w sprawie audytu", href: VECTOR_DIGITAL_URL }]
-        : [
-            {
-              label: "Napisz na WhatsApp",
-              href: waHref(
-                "Cześć Piotr! Piszę w sprawie audytu procesów (Vector Digital).\nNasza firma robi: …\nNajwięcej czasu zabiera nam: …",
-              ),
-            },
-            { label: "lub e-mailem", href: mailHref("Vector Digital — audyt procesów"), quiet: true },
-          ],
+      links: [
+        ...(VECTOR_DIGITAL_URL ? [{ label: "vectordigital.pl", href: VECTOR_DIGITAL_URL }] : []),
+        {
+          label: "Napisz na WhatsApp",
+          href: waHref(
+            "Cześć Piotr! Piszę w sprawie audytu procesów (Vector Digital).\nNasza firma robi: …\nNajwięcej czasu zabiera nam: …",
+          ),
+          quiet: VECTOR_DIGITAL_URL !== null,
+        },
+        { label: "lub e-mailem", href: mailHref("Vector Digital — audyt procesów"), quiet: true },
+      ],
     },
     portfolio: {
       id: "portfolio",
@@ -224,17 +224,17 @@ export const CARD: Record<Locale, CardCopy> = {
       eyebrow: "For businesses",
       title: "Vector Digital",
       body: "We streamline repetitive work in small companies: quotes, reports, invoices, copying data between e-mail and Excel. Process automation and AI built on the tools you already use. I run the audits and implementations.",
-      links: VECTOR_DIGITAL_URL
-        ? [{ label: "Ask about an audit", href: VECTOR_DIGITAL_URL }]
-        : [
-            {
-              label: "Message on WhatsApp",
-              href: waHref(
-                "Hi Piotr! I'm writing about a process audit (Vector Digital).\nOur company does: …\nWhat eats most of our time: …",
-              ),
-            },
-            { label: "or by e-mail", href: mailHref("Vector Digital — process audit"), quiet: true },
-          ],
+      links: [
+        ...(VECTOR_DIGITAL_URL ? [{ label: "vectordigital.pl", href: VECTOR_DIGITAL_URL }] : []),
+        {
+          label: "Message on WhatsApp",
+          href: waHref(
+            "Hi Piotr! I'm writing about a process audit (Vector Digital).\nOur company does: …\nWhat eats most of our time: …",
+          ),
+          quiet: VECTOR_DIGITAL_URL !== null,
+        },
+        { label: "or by e-mail", href: mailHref("Vector Digital — process audit"), quiet: true },
+      ],
     },
     portfolio: {
       id: "portfolio",
