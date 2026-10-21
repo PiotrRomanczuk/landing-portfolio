@@ -42,7 +42,7 @@ export async function generateMetadata({
     devops: "Junior DevOps Engineer CV — CI/CD, Docker, GitHub Actions, Vercel. Infrastructure automation and monitoring.",
   };
   return {
-    title: `Piotr Romanczuk — ${config.title}`,
+    title: `Piotr Romańczuk — ${config.title}`,
     description: variantDescriptions[variant as CVVariant],
     alternates: {
       canonical: `/cv/${variant}`,
