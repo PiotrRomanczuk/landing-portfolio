@@ -92,7 +92,7 @@ export const IS_VECTOR_SOON = VECTOR_DIGITAL_URL === null;
 
 export const CARD: Record<Locale, CardCopy> = {
   pl: {
-    role: "Inżynier oprogramowania · automatyzacja procesów i AI",
+    role: "Programista · automatyzacja procesów i AI",
     intro:
       "Buduję i utrzymuję aplikacje webowe — od kodu po serwer. Pomagam firmom zdjąć z ludzi powtarzalną pracę. Po godzinach uczę angielskiego i gry na gitarze.",
     call: "Zadzwoń",
@@ -111,7 +111,7 @@ export const CARD: Record<Locale, CardCopy> = {
     soonText: "osobna strona Vector Digital",
     title: "Piotr Romańczuk — wizytówka",
     description:
-      "Inżynier oprogramowania z Warszawy. Automatyzacja procesów i wdrożenia AI (Vector Digital), portfolio, korepetycje z angielskiego, lekcje gitary.",
+      "Programista z Warszawy. Automatyzacja procesów i wdrożenia AI (Vector Digital), portfolio, korepetycje z angielskiego, lekcje gitary.",
     lead: {
       id: "vector",
       eyebrow: "Dla firm",
