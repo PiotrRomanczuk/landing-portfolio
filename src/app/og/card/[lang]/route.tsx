@@ -10,7 +10,7 @@ export const dynamic = "force-static";
 export const generateStaticParams = () => [{ lang: "pl" }, { lang: "en" }];
 
 const COPY: Record<Locale, { eyebrow: string; sub: string }> = {
-  pl: { eyebrow: "INŻYNIER OPROGRAMOWANIA", sub: "Automatyzacja procesów i AI" },
+  pl: { eyebrow: "PROGRAMISTA", sub: "Automatyzacja procesów i AI" },
   en: { eyebrow: "SOFTWARE ENGINEER", sub: "Process automation & AI" },
 };
 
